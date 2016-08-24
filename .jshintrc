@@ -1,0 +1,59 @@
+{
+  "bitwise": true,
+  "camelcase": true,
+  "curly": false,  /* custom */
+  "eqeqeq": true,
+  "forin": true,
+  "freeze": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": false,
+  "newcap": true,
+  "noarg": true,
+  "noempty": true,
+  "nonbsp": true,
+  "nonew": true,
+  "plusplus": true,
+  "quotmark": true,
+  "undef": true,
+  "unused": true,
+  "strict": false, /* enable later */
+  "trailing": true,
+  "maxparams": false,
+  "maxdepth": false,
+  "maxstatements": false,
+  "maxcomplexity": false,
+  "maxlen": false,
+  "asi": false,
+  "boss": true,  /* custom */
+  "debug": false,
+  "eqnull": true,  /* custom */
+  "esnext": false,
+  "esversion": 6,
+  "evil": false,
+  "expr": false,
+  "funcscope": false,
+  "gcl": false,
+  "globalstrict": false,
+  "iterator": false,
+  "lastsemic": false,
+  "laxbreak": false,
+  "laxcomma": false,
+  "loopfunc": false,
+  "moz": false,
+  "multistr": false,
+  "notypeof": false,
+  "proto": false,
+  "scripturl": false,
+  "smarttabs": false,
+  "shadow": false,
+  "sub": false,
+  "supernew": false,
+  "noyield": false,
+  "browser": true,  /* custom */
+  "node": true,  /* custom */
+  "onevar": true,  /* custom */
+  "globals": {
+    "console": false
+  }
+}

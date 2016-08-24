@@ -1,0 +1,21 @@
+.crumbs {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.crumb {
+  text-transform: capitalize;
+
+  color: @color-gray-d2;
+
+  a {
+    &:after {
+      margin-right: 6px;
+      margin-left: 6px;
+
+      content: '•';
+
+      color: @color-gray-d1;
+    }
+  }
+}

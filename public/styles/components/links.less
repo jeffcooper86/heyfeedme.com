@@ -1,0 +1,23 @@
+a {
+  text-decoration: none;
+
+  color: @color-1-d1;
+
+  &:hover {
+    color: @color-1-d2;
+  }
+}
+
+.link-2 {
+  color: @color-2;
+}
+
+.link-decorated {
+  transition: box-shadow @animate;
+
+  box-shadow: 0 1px 0;
+
+  &:hover {
+    box-shadow: 0 3px 0;
+  }
+}

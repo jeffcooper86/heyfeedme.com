@@ -1,0 +1,35 @@
+mixin formFieldsFromSchema(fields)
+
+  each field, key in fields
+    -var type = field.instance
+
+    .form-group
+      label(for=key).label= key
+
+      if type === 'Array'
+        each option in field.caster.enumValues
+          .form-group.form-group-s
+            label(for='#{key}#{option}').label-2= option
+            input(id='#{key}#{option}'
+              name=key
+              value=option
+              type='checkbox'
+              checked= (field.data && field.data.indexOf(option) > -1 
+                ? 'checked' 
+                : null))= option
+
+      if type === 'Boolean'
+        input(id=key
+          name=key
+          type='checkbox')
+
+      if type === 'Date'
+        input(id=key
+          name=key
+          type='date')
+
+      if type === 'String' || type === 'Number'
+        input(id=key
+          name=key
+          type='text'
+          value=field.data)

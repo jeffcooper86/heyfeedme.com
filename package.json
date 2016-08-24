@@ -1,0 +1,47 @@
+{
+  "name": "jecoopr",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "async": "^1.5.2",
+    "body-parser": "^1.15.0",
+    "bower": "^1.7.7",
+    "browserify": "^13.0.0",
+    "connect-mongo": "^1.1.0",
+    "dotenv": "^2.0.0",
+    "event-stream": "^3.3.2",
+    "exif-reader": "^1.0.0",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "express-slash": "^2.0.1",
+    "flash": "^1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-csscomb": "^3.0.7",
+    "gulp-diff": "^1.0.0",
+    "gulp-foreach": "^0.1.0",
+    "gulp-jsbeautifier": "^2.0.2",
+    "gulp-less": "^3.0.5",
+    "gulp-watch": "^4.3.5",
+    "jade": "^1.11.0",
+    "lodash": "^4.6.1",
+    "mongodb": "^2.1.11",
+    "mongoose": "^4.4.10",
+    "multer": "^1.1.0",
+    "require-dir": "^0.3.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {
+    "ghooks": "^1.0.3"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "printf '\nRunning gulp beautify check...\n' && gulp beautifyCheck",
+      "pre-push": "printf '\nRun test scripts here...\n'",
+      "post-merge": "printf '\nRunning npm install...\n' && npm install"
+    }
+  },
+  "scripts": {
+    "postinstall": "bower prune && bower install && gulp dist"
+  }
+}

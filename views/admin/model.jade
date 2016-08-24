@@ -1,0 +1,27 @@
+extends ../_layouts/admin
+
+block adminBody
+  .container.container-1
+    h2.heading.h2 Manage #{modelName} (#{models.length})
+
+    form(method='post').form-spaced
+      +formFieldsFromSchema(populatedSchema)
+      input(type='submit', value='create').btn.btn-1
+
+    h3.heading.h3 Update
+    
+    .admin-collection
+      - var count = 1
+      each model in models
+        .admin-item
+          .admin-field
+            span.heading.h4 #{count++} 
+            a(href='/admin/' + modelName + '/' + model._id)
+              | #{model.id}
+            br
+          each field, key in filters.stripPrivates(model.toObject())
+            if typeof(field) !== "object" && field !== ''
+              .admin-field
+                span.heading.h4 #{key}: 
+                | #{field}
+                br

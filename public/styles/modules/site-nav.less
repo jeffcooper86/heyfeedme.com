@@ -1,0 +1,49 @@
+.m-site-nav {
+  position: relative;
+  z-index: @z-index-nav;
+
+  display: flex;
+
+  background-color: transparent;
+
+  align-items: center;
+
+  a {
+    color: @color-black-l3;
+  }
+}
+
+.snm-logo {
+  margin-right: 30px;
+
+  flex-grow: 1;
+
+  a {
+    font-size: @font-size-l1;
+  }
+}
+
+.snm-nav-item {
+  font-size: 20px;
+  font-weight: @font-weight-light;
+
+  color: @color-white;
+
+  a {
+    display: inline-block;
+
+    padding: 10px;
+  }
+
+  &:first-child {
+    a {
+      padding-left: 0;
+    }
+  }
+
+  &:last-child {
+    a {
+      padding-right: 0;
+    }
+  }
+}

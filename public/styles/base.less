@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: @font-1;
+  font-size: @font-size;
+  font-weight: @font-weight-light;
+  line-height: @line-height-s1;
+
+  color: @color-gray-d3;
+  background: @color-white-d1;
+}
+
+img {
+  max-width: 100%;
+}
+
+p {
+  line-height: @line-height;
+
+  + p {
+    margin-top: 20px;
+  }
+}
+
+.logo {
+  font-size: @font-size-l1;
+
+  display: inline-block;
+
+  text-transform: capitalize;
+
+  color: @color-black-l1;
+}
+
+// Move to pages
+.admin-collection {
+  display: flex;
+
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.admin-field {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.admin-item {
+  width: 25%;
+  margin-bottom: 40px;
+  padding-right: 20px;
+
+  flex-basis: auto;
+}

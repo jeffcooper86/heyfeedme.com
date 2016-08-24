@@ -1,0 +1,14 @@
+{
+  "disallowClassLiteralsBeforeAttributes": true,
+  "disallowClassLiteralsBeforeIdLiterals": true,
+  "disallowDuplicateAttributes": true,
+  "disallowIdLiterals": true,
+  "disallowSpacesInsideAttributeBrackets": true,
+  "requireLineFeedAtFileEnd": true,
+  "requireLowerCaseAttributes": true,
+  "requireLowerCaseTags": true,
+  "validateAttributeQuoteMarks": "'",
+  "validateIndentation": 2,
+  "validateLineBreaks": "LF",
+  "validateSelfClosingTags": true
+}

@@ -1,0 +1,9 @@
+mixin crumbs(crumbs)
+  if crumbs
+    nav.nav-crumbs.crumbs
+      each crumb in crumbs
+        span.nav-crumb.crumb
+          if crumb[1]
+            a(href=crumb[1])= crumb[0]
+          else
+            span= crumb[0]

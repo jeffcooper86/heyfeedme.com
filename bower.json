@@ -1,0 +1,8 @@
+{
+  "name": "jecoopr",
+  "main": "app.js",
+  "private": true,
+  "dependencies": {
+    "reset-css": "^2.0.2011012603"
+  }
+}
