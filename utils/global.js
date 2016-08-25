@@ -1,7 +1,13 @@
 var _ = require('lodash');
+var moment = require('moment')
 
+module.exports.moment = _moment;
 module.exports.stripPrivates = _stripPrivates;
 module.exports.trimDirectories = _trimDirectories;
+
+function _moment(date) {
+  return moment(date);
+}
 
 function _stripPrivates(schema) {
   return _.omitBy(schema, function(val, key) {

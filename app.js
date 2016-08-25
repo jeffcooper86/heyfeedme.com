@@ -46,8 +46,9 @@ var routes = requireDir('routes', {
 
 // Public
 app.get('/', routes.home.index);
-app.get('/photography', routes.photography.index);
-app.get('/photography/:photoSection', routes.photography.photoSection);
+app.get('/recipes', routes.recipes.index);
+app.get('/recipes/:recipeSection', routes.recipes.recipeSection);
+app.get('/search', routes.search.index);
 
 
 // API - To do: Make admin section a router module

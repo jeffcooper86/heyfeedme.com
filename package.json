@@ -1,11 +1,11 @@
 {
-  "name": "jecoopr",
+  "name": "heyfeedme",
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
     "async": "^1.5.2",
     "body-parser": "^1.15.0",
-    "bower": "^1.7.7",
+    "bower": "^1.7.9",
     "browserify": "^13.0.0",
     "connect-mongo": "^1.1.0",
     "dotenv": "^2.0.0",
@@ -25,6 +25,7 @@
     "gulp-watch": "^4.3.5",
     "jade": "^1.11.0",
     "lodash": "^4.6.1",
+    "moment": "^2.14.1",
     "mongodb": "^2.1.11",
     "mongoose": "^4.4.10",
     "multer": "^1.1.0",

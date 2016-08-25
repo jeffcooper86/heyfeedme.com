@@ -1,0 +1,19 @@
+.m-search
+  .container.container-1
+    .module-content-wrap
+      .module-content
+        .spaced-1
+          form(action='/search').text-center
+            input(type='text',
+              name='q',
+              placeholder='What do you want?'
+            ).sm-search
+            select(name='f').select
+              option all recipes
+              option drinks
+              option breakfast
+              option lunch
+              option dinner
+              option desert
+            input(type='submit',
+              value='Search').btn.btn-1.sm-search

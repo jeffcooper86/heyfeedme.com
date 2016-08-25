@@ -13,12 +13,40 @@
   margin-bottom: 10px;
 }
 
+.input-l1 {
+  font-size: @font-size-l1;
+  height: @font-size-l1 * 2;
+}
+
 .label-2 {
   font-size: @font-size-s1;
 }
 
-input {
+input,
+select,
+.btn {
+  background: white;
+  border: 1px solid @color-gray-l1;
+  border-radius: 4px;
+  color: @color-gray-d3;
+  display: inline-block;
+  font-family: @font-1;
+  font-size: @font-size;
+  font-weight: @font-weight-light;
+  height: @font-size * 2.4;
+  line-height: @font-size * 2.4;
+  margin-left: @spacing-s2;
+  margin-right: @spacing-s2;
+  padding: 0 @spacing;
   vertical-align: middle;
+
+  &:focus {
+    outline-color: @color-1-l1;
+  }
+
+  &::placeholder {
+    color: @color-gray-d2;
+  }
 }
 
 label {

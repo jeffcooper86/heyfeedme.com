@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var categories = 'abstract city fine-art flowers human-interest landscape macro minimalist nature people portrait still-life'.split(' ');
 
-var photoSchema = new Schema({
+var recipeSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -27,7 +27,7 @@ var photoSchema = new Schema({
   }
 });
 
-module.exports.model = mongoose.model('Photo', photoSchema);
+module.exports.model = mongoose.model('Recipe', recipeSchema);
 
 module.exports.adminModelDefaults = 'name location categories'.split(' ');
 module.exports.adminModelSelect = '';
