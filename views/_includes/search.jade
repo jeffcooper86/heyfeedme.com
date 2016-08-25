@@ -9,11 +9,7 @@
               placeholder='What do you want?'
             ).sm-search
             select(name='f').select
-              option all recipes
-              option drinks
-              option breakfast
-              option lunch
-              option dinner
-              option desert
+              each category in data.categories
+                option= category
             input(type='submit',
               value='Search').btn.btn-1.sm-search

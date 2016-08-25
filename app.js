@@ -9,6 +9,9 @@ const session = require('express-session');
 const flash = require('flash');
 const MongoStore = require('connect-mongo')(session);
 
+// App
+var globalUtils = require(process.cwd() + '/utils/global');
+var recipeUtils = require(process.cwd() + '/utils/recipes');
 
 /*
  * Settings
@@ -34,6 +37,7 @@ app.use(session({
 app.use(flash());
 app.use(slash());
 app.use(getSetEnv);
+app.use(setGlobalData);
 app.use(setTemplateFilters);
 
 /*
@@ -131,6 +135,12 @@ function requireAuthentication(req, res, next) {
 }
 
 function setTemplateFilters(req, res, next) {
-  res.locals.filters = require(process.cwd() + '/utils/global');
+  res.locals.filters = globalUtils;
+  next();
+}
+
+function setGlobalData(req, res, next) {
+  res.locals.data =  {};
+  res.locals.data.categories = recipeUtils.getCategories();
   next();
 }

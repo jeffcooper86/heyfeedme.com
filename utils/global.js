@@ -2,11 +2,16 @@ var _ = require('lodash');
 var moment = require('moment')
 
 module.exports.moment = _moment;
+module.exports.slugify = _slugify;
 module.exports.stripPrivates = _stripPrivates;
 module.exports.trimDirectories = _trimDirectories;
 
 function _moment(date) {
   return moment(date);
+}
+
+function _slugify(route) {
+  return route.replace(" ", "-");
 }
 
 function _stripPrivates(schema) {

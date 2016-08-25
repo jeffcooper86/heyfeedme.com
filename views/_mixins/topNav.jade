@@ -1,0 +1,6 @@
+mixin topNav(navItems)
+  .container.container-1.m-top-nav
+    nav.tnm-nav
+      if navItems
+        each nav in navItems
+          a(href='/recipes/#{filters.slugify(nav)}')= nav
