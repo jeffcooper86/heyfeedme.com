@@ -140,7 +140,7 @@ function setTemplateFilters(req, res, next) {
 }
 
 function setGlobalData(req, res, next) {
-  res.locals.data =  {};
+  res.locals.data = {};
   res.locals.data.categories = recipeUtils.getCategories();
   next();
 }

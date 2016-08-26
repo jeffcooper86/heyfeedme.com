@@ -15,6 +15,7 @@
 
 .input-l1 {
   font-size: @font-size-l1;
+
   height: @font-size-l1 * 2;
 }
 
@@ -22,23 +23,25 @@
   font-size: @font-size-s1;
 }
 
-input,
-select,
-.btn {
-  background: white;
-  border: 1px solid @color-gray-l1;
-  border-radius: 4px;
-  color: @color-gray-d3;
-  display: inline-block;
+input, select, .btn {
   font-family: @font-1;
   font-size: @font-size;
   font-weight: @font-weight-light;
-  height: @font-size * 2.4;
   line-height: @font-size * 2.4;
-  margin-left: @spacing-s2;
+
+  display: inline-block;
+
+  height: @font-size * 2.4;
   margin-right: @spacing-s2;
+  margin-left: @spacing-s2;
   padding: 0 @spacing;
+
   vertical-align: middle;
+
+  color: @color-gray-d3;
+  border: 1px solid @color-gray-l1;
+  border-radius: 4px;
+  background: white;
 
   &:focus {
     outline-color: @color-1-l1;
