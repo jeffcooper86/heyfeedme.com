@@ -18,7 +18,9 @@ html
             include ../_includes/header-nav.jade
 
             block header-text
-
+        block crumbs
+          .m-crumbs.container.container-1
+            +crumbs(crumbs)
         block body
 
     block footer

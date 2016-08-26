@@ -9,6 +9,7 @@
               placeholder='What do you want?'
             ).sm-search
             select(name='f').select
+              option all recipes
               each category in data.categories
                 option= category
             input(type='submit',
