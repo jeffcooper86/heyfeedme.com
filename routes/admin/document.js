@@ -65,11 +65,22 @@ exports = module.exports = function(req, res, next) {
 
   function updateDocument(cb) {
     if (req.method !== 'POST' || action !== 'update') return cb();
+    _trimEmptyArrayReuqestData(req.body)
     doc.update(req.body, function(err, res) {
 
       // Need to get document again - findByIdAndUpdate is limiting
       // http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
       getDocument(cb);
+    });
+  }
+
+  function _trimEmptyArrayReuqestData(data) {
+    _.forEach(data, function(value) {
+      if (_.isArray(value)) {
+        _.remove(value, function(val) {
+          return val.length === 0;
+        });
+      }
     });
   }
 };

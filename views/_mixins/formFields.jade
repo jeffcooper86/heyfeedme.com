@@ -1,5 +1,4 @@
 mixin formFieldsFromSchema(fields)
-
   each field, key in fields
     -var type = field.instance
 
@@ -7,16 +6,27 @@ mixin formFieldsFromSchema(fields)
       label(for=key).label= key
 
       if type === 'Array'
-        each option in field.caster.enumValues
+        if field.caster.enumValues && field.caster.enumValues.length
+          each option in field.caster.enumValues
+            .form-group.form-group-s
+              label(for='#{key}#{option}').label-2= option
+              input(id='#{key}#{option}'
+                name=key
+                value=option
+                type='checkbox'
+                checked= (field.data && field.data.indexOf(option) > -1 
+                  ? 'checked' 
+                  : null))= option
+        else
+          each value in field.data
+            .form-group.form-group-s
+              input(id='#{key}',
+                type='text',
+                name=key,
+                value=value)
           .form-group.form-group-s
-            label(for='#{key}#{option}').label-2= option
-            input(id='#{key}#{option}'
-              name=key
-              value=option
-              type='checkbox'
-              checked= (field.data && field.data.indexOf(option) > -1 
-                ? 'checked' 
-                : null))= option
+            input(type='text',
+                  name=key)
 
       if type === 'Boolean'
         input(id=key

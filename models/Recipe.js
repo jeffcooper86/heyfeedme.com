@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var recipeUtils = require(process.cwd() + '/utils/recipes');
 
-var categories = 'abstract city fine-art flowers human-interest landscape macro minimalist nature people portrait still-life'.split(' ');
+var categories = recipeUtils.getCategories();
 
 var recipeSchema = new Schema({
   name: {
@@ -12,15 +13,15 @@ var recipeSchema = new Schema({
     type: String,
     enum: categories
   }],
-  filename: String,
-  date: Date,
-  location: String,
+
+  // To do: reference other recipe as ingredients
+  ingredients: [{
+    type: String
+  }],
+  steps: [{
+    type: String
+  }],
   description: String,
-  size: {
-    orientation: String,
-    height: Number,
-    width: Number
-  },
   uploaded: {
     type: Date,
     default: Date.now
