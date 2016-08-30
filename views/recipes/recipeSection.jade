@@ -3,16 +3,9 @@ extends ../_layouts/base
 block body
   .container.container-1
     +topNav(data.categories)
+    p= filters.tally(data.recipes, ['recipe', 'recipes'])
     .m-recipe-listings
-      a(href='/recipes/pasta/lasagna').rlm-recipe
-        .rlm-title Lasagna
-        img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
-      .rlm-recipe
-        .rlm-title Lasagna
-        img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
-      .rlm-recipe
-        .rlm-title Lasagna
-        img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
-      .rlm-recipe
-        .rlm-title Lasagna
-        img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
+      each recipe in data.recipes
+        a(href='/recipes/pasta/lasagna').rlm-recipe
+          .rlm-title= recipe.name
+          img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo

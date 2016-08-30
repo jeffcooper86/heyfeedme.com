@@ -4,6 +4,7 @@ var moment = require('moment')
 module.exports.moment = _moment;
 module.exports.slugify = _slugify;
 module.exports.stripPrivates = _stripPrivates;
+module.exports.tally = _tally;
 module.exports.trimDirectories = _trimDirectories;
 module.exports.unslugify = _unslugify;
 
@@ -19,6 +20,11 @@ function _stripPrivates(schema) {
   return _.omitBy(schema, function(val, key) {
     return key[0] === '_';
   });
+}
+
+function _tally(data, labels) {
+  var count = data.length;
+  return count + ' ' + (count > 1 || count == 0 ? labels[1] : labels[0]);
 }
 
 function _trimDirectories(path, trimAmount) {

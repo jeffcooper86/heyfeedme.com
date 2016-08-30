@@ -50,7 +50,7 @@ var routes = requireDir('routes', {
 
 // Public
 app.get('/', routes.home.index);
-app.get('/recipes', routes.recipes.index);
+app.get('/recipes', routes.recipes.recipeSection);
 app.get('/recipes/:recipeSection', routes.recipes.recipeSection);
 app.get('/search', routes.search.index);
 
