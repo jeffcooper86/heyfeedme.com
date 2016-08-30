@@ -1,0 +1,19 @@
+extends ../_layouts/base  
+
+block body
+  .container.container-1
+    +topNav(data.categories)
+    .m-recipe
+      h1.heading.no-space-top.h2= filters.capitalize_titles(data.recipe.name)
+      img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rm-main-photo
+      .m-recipe-ingredients
+        ul
+          each ingredient in data.recipe.ingredients
+            li.rim-ingredient= ingredient
+      .m-recipe-steps
+        -var stepsCount = 0;
+        each step in data.recipe.steps
+          .rsm-step
+            p.rsm-text
+              span.rsm-count= ++stepsCount
+              =step

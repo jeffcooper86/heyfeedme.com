@@ -5,25 +5,19 @@ var utils = require(process.cwd() + '/utils/global');
 exports = module.exports = function(req, res) {
   var l = res.locals,
     template = 'recipes/recipe',
-    recipeSection = req.params.recipeSection,
-    recipesQuery;
-
-  if (recipeSection) {
-    recipesQuery = Recipes.model.find()
-      .where('categories').in([utils.unslugify(recipeSection)]);
-  } else {
-    recipesQuery = Recipes.model.find();
-  }
+    recipeId = req.params.recipeId,
+    recipeQuery = Recipes.model.findById(recipeId);
 
   async.waterfall([
-    getAll
+    getRecipe
   ], function(err) {
     return res.render(template);
   });
 
-  function getAll(cb) {
-    recipesQuery.exec(function(err, data) {
-      l.data.recipes = data;
+  function getRecipe(cb) {
+    recipeQuery.exec(function(err, data) {
+      l.data.recipe = data;
+      l.title = data.description + ' - Heyfeedme';
       cb(null);
     });
   }

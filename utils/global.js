@@ -1,12 +1,26 @@
 var _ = require('lodash');
 var moment = require('moment')
 
+module.exports.capitalize_titles = _capitalize_titles;
 module.exports.moment = _moment;
 module.exports.slugify = _slugify;
 module.exports.stripPrivates = _stripPrivates;
 module.exports.tally = _tally;
 module.exports.trimDirectories = _trimDirectories;
 module.exports.unslugify = _unslugify;
+
+function _capitalize_titles(title, skip) {
+  var words = title.split(' '),
+    skip = skip || ['of', 'the', 'and', 'de'];
+
+  words.forEach(function(word, i) {
+    if (skip.indexOf(word) < 0) {
+      words[i] = _.capitalize(word);
+    };
+  });
+
+  return words.join(' ');
+}
 
 function _moment(date) {
   return moment(date);
