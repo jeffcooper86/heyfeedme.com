@@ -1,4 +1,18 @@
 extends ../_layouts/base  
 
 block body
-  +topNav(data.categories)
+  .container.container-1
+    +topNav(data.categories)
+    .m-recipe-listings
+      a(href='/recipes/pasta/lasagna').rlm-recipe
+        .rlm-title Lasagna
+        img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
+      .rlm-recipe
+        .rlm-title Lasagna
+        img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
+      .rlm-recipe
+        .rlm-title Lasagna
+        img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
+      .rlm-recipe
+        .rlm-title Lasagna
+        img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
