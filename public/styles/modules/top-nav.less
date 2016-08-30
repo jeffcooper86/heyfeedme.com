@@ -5,25 +5,31 @@
 .tnm-nav {
   display: flex;
   flex-direction: column;
+
   margin: @spacing 0;
   a {
-    color: @color-gray-d2;
     margin-bottom: 10px;
+
     text-transform: capitalize;
 
+    color: @color-gray-d2;
+
     &.active {
-      color: @color-1-d1;
       font-weight: @font-weight-bold;
+
+      color: @color-1-d1;
     }
   }
 }
 
 .tnm-nav-wrap {
-  padding: 0 @spacing;
   position: absolute;
   z-index: @z-index-nav;
   top: 0;
   right: 0;
+
+  padding: 0 @spacing;
+
   background: @color-white;
 }
 

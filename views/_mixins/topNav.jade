@@ -5,7 +5,7 @@ mixin topNav(navItems)
       nav.tnm-nav
         if navItems
           a(href='/recipes',
-            class=(data.section === "all" ? 'active' : Null )) all recipes
+            class=(data.section === "all recipes" ? 'active' : Null )) all recipes
           each nav in navItems
             -var activeNav = nav === data.section
             a(href='/recipes/#{filters.slugify(nav)}',
