@@ -13,7 +13,7 @@ function _moment(date) {
 }
 
 function _slugify(route) {
-  return route.replace(" ", "-");
+  return route.replace(/[ ]/g, "-");
 }
 
 function _stripPrivates(schema) {

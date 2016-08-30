@@ -6,6 +6,6 @@ block body
     p= filters.tally(data.recipes, ['recipe', 'recipes'])
     .m-recipe-listings
       each recipe in data.recipes
-        a(href='/recipe/#{recipe.name}/#{recipe.id}').rlm-recipe
+        a(href=filters.slugify('/recipe/#{recipe.name}/#{recipe.id}')).rlm-recipe
           .rlm-title= recipe.name
           img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
