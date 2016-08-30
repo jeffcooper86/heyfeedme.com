@@ -1,6 +1,12 @@
 mixin topNav(navItems)
   .m-top-nav
-    nav.tnm-nav
-      if navItems
-        each nav in navItems
-          a(href='/recipes/#{filters.slugify(nav)}')= nav
+    .tnm-nav-wrap
+      span.tnm-section= data.section
+      nav.tnm-nav
+        if navItems
+          a(href='/recipes',
+            class=(data.section === "all" ? 'active' : Null )) all recipes
+          each nav in navItems
+            -var activeNav = nav === data.section
+            a(href='/recipes/#{filters.slugify(nav)}',
+              class=(activeNav ? 'active' : null))= nav
