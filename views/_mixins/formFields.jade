@@ -1,10 +1,8 @@
 mixin formFieldsFromSchema(fields)
   each field, key in fields
     -var type = field.instance
-
     .form-group
       label(for=key).label= key
-
       if type === 'Array'
         if field.caster.enumValues && field.caster.enumValues.length
           each option in field.caster.enumValues
@@ -27,17 +25,14 @@ mixin formFieldsFromSchema(fields)
           .form-group.form-group-s
             input(type='text',
                   name=key)
-
       if type === 'Boolean'
         input(id=key
           name=key
           type='checkbox')
-
       if type === 'Date'
         input(id=key
           name=key
           type='date')
-
       if type === 'String' || type === 'Number'
         input(id=key
           name=key

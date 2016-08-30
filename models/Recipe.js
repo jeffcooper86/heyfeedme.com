@@ -18,7 +18,7 @@ var recipeSchema = new Schema({
     type: String,
     enum: classifications
   }],
-  
+
   // To do: reference other recipe as ingredients
   ingredients: [{
     type: String
@@ -26,7 +26,7 @@ var recipeSchema = new Schema({
   steps: [{
     type: String
   }],
-  description: String,
+  shortDescription: String,
   uploaded: {
     type: Date,
     default: Date.now

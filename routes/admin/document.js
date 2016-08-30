@@ -68,6 +68,8 @@ exports = module.exports = function(req, res, next) {
     _trimEmptyArrayReuqestData(req.body)
     doc.update(req.body, function(err, res) {
 
+      if (err) console.log(err);
+
       // Need to get document again - findByIdAndUpdate is limiting
       // http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
       getDocument(cb);
