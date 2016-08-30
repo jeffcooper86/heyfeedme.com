@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var recipeUtils = require(process.cwd() + '/utils/recipes');
 
 var categories = recipeUtils.getCategories();
+var classifications = recipeUtils.getClassifications();
 
 var recipeSchema = new Schema({
   name: {
@@ -13,7 +14,11 @@ var recipeSchema = new Schema({
     type: String,
     enum: categories
   }],
-
+  classifications: [{
+    type: String,
+    enum: classifications
+  }],
+  
   // To do: reference other recipe as ingredients
   ingredients: [{
     type: String
