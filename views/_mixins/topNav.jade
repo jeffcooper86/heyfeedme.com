@@ -1,12 +1,13 @@
 mixin topNav(navItems)
   .m-top-nav
     .tnm-nav-wrap
-      span.tnm-section= data.section
+      span.tnm-section 
+        =filters.capitalizeTitles(filters.stringifyArray(data.sections, ', ', 2), ['and', 'more...'])
       nav.tnm-nav
         if navItems
           span(data-section= 'all-recipes',
-            class=(data.sections === 'all sections' ? 'active' : null )) all recipes
+            class=(data.sections.indexOf('all recipes') > -1 ? 'active' : null )) all recipes
           each nav in navItems
-            -var activeNav = data.sections.indexOf(filters.slugify(nav)) > -1
+            -var activeNav = data.sections.indexOf(nav) > -1
             span(data-section= filters.slugify(nav),
               class=(activeNav ? 'active' : null))= nav

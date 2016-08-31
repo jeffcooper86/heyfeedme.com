@@ -4,6 +4,7 @@ var moment = require('moment')
 module.exports.capitalizeTitles = _capitalize_titles;
 module.exports.moment = _moment;
 module.exports.slugify = _slugify;
+module.exports.stringifyArray = _stringifyArray;
 module.exports.stripPrivates = _stripPrivates;
 module.exports.tally = _tally;
 module.exports.trimDirectories = _trimDirectories;
@@ -29,6 +30,15 @@ function _moment(date) {
 function _slugify(route) {
   if (route) return route.replace(/[ ]/g, "-");
   return '';
+}
+
+function _stringifyArray(arr, separator, limit) {
+  var str,
+    extra = limit && arr.length - limit;
+  arr = extra ? arr.slice(0, arr.length - extra) : arr;
+  str = arr.join(separator);
+  if (extra > 0) str += separator + 'and ' + extra + ' more...';
+  return str;
 }
 
 function _stripPrivates(schema) {

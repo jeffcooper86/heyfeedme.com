@@ -5,11 +5,11 @@ var utils = require(process.cwd() + '/utils/global');
 exports = module.exports = function(req, res) {
   var l = res.locals,
     template = 'recipes/recipeSection',
-    recipeSections = req.query.sections && utils.unslugify(req.query.sections)
-    .split(','),
+    recipeSections = req.query.sections &&
+    utils.unslugify(req.query.sections.toLowerCase()).split(','),
     recipesQuery;
 
-  l.data.sections = recipeSections || 'all sections';
+  l.data.sections = recipeSections || ['all recipes'];
 
   if (recipeSections) {
     recipesQuery = Recipes.model.find()

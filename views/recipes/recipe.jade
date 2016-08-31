@@ -2,7 +2,6 @@ extends ../_layouts/base
 
 block body
   .container.container-1
-    +topNav(data.categories)
     .m-recipe
       h1.heading.no-space-top.h2= filters.capitalizeTitles(data.recipe.name)
       if data.recipe.uploaded
