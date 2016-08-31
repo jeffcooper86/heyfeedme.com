@@ -1,1 +1,3 @@
-console.log('Hello world');
+var nav = require('./nav');
+
+nav.doNav();

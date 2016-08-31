@@ -20,7 +20,7 @@ var paths = {
     },
     js: {
       compile: ['./public/js/main.js'],
-      watch: ['']
+      watch: ['./public/js/**/*.js']
     }
   }
 };
@@ -54,7 +54,7 @@ gulp.task('watch:less', function() {
 });
 
 gulp.task('watch:js', function() {
-  gulp.watch(paths.public.less.watch, ['dist:js']);
+  gulp.watch(paths.public.js.watch, ['dist:js']);
 });
 
 gulp.task('watch', ['watch:less', 'watch:js']);
