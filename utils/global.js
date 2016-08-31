@@ -28,6 +28,7 @@ function _moment(date) {
 
 function _slugify(route) {
   if (route) return route.replace(/[ ]/g, "-");
+  return '';
 }
 
 function _stripPrivates(schema) {
@@ -48,4 +49,5 @@ function _trimDirectories(path, trimAmount) {
 
 function _unslugify(route) {
   if (route) return route.replace("-", " ");
+  return '';
 }

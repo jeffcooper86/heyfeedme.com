@@ -9,9 +9,10 @@
   flex-direction: column;
 
   margin: @spacing 0;
-  a {
-    margin-bottom: 10px;
+  span {
+    margin-bottom: @spacing-s1;
 
+    cursor: pointer;
     text-transform: capitalize;
 
     color: @color-gray-d2;
@@ -20,6 +21,10 @@
       font-weight: @font-weight-bold;
 
       color: @color-1-d1;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
@@ -36,5 +41,6 @@
 }
 
 .tnm-section {
+  cursor: pointer;
   text-transform: capitalize;
 }

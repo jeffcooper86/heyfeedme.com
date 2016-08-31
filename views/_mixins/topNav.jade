@@ -4,9 +4,9 @@ mixin topNav(navItems)
       span.tnm-section= data.section
       nav.tnm-nav
         if navItems
-          a(href='/recipes',
-            class=(data.section === "all recipes" ? 'active' : Null )) all recipes
+          span(data-section= 'all-recipes',
+            class=(data.sections === 'all sections' ? 'active' : null )) all recipes
           each nav in navItems
-            -var activeNav = nav === data.section
-            a(href='/recipes/#{filters.slugify(nav)}',
+            -var activeNav = data.sections.indexOf(filters.slugify(nav)) > -1
+            span(data-section= filters.slugify(nav),
               class=(activeNav ? 'active' : null))= nav
