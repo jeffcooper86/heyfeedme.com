@@ -1,0 +1,33 @@
+.filters-wrap {
+  font-size: @font-size-s1;
+
+  position: relative;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+
+  margin: @spacing-s1 0;
+  padding: @spacing;
+
+  background: @color-white;
+  span {
+    margin-bottom: @spacing-s1;
+
+    cursor: pointer;
+    text-transform: capitalize;
+
+    color: @color-gray-d2;
+
+    &.active {
+      font-weight: @font-weight-bold;
+
+      color: @color-1-d1;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

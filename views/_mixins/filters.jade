@@ -1,0 +1,12 @@
+mixin filters(filterItems)
+  .filters-wrap
+    span.snm-section 
+      =filters.capitalizeTitles(filters.stringifyArray(data.sections, ', ', 2), ['and', 'more...'])
+    .filters
+      if filterItems
+        span(data-section= 'all-recipes',
+          class=(data.sections.indexOf('all recipes') > -1 ? 'active' : null )) all recipes
+        each filter in filterItems
+          -var activeFilter = data.sections.indexOf(filter) > -1
+          span(data-section= filters.slugify(filter),
+            class=(activeFilter ? 'active' : null))= filter
