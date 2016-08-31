@@ -4,7 +4,7 @@ block body
   .container.container-1
     +topNav(data.categories)
     .m-recipe
-      h1.heading.no-space-top.h2= filters.capitalize_titles(data.recipe.name)
+      h1.heading.no-space-top.h2= filters.capitalizeTitles(data.recipe.name)
       if data.recipe.uploaded
         p.rm-date= filters.moment(data.recipe.uploaded).format('MMMM DD, YYYY')
       +recipeClasses(data.recipe.classifications)

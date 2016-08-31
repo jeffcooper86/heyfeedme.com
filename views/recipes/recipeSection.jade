@@ -7,5 +7,5 @@ block body
     .m-recipe-listings
       each recipe in data.recipes
         a(href=filters.slugify('/recipe/#{recipe.name}/#{recipe.id}')).rlm-recipe
-          .rlm-title= recipe.name
+          .rlm-title= filters.capitalizeTitles(recipe.name)
           img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo

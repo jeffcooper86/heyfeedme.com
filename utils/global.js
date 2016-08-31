@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var moment = require('moment')
 
-module.exports.capitalize_titles = _capitalize_titles;
+module.exports.capitalizeTitles = _capitalize_titles;
 module.exports.moment = _moment;
 module.exports.slugify = _slugify;
 module.exports.stripPrivates = _stripPrivates;
