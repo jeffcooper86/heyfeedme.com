@@ -8,6 +8,7 @@
     "bower": "^1.7.9",
     "browserify": "^13.0.0",
     "connect-mongo": "^1.1.0",
+    "cookie-parser": "^1.4.3",
     "dotenv": "^2.0.0",
     "event-stream": "^3.3.2",
     "exif-reader": "^1.0.0",

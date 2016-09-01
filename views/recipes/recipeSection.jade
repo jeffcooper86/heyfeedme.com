@@ -2,9 +2,9 @@ extends ../_layouts/base
 
 block body
   .container.container-1
-    p= filters.tally(data.recipes, ['recipe', 'recipes'])
+    p= filters.tally(data.recipes.recipes, ['recipe', 'recipes'])
     .m-recipe-listings
-      each recipe in data.recipes
+      each recipe in data.recipes.recipes
         a(href=filters.slugify('/recipe/#{recipe.name}/#{recipe.id}')).rlm-recipe
           .rlm-title= filters.capitalizeTitles(recipe.name)
           img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo

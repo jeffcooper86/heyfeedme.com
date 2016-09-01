@@ -1,12 +1,11 @@
 mixin recipeFilters(filterItems, activeFilters)
-  .filters-wrap
-    span.snm-section
-      if activeFilters
+  if filterItems && activeFilters
+    .filters-wrap
+      span.snm-section
         =filters.capitalizeTitles(filters.stringifyArray(activeFilters, ', ', 2), ['and', 'more...'])
-    .filters
-      if filterItems
+      .filters
         span(data-section= 'all-recipes',
-          class=(filterItems.indexOf('all recipes') > -1 ? 'active' : null )) all recipes
+          class=(activeFilters.indexOf('all recipes') > -1 ? 'active' : null )) all recipes
         each filter in filterItems
           -var activeFilter = activeFilters && activeFilters.indexOf(filter) > -1
           span(data-section= filters.slugify(filter),

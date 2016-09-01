@@ -4,6 +4,7 @@ var requireDir = require('require-dir');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var slash = require('express-slash');
+var cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('flash');
@@ -34,6 +35,7 @@ app.use(session({
   }),
   secret: process.env.SESSION_SECRET
 }));
+app.use(cookieParser());
 app.use(flash());
 app.use(slash());
 app.use(getSetEnv);
@@ -140,6 +142,9 @@ function setTemplateFilters(req, res, next) {
 
 function setGlobalData(req, res, next) {
   res.locals.data = {};
-  res.locals.data.categories = recipeUtils.getCategories();
+  res.locals.data.recipes = {
+    categories: recipeUtils.getCategories(),
+    activeCats: recipeUtils.getActiveCategories(req)
+  }
   next();
 }
