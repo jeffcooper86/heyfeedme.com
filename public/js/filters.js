@@ -34,8 +34,7 @@ function _makeValidQuery(q) {
 
 function _stripFromQueryParam(stripV, param, q) {
   var qParams = q.split('&'),
-    newParams = [],
-    newQ;
+    newParams = [];
   qParams.forEach(function(qParam) {
     if (qParam.indexOf(param) > -1) {
       var pVals = _getQueryParamVals(qParam);
