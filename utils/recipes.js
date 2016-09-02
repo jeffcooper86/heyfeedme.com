@@ -1,4 +1,5 @@
 var _ = require('lodash');
+var utils = require(process.cwd() + '/utils/global');
 
 module.exports.getActiveCategories = getActiveCategories;
 module.exports.getCategories = getCategories;
@@ -31,7 +32,6 @@ function setActiveCategories(res, cats) {
 function _getActiveCategoriesFromUrl(req) {
 
   // To do: Restrict to valid categories
-
   return req.query.sections &&
   utils.unslugify(req.query.sections.toLowerCase()).split(',');
 }
