@@ -9,26 +9,27 @@ function doFilters() {
       filter = $this.data('filter'),
       param = $this.closest('.js-filters').data('filters');
     $this.toggleClass('active');
-
-    // Update the location and cookies
-    if ($this.hasClass('active')) {
-      _addToQueryParam(filter, param, q);
-    } else {
-      history.replaceState({}, '', window.location.pathname + _stripFromQueryParam(filter, param, q));
-
-      // To do: Update through ajax.
-      window.location.reload();
-    }
+    _updateUrlQuery($this.hasClass('active') ?
+      _addToQueryParam(filter, param, q) :
+      _stripFromQueryParam(filter, param, q)
+    );
   });
 }
 
-function _addToQueryParam(val, param, q) {
-
+function _addToQueryParam(addV, param, q) {
+  if (!q.length) return '?' + param + '=' + addV;
+  else if (q.indexOf(param + '=') > -1) {
+    var r = new RegExp('(' + param + '=[^&]+)');
+    return q.replace(r, '$1,' + addV);
+  } else return q + '&' + param + '=' + addV;
 }
 
-function _validQuery(q) {
-  if (q.length && q[0] !== '?') q = '?' + q;
-  return q;
+function _getQueryParamVals(qp) {
+  return qp.slice(qp.indexOf('=') + 1).split(',')
+}
+
+function _makeValidQuery(q) {
+  return q.length && q[0] !== '?' ? '?' + q : q;
 }
 
 function _stripFromQueryParam(stripV, param, q) {
@@ -36,11 +37,8 @@ function _stripFromQueryParam(stripV, param, q) {
     newParams = [],
     newQ;
   qParams.forEach(function(qParam) {
-    var pVals;
-
-    // Find the param to update.
     if (qParam.indexOf(param) > -1) {
-      pVals = qParam.slice(qParam.indexOf('=') + 1).split(',');
+      var pVals = _getQueryParamVals(qParam);
 
       // Remove the strip value or exclude the param if it was only value.
       if (pVals.length > 1) {
@@ -49,5 +47,12 @@ function _stripFromQueryParam(stripV, param, q) {
       }
    } else newParams.push(qParam);
   });
-  return _validQuery(newParams.join('&'));
+  return _makeValidQuery(newParams.join('&'));
+}
+
+function _updateUrlQuery(q) {
+  history.replaceState({}, '', window.location.pathname + q);
+
+  // To do: Update through ajax.
+  window.location.reload();
 }
