@@ -1,6 +1,6 @@
-module.exports.doNav = _doNav;
+module.exports.doNav = doNav;
 
-function _doNav() {
+function doNav() {
   var $navControl = $('.js-nav-ctrl'),
     $nav;
 

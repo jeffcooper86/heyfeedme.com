@@ -3,10 +3,10 @@ mixin recipeFilters(filterItems, activeFilters)
     .filters-wrap
       span.snm-section
         =filters.capitalizeTitles(filters.stringifyArray(activeFilters, ', ', 2), ['and', 'more...'])
-      .filters
-        span(data-section= 'all-recipes',
+      .filters.js-filters(data-filters='sections')
+        span(data-filter='all-recipes',
           class=(activeFilters.indexOf('all recipes') > -1 ? 'active' : null )) all recipes
         each filter in filterItems
           -var activeFilter = activeFilters && activeFilters.indexOf(filter) > -1
-          span(data-section= filters.slugify(filter),
+          span(data-filter= filters.slugify(filter),
             class=(activeFilter ? 'active' : null))= filter
