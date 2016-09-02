@@ -4,7 +4,7 @@ mixin recipeFilters(filterItems, activeFilters)
       span.snm-section
         =filters.capitalizeTitles(filters.stringifyArray(activeFilters, ', ', 2), ['and', 'more...'])
       .filters.js-filters(data-filters='sections')
-        span(data-filter='all-recipes',
+        span(data-filter='all',
           class=(activeFilters.indexOf('all recipes') > -1 ? 'active' : null )) all recipes
         each filter in filterItems
           -var activeFilter = activeFilters && activeFilters.indexOf(filter) > -1

@@ -9,10 +9,20 @@ function doFilters() {
       filter = $this.data('filter'),
       param = $this.closest('.js-filters').data('filters');
     $this.toggleClass('active');
-    _updateUrlQuery($this.hasClass('active') ?
-      _addToQueryParam(filter, param, q) :
-      _stripFromQueryParam(filter, param, q)
-    );
+    if (filter === 'all') {
+      $this.siblings().removeClass('active');
+      _updateUrlQuery(_stripParamFromQuery(param, q));
+    } else {
+      if ($this.hasClass('active')) {
+        $this.siblings('[data-filter=all]').removeClass('active');
+        _updateUrlQuery(_addToQueryParam(filter, param, q));
+      } else {
+        if (!$this.siblings('.active').length) {
+          $this.siblings('[data-filter=all]').addClass('active');
+        }
+        _updateUrlQuery(_stripFromQueryParam(filter, param, q));
+      }
+    }
   });
 }
 
@@ -29,29 +39,35 @@ function _getQueryParamVals(qp) {
 }
 
 function _makeValidQuery(q) {
-  return q.length && q[0] !== '?' ? '?' + q : q;
+  var newq = q[0] !== '?' ? '?' + q : q;
+  return newq === '?' ? '' : newq;
 }
 
-function _stripFromQueryParam(stripV, param, q) {
+function _stripFromQueryParam(stripV, p, q) {
   var qParams = q.split('&'),
     newParams = [];
   qParams.forEach(function(qParam) {
-    if (qParam.indexOf(param) > -1) {
+    if (qParam.indexOf(p) > -1) {
       var pVals = _getQueryParamVals(qParam);
 
       // Remove the strip value or exclude the param if it was only value.
       if (pVals.length > 1) {
         pVals.splice(pVals.indexOf(stripV), 1);
-        newParams.push(param + '=' + pVals.join(','));
+        newParams.push(p + '=' + pVals.join(','));
       }
    } else newParams.push(qParam);
   });
   return _makeValidQuery(newParams.join('&'));
 }
 
+function _stripParamFromQuery(p, q) {
+  var r = new RegExp('&?' + p + '=[^&]*');
+  return _makeValidQuery(q.replace(r, ''));
+}
+
 function _updateUrlQuery(q) {
   history.replaceState({}, '', window.location.pathname + q);
 
   // To do: Update through ajax.
-  window.location.reload();
+  // window.location.reload();
 }
