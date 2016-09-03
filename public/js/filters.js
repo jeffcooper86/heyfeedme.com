@@ -39,8 +39,9 @@ function _getQueryParamVals(qp) {
 }
 
 function _makeValidQuery(q) {
-  var newq = q[0] !== '?' ? '?' + q : q;
-  return newq === '?' ? '' : newq;
+  var newQ = q[0] !== '?' ? '?' + q : q;
+  newQ = newQ[1] === '&' ? newQ[0] + newQ.slice(2): newQ;
+  return newQ === '?' ? '' : newQ;
 }
 
 function _stripFromQueryParam(stripV, p, q) {
