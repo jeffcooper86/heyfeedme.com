@@ -50,8 +50,11 @@ function _stripFromQueryParam(stripV, p, q) {
     if (qParam.indexOf(p) > -1) {
       var pVals = _getQueryParamVals(qParam);
 
+      // Don't modify the param if sripV is not in it.
+      if (pVals.indexOf(stripV) === -1) newParams.push(qParam);
+
       // Remove the strip value or exclude the param if it was only value.
-      if (pVals.length > 1) {
+      else if (pVals.length > 1) {
         pVals.splice(pVals.indexOf(stripV), 1);
         newParams.push(p + '=' + pVals.join(','));
       }
