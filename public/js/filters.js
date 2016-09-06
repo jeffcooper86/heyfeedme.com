@@ -7,7 +7,8 @@ function doFilters() {
     var $this = $(this),
       q = window.location.search,
       filter = $this.data('filter'),
-      param = $this.closest('.js-filters').data('filters');
+      param = $this.closest('.js-filters').data('filters'),
+      qParams;
     $this.toggleClass('active');
 
     // Reset the filter.
@@ -22,7 +23,7 @@ function doFilters() {
         _updateUrlQuery(_addToQueryParam(filter, param, q));
 
         // The query was not in the original url so add them all.
-        if (!q.length) {
+        if (!_getQueryParamValsFromQuery(q, param).length) {
           $this.siblings('.active').each(function(i, el) {
             _updateUrlQuery(_addToQueryParam(
               $(el).data('filter'), param, window.location.search)
@@ -41,16 +42,27 @@ function doFilters() {
   });
 }
 
-function _addToQueryParam(addV, param, q) {
-  if (!q.length) return '?' + param + '=' + addV;
-  else if (q.indexOf(param + '=') > -1) {
-    var r = new RegExp('(' + param + '=[^&]*)');
-    return q.replace(r, '$1,' + addV);
-  } else return q + '&' + param + '=' + addV;
+function _addToQueryParam(addV, p, q) {
+  var rStr;
+  if (!q.length) return '?' + p + '=' + addV;
+  else if (q.indexOf(p + '=') > -1) {
+    rStr = _getQueryParamValsFromQuery(q, p).length ? '$1,' : '$1';
+    return q.replace(_makeQueryParamRegex(p), rStr + addV);
+  } else return q + '&' + p + '=' + addV;
 }
 
 function _getQueryParamVals(qp) {
-  return qp.slice(qp.indexOf('=') + 1).split(',');
+  var strippedQp = qp.slice(qp.indexOf('=') + 1);
+  return strippedQp.length ? strippedQp.split(',') : [];
+}
+
+function _getQueryParamValsFromQuery(q, p) {
+  var qp = q.match(_makeQueryParamRegex(p));
+  return qp ? _getQueryParamVals(qp[0]) : [];
+}
+
+function _makeQueryParamRegex(p) {
+  return new RegExp('&?(' + p + '=[^&]*)');
 }
 
 function _makeValidQuery(q) {
@@ -80,8 +92,7 @@ function _stripFromQueryParam(stripV, p, q) {
 }
 
 function _stripParamFromQuery(p, q) {
-  var r = new RegExp('&?' + p + '=[^&]*');
-  return _makeValidQuery(q.replace(r, ''));
+  return _makeValidQuery(q.replace(_makeQueryParamRegex(p), ''));
 }
 
 function _updateUrlQuery(q) {
