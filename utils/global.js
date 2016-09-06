@@ -1,16 +1,16 @@
 var _ = require('lodash');
 var moment = require('moment')
 
-module.exports.capitalizeTitles = _capitalize_titles;
-module.exports.moment = _moment;
-module.exports.slugify = _slugify;
-module.exports.stringifyArray = _stringifyArray;
-module.exports.stripPrivates = _stripPrivates;
-module.exports.tally = _tally;
-module.exports.trimDirectories = _trimDirectories;
-module.exports.unslugify = _unslugify;
+module.exports.capitalizeTitles = capitalize_titles;
+module.exports.moment = moment;
+module.exports.slugify = slugify;
+module.exports.stringifyArray = stringifyArray;
+module.exports.stripPrivates = stripPrivates;
+module.exports.tally = tally;
+module.exports.trimDirectories = trimDirectories;
+module.exports.unslugify = unslugify;
 
-function _capitalize_titles(title, skip) {
+function capitalize_titles(title, skip) {
   var words = title.split(' '),
     skip = skip || ['of', 'the', 'and', 'de'];
 
@@ -23,16 +23,16 @@ function _capitalize_titles(title, skip) {
   return words.join(' ');
 }
 
-function _moment(date) {
+function moment(date) {
   return moment(date);
 }
 
-function _slugify(route) {
+function slugify(route) {
   if (route) return route.replace(/[ ]/g, "-");
   return '';
 }
 
-function _stringifyArray(arr, separator, limit) {
+function stringifyArray(arr, separator, limit) {
   var str,
     extra = limit && arr.length - limit;
   arr = extra ? arr.slice(0, arr.length - extra) : arr;
@@ -41,23 +41,23 @@ function _stringifyArray(arr, separator, limit) {
   return str;
 }
 
-function _stripPrivates(schema) {
+function stripPrivates(schema) {
   return _.omitBy(schema, function(val, key) {
     return key[0] === '_';
   });
 }
 
-function _tally(data, labels) {
+function tally(data, labels) {
   var count = data.length;
   return count + ' ' + (count > 1 || count == 0 ? labels[1] : labels[0]);
 }
 
-function _trimDirectories(path, trimAmount) {
+function trimDirectories(path, trimAmount) {
   if (path[-1] === '/') path = path.slice(0, -1);
   return path.split('/').slice(0, -trimAmount).join('/');
 }
 
-function _unslugify(route) {
+function unslugify(route) {
   if (route) return route.replace("-", " ");
   return '';
 }
