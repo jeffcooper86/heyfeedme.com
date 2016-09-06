@@ -9,13 +9,28 @@ function doFilters() {
       filter = $this.data('filter'),
       param = $this.closest('.js-filters').data('filters');
     $this.toggleClass('active');
+
+    // Reset the filter.
     if (filter === 'all') {
       $this.siblings().removeClass('active');
       _updateUrlQuery(_stripParamFromQuery(param, q));
     } else {
+
+      // Add the filter to the query.
       if ($this.hasClass('active')) {
         $this.siblings('[data-filter=all]').removeClass('active');
         _updateUrlQuery(_addToQueryParam(filter, param, q));
+
+        // The query was not in the original url so add them all.
+        if (!q.length) {
+          $this.siblings('.active').each(function(i, el) {
+            _updateUrlQuery(_addToQueryParam(
+              $(el).data('filter'), param, window.location.search)
+            );
+          });
+        }
+
+      // Remove the filter.
       } else {
         if (!$this.siblings('.active').length) {
           $this.siblings('[data-filter=all]').addClass('active');
@@ -29,13 +44,13 @@ function doFilters() {
 function _addToQueryParam(addV, param, q) {
   if (!q.length) return '?' + param + '=' + addV;
   else if (q.indexOf(param + '=') > -1) {
-    var r = new RegExp('(' + param + '=[^&]+)');
+    var r = new RegExp('(' + param + '=[^&]*)');
     return q.replace(r, '$1,' + addV);
   } else return q + '&' + param + '=' + addV;
 }
 
 function _getQueryParamVals(qp) {
-  return qp.slice(qp.indexOf('=') + 1).split(',')
+  return qp.slice(qp.indexOf('=') + 1).split(',');
 }
 
 function _makeValidQuery(q) {
