@@ -54,6 +54,7 @@
   "node": true,  /* custom */
   "onevar": true,  /* custom */
   "globals": {
-    "console": false
+    "console": false,
+    "$": false
   }
 }

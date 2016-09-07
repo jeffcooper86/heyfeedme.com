@@ -78,8 +78,8 @@ app.route('/admin/:model/:documentId')
 
 
 app.get('/style-guide', function(req, res) {
-  res.render('_style-guide.jade')
-})
+  res.render('_style-guide.jade');
+});
 
 /*
  * Error Handling
@@ -111,7 +111,7 @@ function dbConnect(req, res, next) {
     mongoose.connect('mongodb://localhost/test');
   } else {
     var config = JSON.parse(process.env.APP_CONFIG);
-    mongoose.connect('mongodb://' + config.mongo.user + ":" + process.env.MONGO_PW + "@" + config.mongo.hostString);
+    mongoose.connect('mongodb://' + config.mongo.user + ':' + process.env.MONGO_PW + '@' + config.mongo.hostString);
   }
 
   var db = mongoose.connection;
@@ -145,6 +145,6 @@ function setGlobalData(req, res, next) {
   res.locals.data.recipes = {
     categories: recipeUtils.getCategories(),
     activeCats: recipeUtils.getActiveCategories(req)
-  }
+  };
   next();
 }

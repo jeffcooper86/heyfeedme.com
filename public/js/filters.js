@@ -1,26 +1,28 @@
-module.exports.doFilters = doFilters;
+var cookiesJs = require('cookies-js');
+var iUtils = require('../../utils/isomorphic');
 
+module.exports.doFilters = doFilters;
 function doFilters() {
   var $filterItems = $('.js-filters > span');
-
   $filterItems.on('click', function() {
     var $this = $(this),
       q = window.location.search,
       filter = $this.data('filter'),
-      param = $this.closest('.js-filters').data('filters'),
-      qParams;
+      param = $this.closest('.js-filters').data('filters');
     $this.toggleClass('active');
 
     // Reset the filter.
     if (filter === 'all') {
       $this.siblings().removeClass('active');
       _updateUrlQuery(_stripParamFromQuery(param, q));
+      _setCookie(param, ['all']);
     } else {
 
       // Add the filter to the query.
       if ($this.hasClass('active')) {
         $this.siblings('[data-filter=all]').removeClass('active');
         _updateUrlQuery(_addToQueryParam(filter, param, q));
+        _addValToCookie(param, filter);
 
         // The query was not in the original url so add them all.
         if (!_getQueryParamValsFromQuery(q, param).length) {
@@ -51,6 +53,25 @@ function _addToQueryParam(addV, p, q) {
   } else return q + '&' + p + '=' + addV;
 }
 
+function _addValToCookie(name, v) {
+  var cookieV = cookiesJs.get(name);
+
+  // Not sure why but cookies saved by server start with 'j:'
+  if (cookieV.length > 2 && cookieV[1] === ':') {
+    cookieV = cookieV.slice(2);
+  }
+
+  cookieV = JSON.parse(cookieV);
+
+  // If it was all before, reset to empty array.
+  if (cookieV.length === 1 && cookieV.indexOf('all') > -1) {
+    cookieV = [];
+  }
+
+  cookieV.push(iUtils.unslugify(v));
+  _setCookie(name, cookieV);
+}
+
 function _getQueryParamVals(qp) {
   var strippedQp = qp.slice(qp.indexOf('=') + 1);
   return strippedQp.length ? strippedQp.split(',') : [];
@@ -69,6 +90,11 @@ function _makeValidQuery(q) {
   var newQ = q[0] !== '?' ? '?' + q : q;
   newQ = newQ[1] === '&' ? newQ[0] + newQ.slice(2): newQ;
   return newQ === '?' ? '' : newQ;
+}
+
+function _setCookie(name, v) {
+  if (typeof(v) !== 'string') v = JSON.stringify(v);
+  cookiesJs.set(name, v);
 }
 
 function _stripFromQueryParam(stripV, p, q) {

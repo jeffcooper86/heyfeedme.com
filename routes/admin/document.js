@@ -15,7 +15,7 @@ exports = module.exports = function(req, res, next) {
     template = 'admin/document';
 
   l.crumbs = [
-    [modelName, utils.trimDirectories(req.path, 1)],
+    [modelName, utils.i.trimDirectories(req.path, 1)],
     [documentId]
   ];
 

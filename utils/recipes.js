@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var utils = require(process.cwd() + '/utils/global');
 
 module.exports.getActiveCategories = getActiveCategories;
@@ -10,10 +9,15 @@ function getActiveCategories(req) {
 
   // First check request for params and fall back to cookies.
   var activeCats = _getActiveCategoriesFromUrl(req) ||
-    req.cookies.activeCategories;
+    req.cookies.sections;
+
+  if (typeof(activeCats) === 'string') {
+    activeCats = JSON.parse(activeCats);
+  }
+  console.log(activeCats);
 
   // Default to All.
-  return activeCats || ['all recipes'];
+  return activeCats || ['all'];
 }
 
 function getCategories() {
@@ -26,12 +30,12 @@ function getClassifications() {
 }
 
 function setActiveCategories(res, cats) {
-  res.cookie('activeCategories', cats);
+  res.cookie('sections', cats);
 }
 
 function _getActiveCategoriesFromUrl(req) {
 
   // To do: Restrict to valid categories
   return req.query.sections &&
-  utils.unslugify(req.query.sections.toLowerCase()).split(',');
+  utils.i.unslugify(req.query.sections.toLowerCase()).split(',');
 }
