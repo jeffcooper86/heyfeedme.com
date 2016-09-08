@@ -2,7 +2,7 @@ include ../_mixins/_mixins
 
 html
   head
-    block title 
+    block title
       title #{title || "HeyFeedMe"}
     meta(http-equiv='Content-Type', content='text/html', charset='utf-8')
     meta(name='viewport', content='width=device-width', initial-scale='1', user-scalable='no')
@@ -16,9 +16,9 @@ html
       block header
         header.m-header
           .container.container-1
-            include ../_includes/header-nav.jade
+            include ../_includes/header-nav.pug
             block header-text
-        include ../_includes/right-nav.jade
+        include ../_includes/right-nav.pug
         block crumbs
           .m-crumbs.container.container-1
             +crumbs(crumbs)
@@ -32,7 +32,7 @@ html
               p.text-center
                 a(href='/') Home
                 span &copy; HeyFeedMe #{filters.moment().format('YYYY')}
-    
+
     script(src='/bower_components/jquery/dist/jquery.min.js')
     script(src='/dist/js/main.js')
     block js

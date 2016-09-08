@@ -20,7 +20,7 @@ var recipeUtils = require(process.cwd() + '/utils/recipes');
  */
 app.enable('strict routing');
 app.use(express.static('public'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -78,7 +78,7 @@ app.route('/admin/:model/:documentId')
 
 
 app.get('/style-guide', function(req, res) {
-  res.render('_style-guide.jade');
+  res.render('_style-guide.pug');
 });
 
 /*

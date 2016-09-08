@@ -9,19 +9,21 @@ module.exports.schemaPopulated = schemaPopulated;
 
 
 function buildModelPath(modelName) {
-  return process.cwd() + '/models/' +  _.capitalize(modelName.slice(0, -1))
-    + '.js'
+  return process.cwd() + '/models/' +  _.capitalize(modelName.slice(0, -1)) +
+    '.js';
 }
 
 function schemaDefaults(schema, Model) {
   var newSchema = _.cloneDeep(schema);
-  if (Model.adminModelDefaults) return _.pick(newSchema, Model.adminModelDefaults);
+  if (Model.adminModelDefaults) return _.pick(
+    newSchema, Model.adminModelDefaults
+  );
   return newSchema;
 }
 
 function schemaDefaultsPopulated(data, Model) {
   return utils.stripPrivates(
-    _schemaDefaults(_schemaPopulated(data, _schemaOfModel(Model)), Model)
+    schemaDefaults(schemaPopulated(data, schemaOfModel(Model)), Model)
   );
 }
 
