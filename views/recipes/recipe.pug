@@ -1,19 +1,22 @@
-extends ../_layouts/base  
+extends ../_layouts/base
 
 block body
   .container.container-1
     .m-recipe
       h1.heading.no-space-top.h2= filters.capitalizeTitles(data.recipe.name)
+
       if data.recipe.uploaded
         p.rm-date= filters.moment(data.recipe.uploaded).format('MMMM DD, YYYY')
       +recipeClasses(data.recipe.classifications)
       img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rm-main-photo
       .m-recipe-ingredients
         ul
+
           each ingredient in data.recipe.ingredients
             li.rim-ingredient= ingredient
       .m-recipe-steps
         -var stepsCount = 0;
+
         each step in data.recipe.steps
           .rsm-step
             p.rsm-text

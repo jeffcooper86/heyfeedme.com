@@ -1,9 +1,8 @@
-extends ../_layouts/admin  
+extends ../_layouts/admin
 
 block adminBody
   .container.container-1
     form(method='post')
       +formFieldsFromSchema(populatedSchema)
-      button(type='submit', value='update', name='action').btn.btn-1 update
-      button(type='submit', value='delete', name='action').btn.btn-1 delete
-    
+      button(type='submit' value='update' name='action').btn.btn-1 update
+      button(type='submit' value='delete' name='action').btn.btn-1 delete

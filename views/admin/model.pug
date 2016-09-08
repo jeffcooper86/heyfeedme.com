@@ -9,19 +9,21 @@ block adminBody
       input(type='submit', value='create').btn.btn-1
 
     h3.heading.h3 Update
-    
+
     .admin-collection
       - var count = 1
+
       each model in models
         .admin-item
           .admin-field
-            span.heading.h4 #{count++} 
+            span.heading.h4 #{count++}
             a(href='/admin/' + modelName + '/' + model._id)
               | #{model.id}
             br
+
           each field, key in filters.stripPrivates(model.toObject())
             if typeof(field) !== "object" && field !== ''
               .admin-field
-                span.heading.h4 #{key}: 
+                span.heading.h4 #{key}:
                 | #{field}
                 br

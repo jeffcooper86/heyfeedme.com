@@ -4,7 +4,10 @@ block body
   .container.container-1
     p= filters.i.tally(data.recipes.recipes, ['recipe', 'recipes'])
     .m-recipe-listings
+
       each recipe in data.recipes.recipes
-        a(href=filters.i.slugify(`/recipe/${recipe.name}/${recipe.id}`)).rlm-recipe
+        a(
+          href=filters.i.slugify(`/recipe/${recipe.name}/${recipe.id}`)
+        ).rlm-recipe
           .rlm-title= filters.capitalizeTitles(recipe.name)
           img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
