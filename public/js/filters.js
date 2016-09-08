@@ -4,19 +4,21 @@ var iUtils = require('../../utils/isomorphic');
 module.exports.doFilters = doFilters;
 function doFilters() {
   var $filterItems = $('.js-filters > span');
+
   $filterItems.on('click', function() {
     var $this = $(this),
       q = window.location.search,
       filter = $this.data('filter'),
       param = $this.closest('.js-filters').data('filters');
-    $this.toggleClass('active');
 
     // Reset the filter.
     if (filter === 'all') {
+      $this.addClass('active');
       $this.siblings().removeClass('active');
       _updateUrlQuery(_stripParamFromQuery(param, q));
       _setCookie(param, ['all']);
     } else {
+      $this.toggleClass('active');
 
       // Add the filter to the query.
       if ($this.hasClass('active')) {
@@ -39,6 +41,7 @@ function doFilters() {
           $this.siblings('[data-filter=all]').addClass('active');
         }
         _updateUrlQuery(_stripFromQueryParam(filter, param, q));
+        _removeValFromCookie(param, filter);
       }
     }
   });
@@ -54,14 +57,7 @@ function _addToQueryParam(addV, p, q) {
 }
 
 function _addValToCookie(name, v) {
-  var cookieV = cookiesJs.get(name);
-
-  // Not sure why but cookies saved by server start with 'j:'
-  if (cookieV.length > 2 && cookieV[1] === ':') {
-    cookieV = cookieV.slice(2);
-  }
-
-  cookieV = JSON.parse(cookieV);
+  var cookieV = _getCookie(name);
 
   // If it was all before, reset to empty array.
   if (cookieV.length === 1 && cookieV.indexOf('all') > -1) {
@@ -70,6 +66,26 @@ function _addValToCookie(name, v) {
 
   cookieV.push(iUtils.unslugify(v));
   _setCookie(name, cookieV);
+}
+
+function _removeValFromCookie(name, v) {
+    var cookieV = _getCookie(name),
+      i = cookieV.indexOf(iUtils.unslugify(v));
+    if (i > -1) {
+      cookieV.splice(i, 1);
+    }
+    _setCookie(name, cookieV);
+}
+
+function _getCookie(n) {
+  var cookie = cookiesJs.get(n);
+
+  // Not sure why but cookies saved by server start with 'j:'
+  if (cookie.length > 2 && cookie[1] === ':') {
+    cookie = cookie.slice(2);
+  }
+
+  return JSON.parse(cookie);
 }
 
 function _getQueryParamVals(qp) {

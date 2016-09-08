@@ -1,6 +1,5 @@
 var async = require('async');
 var Recipes = require(process.cwd() + '/models/Recipe');
-var utils = require(process.cwd() + '/utils/global');
 var recipesUtils = require(process.cwd() + '/utils/recipes');
 
 exports = module.exports = function(req, res) {
@@ -9,7 +8,6 @@ exports = module.exports = function(req, res) {
     activeRecipeSections = res.locals.data.recipes.activeCats,
     recipesQuery;
 
-  console.log(req.cookies);
   // Reset the activeRecipeSections cookies.
   recipesUtils.setActiveCategories(res, activeRecipeSections);
 
@@ -24,6 +22,7 @@ exports = module.exports = function(req, res) {
   async.waterfall([
     getAll
   ], function(err) {
+    if (err) return res.render('_error500');
     return res.render(template);
   });
 

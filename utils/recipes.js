@@ -14,7 +14,6 @@ function getActiveCategories(req) {
   if (typeof(activeCats) === 'string') {
     activeCats = JSON.parse(activeCats);
   }
-  console.log(activeCats);
 
   // Default to All.
   return activeCats || ['all'];
