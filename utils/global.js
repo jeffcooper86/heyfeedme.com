@@ -1,6 +1,6 @@
 var _ = require('lodash');
 var moment = require('moment');
-var isomorphicUtils = require(process.cwd() + '/utils/isomorphic');
+var isomorphicUtils = require(process.cwd() + '/utils/_shared/global');
 
 module.exports.i = isomorphicUtils;
 module.exports.capitalizeTitles = capitalizeTitles;

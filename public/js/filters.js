@@ -1,5 +1,5 @@
 var cookiesJs = require('cookies-js');
-var iUtils = require('../../utils/isomorphic');
+var iUtils = require('../../utils/_shared/global');
 
 module.exports.doFilters = doFilters;
 function doFilters() {
