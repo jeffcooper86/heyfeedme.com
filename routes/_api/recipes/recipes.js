@@ -10,10 +10,7 @@ module.exports.html = function(req, res) {
   );
 
   function sendRecipes(err, recipes) {
+    if (err) return res.render('_error500');
     return res.send(pug.renderFile(t, recipes));
   }
-};
-
-module.exports.data = function(req, res) {
-  return res;
 };
