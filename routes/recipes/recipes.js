@@ -4,32 +4,21 @@ var recipesUtils = require(process.cwd() + '/utils/recipes');
 
 exports = module.exports = function(req, res) {
   var l = res.locals,
-    template = 'recipes/recipeSection',
-    activeRecipeSections = res.locals.data.recipes.activeCats,
-    recipesQuery;
+    template = 'recipes/recipes',
+    activeRecipeSections = res.locals.data.recipes.activeCats;
 
   // Reset the activeRecipeSections cookies.
   recipesUtils.setActiveCategories(res, activeRecipeSections);
 
-  if (activeRecipeSections &&
-    activeRecipeSections.indexOf('all') < 0) {
-    recipesQuery = Recipes.model.find()
-      .where('categories').in(activeRecipeSections);
-  } else {
-    recipesQuery = Recipes.model.find();
-  }
-
   async.waterfall([
     getAll
-  ], function(err) {
+  ], function(err, data) {
     if (err) return res.render('_error500');
+    l.data.recipes.recipes = data;
     return res.render(template);
   });
 
   function getAll(cb) {
-    recipesQuery.exec(function(err, data) {
-      l.data.recipes.recipes = data;
-      cb(null);
-    });
+    recipesUtils.getRecipes(Recipes, activeRecipeSections, cb);
   }
 };

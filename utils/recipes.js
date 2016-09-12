@@ -3,6 +3,7 @@ var utils = require(process.cwd() + '/utils/global');
 module.exports.getActiveCategories = getActiveCategories;
 module.exports.getCategories = getCategories;
 module.exports.getClassifications = getClassifications;
+module.exports.getRecipes = getRecipes;
 module.exports.setActiveCategories = setActiveCategories;
 
 function getActiveCategories(req) {
@@ -26,6 +27,17 @@ function getCategories() {
 
 function getClassifications() {
   return 'vegetarian;vegan;gluten free'.split(';').sort();
+}
+
+function getRecipes(Recipes, cats, cb) {
+  var q;
+  if (cats && cats.indexOf('all') < 0) {
+    q = Recipes.model.find()
+      .where('categories').in(cats);
+  } else q = Recipes.model.find();
+  q.exec(function(err, recipes) {
+    cb(err, recipes);
+  });
 }
 
 function setActiveCategories(res, cats) {
