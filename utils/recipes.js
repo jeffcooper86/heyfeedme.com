@@ -17,7 +17,9 @@ function getActiveCategories(req) {
   }
 
   // Default to All.
-  return activeCats || ['all'];
+  if (!activeCats.length) activeCats = ['all'];
+
+  return activeCats;
 }
 
 function getCategories() {

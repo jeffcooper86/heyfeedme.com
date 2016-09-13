@@ -110,6 +110,7 @@ function _removeValFromCookie(name, v) {
     if (i > -1) {
       cookieV.splice(i, 1);
     }
+    if (!cookieV.length) cookieV = ['all'];
     _setCookie(name, cookieV);
 }
 
