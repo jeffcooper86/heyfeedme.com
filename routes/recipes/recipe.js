@@ -1,6 +1,5 @@
 var async = require('async');
 var Recipes = require(process.cwd() + '/models/Recipe');
-var utils = require(process.cwd() + '/utils/global');
 
 exports = module.exports = function(req, res) {
   var l = res.locals,
@@ -11,6 +10,7 @@ exports = module.exports = function(req, res) {
   async.waterfall([
     getRecipe
   ], function(err) {
+    if (err) return res.render('_error500');
     return res.render(template);
   });
 
