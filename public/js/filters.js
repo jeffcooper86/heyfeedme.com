@@ -2,7 +2,7 @@ var cookiesJs = require('cookies-js');
 var iUtils = require('../../utils/_shared/global');
 
 module.exports.doFilters = doFilters;
-function doFilters() {
+function doFilters(cb) {
   var $filterItems = $('.js-filters > span');
 
   $filterItems.on('click', function() {
@@ -28,22 +28,23 @@ function doFilters() {
 
         // The query was not in the original url so add them all.
         if (!_getQueryParamValsFromQuery(q, param).length) {
-          $this.siblings('.active').each(function(i, el) {
-            _updateUrlQuery(_addToQueryParam(
-              $(el).data('filter'), param, window.location.search)
-            );
-          });
+          _updateUrlQuery(_buildUrlQueryFromCookie(param));
         }
 
       // Remove the filter.
       } else {
-        if (!$this.siblings('.active').length) {
-          $this.siblings('[data-filter=all]').addClass('active');
-        }
         _updateUrlQuery(_stripFromQueryParam(filter, param, q));
         _removeValFromCookie(param, filter);
+        if (!$this.siblings('.active').length) {
+          $this.siblings('[data-filter=all]').addClass('active');
+        } else if (!_getQueryParamValsFromQuery(q, param).length) {
+          _updateUrlQuery(_buildUrlQueryFromCookie(param));
+        }
       }
     }
+
+    // Callback.
+    if (cb) cb();
   });
 }
 
@@ -68,13 +69,8 @@ function _addValToCookie(name, v) {
   _setCookie(name, cookieV);
 }
 
-function _removeValFromCookie(name, v) {
-    var cookieV = _getCookie(name),
-      i = cookieV.indexOf(iUtils.unslugify(v));
-    if (i > -1) {
-      cookieV.splice(i, 1);
-    }
-    _setCookie(name, cookieV);
+function _buildUrlQueryFromCookie(name) {
+  return iUtils.slugify(`?${name}=` + _getCookie(name).join(','));
 }
 
 function _getCookie(n) {
@@ -108,6 +104,15 @@ function _makeValidQuery(q) {
   return newQ === '?' ? '' : newQ;
 }
 
+function _removeValFromCookie(name, v) {
+    var cookieV = _getCookie(name),
+      i = cookieV.indexOf(iUtils.unslugify(v));
+    if (i > -1) {
+      cookieV.splice(i, 1);
+    }
+    _setCookie(name, cookieV);
+}
+
 function _setCookie(name, v) {
   if (typeof(v) !== 'string') v = JSON.stringify(v);
   cookiesJs.set(name, v);
@@ -139,7 +144,4 @@ function _stripParamFromQuery(p, q) {
 
 function _updateUrlQuery(q) {
   history.replaceState({}, '', window.location.pathname + q);
-
-  // To do: Update through ajax.
-  // window.location.reload();
 }

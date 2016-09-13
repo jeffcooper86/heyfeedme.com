@@ -22,7 +22,7 @@ function stringifyArray(arr, separator, limit) {
 }
 
 function tally(data, labels) {
-  var count = data.length;
+  var count = data.length !== undefined ? data.length : data;
   return count + ' ' + (count > 1 || count === 0 ? labels[1] : labels[0]);
 }
 
