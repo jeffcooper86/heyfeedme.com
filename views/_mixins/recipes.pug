@@ -1,6 +1,6 @@
 mixin recipes(recipes)
   .m-recipe-listings
-    p.js-recipes-tally= filters.i.tally(data.recipes.recipes, ['recipe', 'recipes'])
+    p.js-recipes-tally.rlm-tally= filters.i.tally(recipes, ['recipe', 'recipes'])
     .rlm-recipes-wrap
       each r in recipes
         a(href=filters.i.slugify(`/recipe/${r.name}/${r.id}`)).rlm-recipe
