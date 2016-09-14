@@ -1,11 +1,17 @@
 // Server and client side global utils - avoid large libraries.
 
+module.exports.getNested = getNested;
 module.exports.slugify = slugify;
 module.exports.stringifyArray = stringifyArray;
 module.exports.tally = tally;
 module.exports.trimDirectories = trimDirectories;
 module.exports.unslugify = unslugify;
 
+function getNested(obj, p) {
+  p = !Array.isArray(p) ? p.split('.') : p;
+  if (p.length === 1) return obj[p[0]];
+  return obj[p[0]] ? getNested(obj[p[0]], p.slice(1)) : undefined;
+}
 
 function slugify(route) {
   if (route) return route.replace(/[ ]/g, '-');
