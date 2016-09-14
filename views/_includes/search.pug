@@ -1,13 +1,8 @@
 .m-search
   .container.container-1
-    .module-content-wrap
+    .module-content-wrap.mcw-s3
       .module-content
         .spaced-1
           form(action='/search').text-center
             input(type='text' name='q' placeholder='What to eat?').sm-search
-            select(name='f').select
-              option all recipes
-
-              each category in data.categories
-                option= category
             input(type='submit' value='Search').btn.btn-1.sm-search
