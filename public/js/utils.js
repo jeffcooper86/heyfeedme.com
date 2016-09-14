@@ -32,7 +32,7 @@ function stripFromQueryParam(stripV, p, q) {
       // Remove the strip value or exclude the param if it was only value.
       else if (pVals.length > 1) {
         pVals.splice(pVals.indexOf(stripV), 1);
-        newParams.push(p + '=' + pVals.join(','));
+        newParams.push(`${p}=${pVals.join(',')}`);
       }
    } else newParams.push(qParam);
   });
@@ -60,11 +60,11 @@ function _getQueryParamVals(qp) {
 }
 
 function _makeQueryParamRegex(p) {
-  return new RegExp('&?(' + p + '=[^&]*)');
+  return new RegExp(`&?(${p}=[^&]*)`);
 }
 
 function _makeValidQuery(q) {
-  var newQ = q[0] !== '?' ? '?' + q : q;
+  var newQ = q[0] !== '?' ? `?${q}` : q;
   newQ = newQ[1] === '&' ? newQ[0] + newQ.slice(2): newQ;
   return newQ === '?' ? '' : newQ;
 }
