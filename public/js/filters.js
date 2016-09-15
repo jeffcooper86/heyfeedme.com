@@ -40,7 +40,7 @@ function doFilters(cb) {
 function _addValToCookie(name, v) {
   var cookieV = _getCookie(name);
 
-  // If it was all before, reset to empty array.
+  // If it was all before, reset to empty array before adding.
   if (cookieV.length === 1 && cookieV.indexOf('all') > -1) {
     cookieV = [];
   }
@@ -50,10 +50,13 @@ function _addValToCookie(name, v) {
 }
 
 function _updateUrlQueryFromCookie(name) {
-  var q = window.location.search;
-  return utils.updateUrlQuery(
-    iUtils.slugify(`?${name}=` + _getCookie(name).join(','))
-  );
+  var cookieV = _getCookie(name);
+
+  // Remove the param from the query if the cookie is set to all.
+  if (cookieV.length === 1 && cookieV[0] === 'all') {
+    return utils.stripParamFromQuery(name, window.location.search);
+  }
+  return utils.updateUrlQuery(iUtils.slugify(`?${name}=` + cookieV.join(',')));
 }
 
 function _getCookie(n) {
@@ -63,7 +66,6 @@ function _getCookie(n) {
   if (cookie.length > 2 && cookie[1] === ':') {
     cookie = cookie.slice(2);
   }
-
   return JSON.parse(cookie);
 }
 
