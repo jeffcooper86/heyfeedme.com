@@ -1,6 +1,6 @@
-var cookiesJs = require('cookies-js');
+var cookies = require('./cookies');
 var iUtils = require('../../utils/_shared/global');
-var utils = require('./utils');
+var urlQuery = require('./urlQuery');
 
 module.exports.doFilters = doFilters;
 function doFilters(cb) {
@@ -14,21 +14,21 @@ function doFilters(cb) {
     // Reset the filter to all.
     if (filter === 'all') {
       $this.addClass('active').siblings().removeClass('active');
-      _setCookie(param, ['all']);
+      cookies.setCookie(param, ['all']);
     } else {
       $this.toggleClass('active');
 
       // Add the filter.
       if ($this.hasClass('active')) {
         $this.siblings('[data-filter=all]').removeClass('active');
-        _addValToCookie(param, filter);
+        cookies.addValToCookieArray(param, filter);
 
       // Remove the filter.
       } else {
         if (!$this.siblings('.active').length) {
           $this.siblings('[data-filter=all]').addClass('active');
         }
-        _removeValFromCookie(param, filter);
+        cookies.removeValFromCookieArray(param, filter, ['all']);
       }
     }
 
@@ -37,49 +37,19 @@ function doFilters(cb) {
   });
 }
 
-function _addValToCookie(name, v) {
-  var cookieV = _getCookie(name);
-
-  // If it was all before, reset to empty array before adding.
-  if (cookieV.length === 1 && cookieV.indexOf('all') > -1) {
-    cookieV = [];
-  }
-
-  cookieV.push(iUtils.unslugify(v));
-  _setCookie(name, cookieV);
-}
+/*
+ * Private funcs.
+ * ----------------------------
+ */
 
 function _updateUrlQueryFromCookie(name) {
-  var cookieV = _getCookie(name);
+  var cookieV = cookies.getCookie(name);
 
   // Remove the param from the query if the cookie is set to all.
   if (cookieV.length === 1 && cookieV[0] === 'all') {
-    return utils.stripParamFromQuery(name, window.location.search);
+    return urlQuery.stripParamFromQuery(name, window.location.search);
   }
-  return utils.updateUrlQuery(iUtils.slugify(`?${name}=` + cookieV.join(',')));
-}
-
-function _getCookie(n) {
-  var cookie = cookiesJs.get(n);
-
-  // Not sure why but cookies saved by server start with 'j:'
-  if (cookie.length > 2 && cookie[1] === ':') {
-    cookie = cookie.slice(2);
-  }
-  return JSON.parse(cookie);
-}
-
-function _removeValFromCookie(name, v) {
-    var cookieV = _getCookie(name),
-      i = cookieV.indexOf(iUtils.unslugify(v));
-    if (i > -1) {
-      cookieV.splice(i, 1);
-    }
-    if (!cookieV.length) cookieV = ['all'];
-    _setCookie(name, cookieV);
-}
-
-function _setCookie(name, v) {
-  if (typeof(v) !== 'string') v = JSON.stringify(v);
-  cookiesJs.set(name, v);
+  return urlQuery.updateUrlQuery(
+    iUtils.slugify(`?${name}=` + cookieV.join(','))
+  );
 }
