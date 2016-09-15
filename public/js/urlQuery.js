@@ -1,17 +1,20 @@
+var iUtils = require('../../utils/_shared/global');
+
 module.exports.addToQueryParam = addToQueryParam;
 module.exports.getQueryParamValsFromQuery = getQueryParamValsFromQuery;
 module.exports.stripFromQueryParam = stripFromQueryParam;
 module.exports.stripParamFromQuery = stripParamFromQuery;
+module.exports.updateQueryParam = updateQueryParam;
 module.exports.updateUrlQuery = updateUrlQuery;
 
 function addToQueryParam(addV, p, q) {
   var newQ;
   if (!q.length) newQ = `?${p}=${addV}`;
-  else if (q.indexOf(p + '=') > -1) {
-    let rStr = getQueryParamValsFromQuery(q, p).length ? '$1,' : '$1';
+  else if (q.indexOf(`${p}=`) > -1) {
+    let rStr = getQueryParamValsFromQuery(q, p).length ? '$1$2,' : '$1$2';
     newQ = q.replace(_makeQueryParamRegex(p), rStr + addV);
   } else newQ = `${q}&${p}=${addV}`;
-  return updateUrlQuery(newQ);
+  return newQ;
 }
 
 function getQueryParamValsFromQuery(q, p) {
@@ -36,13 +39,21 @@ function stripFromQueryParam(stripV, p, q) {
       }
    } else newParams.push(qParam);
   });
-  return updateUrlQuery(_makeValidQuery(newParams.join('&')));
+  return _makeValidQuery(newParams.join('&'));
 }
 
 function stripParamFromQuery(p, q) {
-  return updateUrlQuery(
-    _makeValidQuery(q.replace(_makeQueryParamRegex(p), ''))
-  );
+  return _makeValidQuery(q.replace(_makeQueryParamRegex(p), ''));
+}
+
+function updateQueryParam(q, p, newVals) {
+  var newValStr = iUtils.slugify(newVals.join(','));
+
+  if (!newVals.length) return stripParamFromQuery(p, q);
+
+  return getQueryParamValsFromQuery(q, p).length ?
+    q.replace(_makeQueryParamRegex(p), `$1` + newValStr) :
+    addToQueryParam(newValStr, p, q);
 }
 
 function updateUrlQuery(q) {
@@ -60,7 +71,7 @@ function _getQueryParamVals(qp) {
 }
 
 function _makeQueryParamRegex(p) {
-  return new RegExp(`&?(${p}=[^&]*)`);
+  return new RegExp(`(&?${p}=)([^&]*)`);
 }
 
 function _makeValidQuery(q) {

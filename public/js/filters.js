@@ -1,5 +1,4 @@
 var cookies = require('./cookies');
-var iUtils = require('../../utils/_shared/global');
 var urlQuery = require('./urlQuery');
 
 module.exports.doFilters = doFilters;
@@ -46,10 +45,9 @@ function _updateUrlQueryFromCookie(name) {
   var cookieV = cookies.getCookie(name);
 
   // Remove the param from the query if the cookie is set to all.
-  if (cookieV.length === 1 && cookieV[0] === 'all') {
-    return urlQuery.stripParamFromQuery(name, window.location.search);
-  }
+  if ((cookieV.length === 1 && cookieV[0] === 'all')) cookieV = [];
+
   return urlQuery.updateUrlQuery(
-    iUtils.slugify(`?${name}=` + cookieV.join(','))
+    urlQuery.updateQueryParam(window.location.search, name, cookieV)
   );
 }
