@@ -5,7 +5,11 @@ var recipesUtils = require(process.cwd() + '/utils/recipes');
 exports = module.exports = function(req, res) {
   var l = res.locals,
     template = 'recipes/recipes',
-    activeRecipeSections = res.locals.data.recipes.activeCats;
+    activeRecipeSections = res.locals.data.recipes.activeCats,
+    search = req.query.search;
+
+  // Set locals.
+  l.data.search = search;
 
   // Reset the activeRecipeSections cookies.
   recipesUtils.setActiveCategories(res, activeRecipeSections);

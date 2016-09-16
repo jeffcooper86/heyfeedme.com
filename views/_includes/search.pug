@@ -1,5 +1,10 @@
 .m-search.js-search
   .module-content-wrap.mcw-s1.text-center
     form
-      input(type='text' name='search' placeholder='What to eat?').sm-search
+      input(
+        type='text'
+        name='search'
+        placeholder='What to eat?'
+        value=data.search
+      ).sm-search
       input(type='submit' value='Search').btn.btn-1.sm-search
