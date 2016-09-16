@@ -1,5 +1,5 @@
 var cookiesJs = require('cookies-js');
-var iUtils = require('../../utils/_shared/global');
+var iUtils = require('./iUtils');
 
 module.exports.addValToCookieArray = addValToCookieArray;
 module.exports.getCookie = getCookie;

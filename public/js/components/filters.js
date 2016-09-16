@@ -1,5 +1,5 @@
-var cookies = require('./cookies');
-var urlQuery = require('./urlQuery');
+var cookies = require('../utils/cookies');
+var urlQuery = require('../utils/urlQuery');
 
 module.exports.doFilters = doFilters;
 function doFilters(cb) {

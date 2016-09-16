@@ -1,4 +1,4 @@
-var iUtils = require('../../utils/_shared/global');
+var iUtils = require('./iUtils');
 
 module.exports.addToQueryParam = addToQueryParam;
 module.exports.getQueryParamValsFromQuery = getQueryParamValsFromQuery;
