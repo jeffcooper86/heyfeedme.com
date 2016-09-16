@@ -49,7 +49,7 @@ function stripParamFromQuery(p, q) {
 function updateQueryParam(q, p, newVals) {
   var newValStr = iUtils.slugify(newVals.join(','));
 
-  if (!newVals.length) return stripParamFromQuery(p, q);
+  if (!newValStr.length) return stripParamFromQuery(p, q);
 
   return getQueryParamValsFromQuery(q, p).length ?
     q.replace(_makeQueryParamRegex(p), `$1` + newValStr) :

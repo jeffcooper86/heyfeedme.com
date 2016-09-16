@@ -9,7 +9,7 @@ function init() {
     cb: function($form) {
       var search = $form.find('input[name=search]').val();
       urlQuery.updateUrlQuery(
-        urlQuery.addToQueryParam(search, 'search', window.location.search)
+        urlQuery.updateQueryParam(window.location.search, 'search', [search])
       );
       $.ajax({
         url: '/api/recipes/html' + window.location.search
