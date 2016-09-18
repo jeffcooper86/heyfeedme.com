@@ -1,9 +1,11 @@
 var utils = require(process.cwd() + '/utils/global');
+var _ = require('lodash');
 
 module.exports.getActiveCategories = getActiveCategories;
 module.exports.getCategories = getCategories;
 module.exports.getClassifications = getClassifications;
 module.exports.getRecipes = getRecipes;
+module.exports.searchRecipes = searchRecipes;
 module.exports.setActiveCategories = setActiveCategories;
 
 function getActiveCategories(req) {
@@ -40,6 +42,28 @@ function getRecipes(Recipes, cats, cb) {
   q.exec(function(err, recipes) {
     cb(err, recipes);
   });
+}
+
+function searchRecipes(recipes, q) {
+  if (!q) return recipes;
+  var searchOn = [
+    'name',
+    'categories',
+    'classifications',
+    'ingredients',
+    'shortDescription'
+  ];
+
+  recipes = _.filter(recipes, function(recipe) {
+    var includeRecipe = false;
+    searchOn.forEach(function(searchItem) {
+      var recipeItem = recipe[searchItem];
+      if (Array.isArray(recipeItem)) recipeItem = recipeItem.join(' ');
+      if (recipeItem && recipeItem.indexOf(q) > -1) includeRecipe = true;
+    });
+    return includeRecipe;
+  });
+  return recipes;
 }
 
 function setActiveCategories(res, cats) {

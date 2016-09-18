@@ -4,10 +4,18 @@ var pug = require('pug');
 
 exports = module.exports = function(req, res) {
   var l = res.locals,
-    t = process.cwd() + '/views/_mixins/recipes.pug';
+    t = process.cwd() + '/views/_mixins/recipes.pug',
+    searchQ = req.query.search;
+
   recipesUtils.getRecipes(
-    Recipes, res.locals.data.recipes.activeCats, sendRecipes
+    Recipes, res.locals.data.recipes.activeCats, searchRecipes
   );
+
+  function searchRecipes(err, recipes) {
+    if (err) return sendRecipes(err);
+    if (searchQ) recipes = recipesUtils.searchRecipes(recipes, searchQ);
+    sendRecipes(null, recipes);
+  }
 
   function sendRecipes(err, recipes) {
     var data = {};
