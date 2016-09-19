@@ -29,13 +29,13 @@ function getCookie(n) {
 }
 
 function removeValFromCookieArray(name, v, defaultV) {
-    var cookieV = getCookie(name),
-      i = cookieV.indexOf(iUtils.unslugify(v));
-    if (i > -1) {
-      cookieV.splice(i, 1);
-    }
-    if (!cookieV.length) cookieV = defaultV;
-    setCookie(name, cookieV);
+  var cookieV = getCookie(name),
+    i = cookieV.indexOf(iUtils.unslugify(v));
+  if (i > -1) {
+    cookieV.splice(i, 1);
+  }
+  if (!cookieV.length) cookieV = defaultV;
+  setCookie(name, cookieV);
 }
 
 function setCookie(name, v) {

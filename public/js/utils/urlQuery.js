@@ -37,7 +37,7 @@ function stripFromQueryParam(stripV, p, q) {
         pVals.splice(pVals.indexOf(stripV), 1);
         newParams.push(`${p}=${pVals.join(',')}`);
       }
-   } else newParams.push(qParam);
+    } else newParams.push(qParam);
   });
   return _makeValidQuery(newParams.join('&'));
 }
@@ -76,6 +76,6 @@ function _makeQueryParamRegex(p) {
 
 function _makeValidQuery(q) {
   var newQ = q[0] !== '?' ? `?${q}` : q;
-  newQ = newQ[1] === '&' ? newQ[0] + newQ.slice(2): newQ;
+  newQ = newQ[1] === '&' ? newQ[0] + newQ.slice(2) : newQ;
   return newQ === '?' ? '' : newQ;
 }

@@ -2,6 +2,7 @@ var cookies = require('../utils/cookies');
 var urlQuery = require('../utils/urlQuery');
 
 module.exports.doFilters = doFilters;
+
 function doFilters(cb) {
   var $filterItems = $('.js-filters > span');
 
@@ -22,7 +23,7 @@ function doFilters(cb) {
         $this.siblings('[data-filter=all]').removeClass('active');
         cookies.addValToCookieArray(param, filter);
 
-      // Remove the filter.
+        // Remove the filter.
       } else {
         if (!$this.siblings('.active').length) {
           $this.siblings('[data-filter=all]').addClass('active');

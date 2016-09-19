@@ -11,7 +11,7 @@ var csscomb = require('gulp-csscomb');
 var diff = require('gulp-diff');
 
 var paths = {
-  js: ['./*.js', './routes/**/*.js'],
+  js: ['./*.js', './routes/**/*.js', './utils/**/*.js', './models/**/*.js'],
   public: {
     dist: './public/dist/',
     less: {
@@ -91,7 +91,7 @@ function beautifyLess() {
 function beautifyJs(fail) {
   es.merge(
     gulp.src(paths.js
-      .concat(paths.public.js.compile))
+      .concat(paths.public.js.watch))
     .pipe(foreach(function(stream, file) {
       return stream
         .pipe(jsPrettify({

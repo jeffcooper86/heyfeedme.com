@@ -9,7 +9,7 @@ module.exports.schemaPopulated = schemaPopulated;
 
 
 function buildModelPath(modelName) {
-  return process.cwd() + '/models/' +  _.capitalize(modelName.slice(0, -1)) +
+  return process.cwd() + '/models/' + _.capitalize(modelName.slice(0, -1)) +
     '.js';
 }
 

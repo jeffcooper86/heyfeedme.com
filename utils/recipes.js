@@ -82,5 +82,5 @@ function _getActiveCategoriesFromUrl(req) {
 
   // To do: Restrict to valid categories
   return req.query.sections &&
-  utils.i.unslugify(req.query.sections.toLowerCase()).split(',');
+    utils.i.unslugify(req.query.sections.toLowerCase()).split(',');
 }
