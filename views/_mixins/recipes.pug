@@ -10,8 +10,7 @@ mixin recipes(recipes)
             img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
 
       if !recipes.length
-        p.rlm-none
-         | No recipes found :/
+        p.rlm-none.text-center
          button(data-nav='.js-right-nav').js-nav-ctrl.btn.btn-1 Adjust Filters
 
 if compileRecipes
