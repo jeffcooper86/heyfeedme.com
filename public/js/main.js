@@ -7,7 +7,7 @@ var search = require('./modules/search');
 /**
  * Components.
  */
-nav.doNav();
+nav.doNav({});
 // filters.doFilters();
 
 

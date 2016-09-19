@@ -1,7 +1,8 @@
 module.exports.doNav = doNav;
 
-function doNav() {
-  var $navControl = $('.js-nav-ctrl'),
+function doNav(opts) {
+  var el = opts.el || '.js-nav-ctrl',
+    $navControl = $(el),
     $nav;
 
   $navControl.on('click', function() {

@@ -1,5 +1,6 @@
 var forms = require('../components/forms');
 var urlQuery = require('../utils/urlQuery');
+var nav = require('../components/nav');
 
 module.exports.init = init;
 
@@ -17,6 +18,9 @@ function init() {
         var $recipes = $('.m-recipe-listings');
         data = JSON.parse(data);
         $recipes.replaceWith(data.recipesHtml);
+        nav.doNav({
+          el: '.rlm-none .js-nav-ctrl'
+        });
       });
     }
   });
