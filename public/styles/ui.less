@@ -1,5 +1,6 @@
 .ui-loading {
   position: relative;
+
   text-align: center;
 
   > * {
@@ -7,8 +8,10 @@
   }
 
   &:before {
-     content: 'loading';
-     display: inline-block;
-     margin: @spacing;
+    display: inline-block;
+
+    margin: @spacing;
+
+    content: 'loading';
   }
 }
