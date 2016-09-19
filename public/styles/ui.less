@@ -1,0 +1,14 @@
+.ui-loading {
+  position: relative;
+  text-align: center;
+
+  > * {
+    visibility: hidden;
+  }
+
+  &:before {
+     content: 'loading';
+     display: inline-block;
+     margin: @spacing;
+  }
+}
