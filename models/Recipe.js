@@ -35,7 +35,7 @@ var recipeSchema = new Schema({
 
 module.exports.model = mongoose.model('Recipe', recipeSchema);
 
-module.exports.adminModelDefaults = 'name location categories'.split(' ');
+module.exports.adminModelDefaults = 'name'.split(' ');
 module.exports.adminModelSelect = '';
 module.exports.adminModelSort = {
   name: 1

@@ -1,6 +1,4 @@
-var _ = require('lodash');
 var async = require('async');
-var utils = require(process.cwd() + '/utils/global');
 var dbUtils = require(process.cwd() + '/utils/db');
 
 exports = module.exports = function(req, res, next) {
@@ -22,17 +20,21 @@ exports = module.exports = function(req, res, next) {
 
   // Do upserts and get all documents.
   async.waterfall([
-    upsert,
+    create,
     populateSchema,
     getAll
   ], function(err) {
+    if (err) return res.render('_error500');
     return res.render(template);
   });
 
-  function populateSchema(cb) {
-    var data = new MongooseModel(req.body).toObject();
-    l.populatedSchema = dbUtils.schemaDefaultsPopulated(data, Model);
-    cb();
+  function create(cb) {
+    if (req.method !== 'POST') return cb(null);
+    var m = new MongooseModel(req.body);
+    m.save(function(err, savedModel) {
+      if (err) return cb();
+      res.redirect('/admin/' + modelName + '/' + savedModel._id);
+    });
   }
 
   function getAll(cb) {
@@ -47,12 +49,9 @@ exports = module.exports = function(req, res, next) {
       });
   }
 
-  function upsert(cb) {
-    if (req.method !== 'POST') return cb(null);
-    var m = new MongooseModel(req.body);
-    m.save(function(err, savedModel) {
-      if (err) return cb();
-      res.redirect('/admin/' + modelName + '/' + savedModel._id);
-    });
+  function populateSchema(cb) {
+    var data = new MongooseModel(req.body).toObject();
+    l.populatedSchema = dbUtils.schemaDefaultsPopulated(data, Model);
+    cb();
   }
 };

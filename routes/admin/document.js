@@ -34,7 +34,8 @@ exports = module.exports = function(req, res, next) {
     removeDocument,
     populateSchema
   ], function(err) {
-    res.render(template);
+    if (err) return res.render('_error500');
+    return res.render(template);
   });
 
   function populateSchema(cb) {
@@ -65,7 +66,7 @@ exports = module.exports = function(req, res, next) {
 
   function updateDocument(cb) {
     if (req.method !== 'POST' || action !== 'update') return cb();
-    _trimEmptyArrayReuqestData(req.body)
+    _trimEmptyArrayReuqestData(req.body);
     doc.update(req.body, function(err, res) {
 
       if (err) console.log(err);
