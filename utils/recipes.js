@@ -54,12 +54,20 @@ function searchRecipes(recipes, q) {
     'shortDescription'
   ];
 
+  q = q.toLowerCase();
   recipes = _.filter(recipes, function(recipe) {
     var includeRecipe = false;
     searchOn.forEach(function(searchItem) {
       var recipeItem = recipe[searchItem];
+      if (!recipeItem) return;
+
+      // Format recipe items as strings.
       if (Array.isArray(recipeItem)) recipeItem = recipeItem.join(' ');
-      if (recipeItem && recipeItem.indexOf(q) > -1) includeRecipe = true;
+      recipeItem = recipeItem.toLowerCase();
+
+      // Look for a match.
+      var sRe = new RegExp(`${q}`);
+      if (recipeItem.search(sRe) > -1) includeRecipe = true;
     });
     return includeRecipe;
   });
