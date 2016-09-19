@@ -35,7 +35,11 @@ var recipeSchema = new Schema({
 
 module.exports.model = mongoose.model('Recipe', recipeSchema);
 
+// For model/collection view.
 module.exports.adminModelDefaults = 'name'.split(' ');
+module.exports.adminModelTable = 'name shortDescription uploaded'.split(' ');
+
+// For queries.
 module.exports.adminModelSelect = '';
 module.exports.adminModelSort = {
   name: 1

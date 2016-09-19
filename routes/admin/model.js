@@ -18,10 +18,11 @@ exports = module.exports = function(req, res, next) {
   }
   MongooseModel = Model.model;
 
-  // Do upserts and get all documents.
+  // Do creates and get all documents.
   async.waterfall([
     create,
     populateSchema,
+    getSchemaTableCols,
     getAll
   ], function(err) {
     if (err) return res.render('_error500');
@@ -32,6 +33,8 @@ exports = module.exports = function(req, res, next) {
     if (req.method !== 'POST') return cb(null);
     var m = new MongooseModel(req.body);
     m.save(function(err, savedModel) {
+
+      // Stay on the page.
       if (err) return cb();
       res.redirect('/admin/' + modelName + '/' + savedModel._id);
     });
@@ -49,9 +52,15 @@ exports = module.exports = function(req, res, next) {
       });
   }
 
+  // Populate the schema for create with req.body.
   function populateSchema(cb) {
     var data = new MongooseModel(req.body).toObject();
     l.populatedSchema = dbUtils.schemaDefaultsPopulated(data, Model);
+    cb();
+  }
+
+  function getSchemaTableCols(cb) {
+    l.tableColumns = Model.adminModelTable;
     cb();
   }
 };
