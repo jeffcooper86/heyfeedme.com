@@ -7,16 +7,18 @@
     border: 1px solid @color-gray-l1;
 
     th {
-      background: @color-white-d1;
       border: 1px solid @color-gray;
+      background: @color-white-d1;
     }
   }
 
   thead {
-    border: 1px solid @color-gray;
     font-weight: @font-weight-bold;
-    color: @color-heading;
+
     text-align: left;
+
+    color: @color-heading;
+    border: 1px solid @color-gray;
   }
 
   tr {
@@ -29,8 +31,8 @@
 
   &.tbl-color {
     thead {
+      border-color: @color-1-l1;
       background: @color-1-l2;
-      border-color: @color-1-l1
     }
   }
 
@@ -39,7 +41,7 @@
   }
 
   &.tbl-h-1col {
-    th:first-child {
+    th: first-child {
       text-align: center;
     }
   }

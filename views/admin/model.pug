@@ -2,7 +2,7 @@ extends ../_layouts/admin
 
 block adminBody
   .container.container-1
-    h2.heading.h3 #{modelName} (#{models.length})
+    h2.heading.h4 #{modelName} (#{models.length})
 
     form(method='post').form.container.container-3
       +formFieldsFromSchema(populatedSchema)
@@ -13,8 +13,8 @@ block adminBody
       -var newCount = 0
       thead
         tr
-          th #
-          th id
+          th
+          th _id
           each key in tableColumns
             th= key
       tbody

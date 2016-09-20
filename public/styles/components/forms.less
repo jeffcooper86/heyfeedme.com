@@ -86,7 +86,6 @@ label {
   }
 
   &.fg-spread {
-    .form-border();
     display: flex;
 
     margin-top: @spacing-s1;
@@ -94,6 +93,8 @@ label {
     padding: @spacing-s2;
 
     background: @color-white;
+
+    .form-border();
     flex-wrap: wrap;
 
     .form-group {
