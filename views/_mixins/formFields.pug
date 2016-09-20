@@ -1,7 +1,7 @@
-mixin formFieldsFromSchema(fields)
+mixin formFieldsFromSchema(fields, fgClass)
   each field, key in fields
     -var type = field.instance
-    .form-group.fg-l1
+    .form-group(class=fgClass)
       label(for=key).label.heading.h4= key
 
       if type === 'Array'

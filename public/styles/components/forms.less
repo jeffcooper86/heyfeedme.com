@@ -1,4 +1,4 @@
-.form-border {
+.form-border() {
   border: 1px solid @color-gray-l1;
   border-radius: 4px;
 }
@@ -49,7 +49,7 @@ label {
   text-transform: capitalize;
 }
 
-.form-colored {
+.form-color {
   padding: @spacing-s1;
 
   background: @color-white-d1;
@@ -62,14 +62,6 @@ label {
     width: 100%;
     margin-top: @spacing-s2;
     margin-left: 0;
-
-    .fg-color & {
-      margin-top: 0;
-
-      + .ff-wide {
-        margin-top: @spacing-s2;
-      }
-    }
   }
 }
 
@@ -94,6 +86,7 @@ label {
   }
 
   &.fg-spread {
+    .form-border();
     display: flex;
 
     margin-top: @spacing-s1;
@@ -101,8 +94,6 @@ label {
     padding: @spacing-s2;
 
     background: @color-white;
-
-    .form-border;
     flex-wrap: wrap;
 
     .form-group {

@@ -2,19 +2,64 @@
   td, th {
     padding: @spacing-s1;
   }
+
+  tbody {
+    border: 1px solid @color-gray-l1;
+
+    th {
+      background: @color-white-d1;
+      border: 1px solid @color-gray;
+    }
+  }
+
   thead {
+    border: 1px solid @color-gray;
     font-weight: @font-weight-bold;
-
+    color: @color-heading;
     text-align: left;
+  }
 
-    background: @color-white-d1;
+  tr {
+    border-bottom: 1px solid @color-gray-l1;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &.tbl-color {
+    thead {
+      background: @color-1-l2;
+      border-color: @color-1-l1
+    }
   }
 
   &.tbl-full {
     width: 100%;
   }
 
+  &.tbl-h-1col {
+    th:first-child {
+      text-align: center;
+    }
+  }
+
   &.tbl-small {
     font-size: @font-size-s1;
+  }
+
+  &.tbl-spaced {
+    margin-top: @spacing;
+    margin-bottom: @spacing;
+  }
+
+  &.tbl-spaced-l1 {
+    margin-top: @spacing-l1;
+    margin-bottom: @spacing-l1;
+  }
+
+  &.tbl-spaced-l2 {
+    margin-top: @spacing-l2;
+    margin-bottom: @spacing-l2;
   }
 }

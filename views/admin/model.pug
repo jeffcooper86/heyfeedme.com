@@ -2,13 +2,14 @@ extends ../_layouts/admin
 
 block adminBody
   .container.container-1
-    h2.heading.h2 #{modelName} (#{models.length})
+    h2.heading.h3 #{modelName} (#{models.length})
 
-    form(method='post').form-spaced
+    form(method='post').form.container.container-3
       +formFieldsFromSchema(populatedSchema)
-      input(type='submit', value='create').btn.btn-1
+      .text-center
+        input(type='submit', value='create').btn.btn-1
 
-    table.tbl.tbl-full.tbl-small
+    table.tbl.tbl-full.tbl-small.tbl-spaced-l2.tbl-color.tbl-h-1col
       -var newCount = 0
       thead
         tr
@@ -20,7 +21,7 @@ block adminBody
         each model in models
           -var m = model.toObject()
           tr
-            td= ++newCount
+            th= ++newCount
             td
               a(href='/admin/' + modelName + '/' + model._id)
                 | #{model.id}
