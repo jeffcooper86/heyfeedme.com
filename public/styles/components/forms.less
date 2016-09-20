@@ -1,3 +1,8 @@
+.form-border {
+  border: 1px solid @color-gray-l1;
+  border-radius: 4px;
+}
+
 input, select, .btn {
   font-family: @font-1;
   font-size: @font-size;
@@ -14,8 +19,7 @@ input, select, .btn {
   vertical-align: middle;
 
   color: @color-gray-d3;
-  border: 1px solid @color-gray-l1;
-  border-radius: 4px;
+  .form-border;
   background: white;
 
   &:focus {
@@ -29,6 +33,10 @@ input, select, .btn {
   &[type='checkbox'] {
     height: auto;
   }
+
+  &.no-space {
+    margin: 0;
+  }
 }
 
 label {
@@ -40,19 +48,69 @@ label {
   text-transform: capitalize;
 }
 
-.form-spaced {
-  margin-top: 40px;
-  margin-bottom: 40px;
+.form-colored {
+  background: @color-white-d1;
+  padding: @spacing-s1;
+}
+
+.form-field {
+  &.ff-wide {
+    display: block;
+    margin-left: 0;
+    margin-top: @spacing-s2;
+    width: 100%;
+
+    .fg-color & {
+      margin-top: 0;
+
+      +.ff-wide {
+        margin-top: @spacing-s2;
+      }
+    }
+  }
 }
 
 .form-group {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: @spacing;
+  margin-bottom: @spacing;
+
+  &.fg-color {
+    background: @color-1-l2;
+    padding: @spacing;
+  }
+
+  &.fg-s1 {
+    margin-top: @spacing-s1;
+    margin-bottom: @spacing-s1;
+  }
+
+  &.fg-l1 {
+    margin-top: @spacing-l1;
+    margin-bottom: @spacing-l1;
+  }
+
+  &.fg-spread {
+    background: @color-white;
+    .form-border;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: @spacing-s1;
+    margin-bottom: @spacing-s1;
+    padding: @spacing-s2;
+
+    .form-group {
+      margin: @spacing-s2 @spacing-s1;
+    }
+  }
+
+  &.fg-no-space {
+    margin: 0;
+  }
 }
 
-.form-group-s {
-  margin-top: 10px;
-  margin-bottom: 10px;
+.form-spaced {
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .input-l1 {

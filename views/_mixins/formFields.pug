@@ -1,35 +1,34 @@
 mixin formFieldsFromSchema(fields)
   each field, key in fields
     -var type = field.instance
-    .form-group
-      label(for=key).label= key
+    .form-group.fg-l1
+      label(for=key).label.heading.h4= key
 
       if type === 'Array'
         if field.caster.enumValues && field.caster.enumValues.length
-
-          each option in field.caster.enumValues
-            .form-group.form-group-s
-              label(for=key + option).label-2= option
-              input(
-                type='checkbox'
-                id=`${key}${option}`
-                name=key
-                value=option
-                checked=field.data && field.data.indexOf(option) > -1
-              )
+          .form-group.fg-spread
+            each option in field.caster.enumValues
+              .form-group
+                label(for=key + option).label-2= option
+                input(
+                  type='checkbox'
+                  id=`${key}${option}`
+                  name=key
+                  value=option
+                  checked=field.data && field.data.indexOf(option) > -1
+                ).no-space
 
         else
-          each value in field.data
-            .form-group.form-group-s
-              input(id=key type='text' name=key value=value)
-          .form-group.form-group-s
-            input(type='text' name=key)
+          .form-group
+            each value in field.data
+              input(id=key type='text' name=key value=value).form-field.ff-wide
+            input(type='text' name=key).form-field.ff-wide
 
       else if type === 'Boolean'
-        input(id=key name=key type='checkbox')
+        input(id=key name=key type='checkbox').form-field
 
       else if type === 'Date'
-        input(id=key name=key type='date')
+        input(id=key name=key type='date').form-field.ff-wide
 
       else if type === 'String' || type === 'Number'
-        input(id=key name=key type='text' value=field.data)
+        input(id=key name=key type='text' value=field.data).form-field.ff-wide

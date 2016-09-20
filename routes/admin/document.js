@@ -18,6 +18,7 @@ exports = module.exports = function(req, res, next) {
     [modelName, utils.i.trimDirectories(req.path, 1)],
     [documentId]
   ];
+  l.docId = documentId;
 
   // Load the model.
   try {
