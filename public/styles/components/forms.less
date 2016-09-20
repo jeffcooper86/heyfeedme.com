@@ -19,8 +19,9 @@ input, select, .btn {
   vertical-align: middle;
 
   color: @color-gray-d3;
-  .form-border;
   background: white;
+
+  .form-border;
 
   &:focus {
     outline-color: @color-1-l1;
@@ -49,21 +50,23 @@ label {
 }
 
 .form-colored {
-  background: @color-white-d1;
   padding: @spacing-s1;
+
+  background: @color-white-d1;
 }
 
 .form-field {
   &.ff-wide {
     display: block;
-    margin-left: 0;
-    margin-top: @spacing-s2;
+
     width: 100%;
+    margin-top: @spacing-s2;
+    margin-left: 0;
 
     .fg-color & {
       margin-top: 0;
 
-      +.ff-wide {
+      + .ff-wide {
         margin-top: @spacing-s2;
       }
     }
@@ -75,8 +78,9 @@ label {
   margin-bottom: @spacing;
 
   &.fg-color {
-    background: @color-1-l2;
     padding: @spacing;
+
+    background: @color-1-l2;
   }
 
   &.fg-s1 {
@@ -90,13 +94,16 @@ label {
   }
 
   &.fg-spread {
-    background: @color-white;
-    .form-border;
     display: flex;
-    flex-wrap: wrap;
+
     margin-top: @spacing-s1;
     margin-bottom: @spacing-s1;
     padding: @spacing-s2;
+
+    background: @color-white;
+
+    .form-border;
+    flex-wrap: wrap;
 
     .form-group {
       margin: @spacing-s2 @spacing-s1;
