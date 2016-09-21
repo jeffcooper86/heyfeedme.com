@@ -36,11 +36,11 @@ var recipeSchema = new Schema({
 
 module.exports.model = mongoose.model('Recipe', recipeSchema);
 
-// For model/collection view.
+// For admin model/collection views.
 module.exports.adminModelDefaults = 'name'.split(' ');
 module.exports.adminModelTable = 'name categories shortDescription uploaded'.split(' ');
 
-// For queries.
+// For admin model view queries.
 module.exports.adminModelSelect = '';
 module.exports.adminModelSort = {
   name: 1
