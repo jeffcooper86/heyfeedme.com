@@ -29,7 +29,8 @@ var recipeSchema = new Schema({
   shortDescription: String,
   uploaded: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    fixed: true
   }
 });
 

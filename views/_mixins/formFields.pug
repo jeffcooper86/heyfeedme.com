@@ -28,7 +28,20 @@ mixin formFieldsFromSchema(fields, fgClass)
         input(id=key name=key type='checkbox').form-field
 
       else if type === 'Date'
-        input(id=key name=key type='date').form-field.ff-wide
+        if field.options.fixed
+          input(
+            id=key
+            type='text'
+            value=filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss')
+            readonly
+          ).form-field.ff-wide
+        else
+          input(
+            id=key
+            name=key
+            type='date'
+            value=filters.moment(field.data).format('YYYY-MM-DD')
+          ).form-field.ff-wide
 
       else if type === 'String' || type === 'Number'
         input(id=key name=key type='text' value=field.data).form-field.ff-wide

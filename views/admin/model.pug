@@ -26,4 +26,7 @@ block adminBody
               a(href='/admin/' + modelName + '/' + model._id)
                 | #{model.id}
               each key in tableColumns
-                td= m[key]
+                if key === 'uploaded'
+                  td= filters.moment(m[key]).format('MMMM DD YYYY HH:mm:ss')
+                else
+                  td= m[key]
