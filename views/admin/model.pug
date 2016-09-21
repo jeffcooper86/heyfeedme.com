@@ -2,7 +2,7 @@ extends ../_layouts/admin
 
 block adminBody
   .container.container-1
-    h2.heading.h4 #{modelName} (#{models.length})
+    h2.heading.h4 #{modelName} (#{docs.length})
 
     form(method='post').form.container.container-3
       +formFieldsFromSchema(populatedSchema)
@@ -18,15 +18,15 @@ block adminBody
           each key in tableColumns
             th= key
       tbody
-        each model in models
-          -var m = model.toObject()
+        each doc in docs
+          -var d = doc.toObject()
           tr
             th= ++newCount
             td
-              a(href='/admin/' + modelName + '/' + model._id)
-                | #{model.id}
+              a(href='/admin/' + modelName + '/' + d._id)
+                | #{d._id}
               each key in tableColumns
-                if key === 'uploaded'
-                  td= filters.moment(m[key]).format('MMMM DD YYYY HH:mm:ss')
+                if filters.i.getNested(schema, `${key}.instance`) === 'Date'
+                  td= filters.moment(d[key]).format('MMM DD YYYY HH:mm:ss')
                 else
-                  td= m[key]
+                  td= d[key]

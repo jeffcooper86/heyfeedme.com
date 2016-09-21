@@ -17,12 +17,13 @@ exports = module.exports = function(req, res, next) {
     next(err);
   }
   MongooseModel = Model.model;
+  l.schema = MongooseModel.schema.paths;
+  l.tableColumns = Model.adminModelTable;
 
   // Do creates and get all documents.
   async.waterfall([
     create,
     populateSchema,
-    getSchemaTableCols,
     getAll
   ], function(err) {
     if (err) return res.render('_error500');
@@ -47,7 +48,7 @@ exports = module.exports = function(req, res, next) {
       })
       .select(Model.adminModelSelect || {})
       .exec(function(err, data) {
-        l.models = data;
+        l.docs = data;
         cb(null);
       });
   }
@@ -56,11 +57,6 @@ exports = module.exports = function(req, res, next) {
   function populateSchema(cb) {
     var data = new MongooseModel(req.body).toObject();
     l.populatedSchema = dbUtils.schemaDefaultsPopulated(data, Model);
-    cb();
-  }
-
-  function getSchemaTableCols(cb) {
-    l.tableColumns = Model.adminModelTable;
     cb();
   }
 };

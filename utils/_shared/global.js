@@ -8,6 +8,7 @@ module.exports.trimDirectories = trimDirectories;
 module.exports.unslugify = unslugify;
 
 function getNested(obj, p) {
+  if (!obj) return;
   p = !Array.isArray(p) ? p.split('.') : p;
   if (p.length === 1) return obj[p[0]];
   return obj[p[0]] ? getNested(obj[p[0]], p.slice(1)) : undefined;
