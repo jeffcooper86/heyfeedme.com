@@ -9,6 +9,7 @@ var source = require('vinyl-source-stream');
 var jsPrettify = require('gulp-jsbeautifier');
 var csscomb = require('gulp-csscomb');
 var diff = require('gulp-diff');
+var glob = require('glob');
 
 var paths = {
   js: ['./*.js', './routes/**/*.js', './utils/**/*.js', './models/**/*.js'],
@@ -19,7 +20,10 @@ var paths = {
       watch: ['./public/styles/**/*.less']
     },
     js: {
-      compile: ['./public/js/main.js'],
+      compile: {
+        main: ['./public/js/main.js'],
+        pages: './public/js/pages/**/*.js'
+      },
       watch: ['./public/js/**/*.js']
     }
   }
@@ -35,14 +39,16 @@ gulp.task('dist:less', function() {
     .pipe(autoprefixer({
       browsers: ['> 5%']
     }))
-    .pipe(gulp.dest(paths.public.dist + 'styles/'));
+    .pipe(gulp.dest(`${paths.public.dist}styles/`));
 });
 
 gulp.task('dist:js', function() {
-  var bundleStream = browserify(paths.public.js.compile).bundle();
+  var bundleStream = browserify(paths.public.js.compile.main).bundle();
   bundleStream
     .pipe(source('main.js'))
-    .pipe(gulp.dest(paths.public.dist + 'js/'));
+    .pipe(gulp.dest(`${paths.public.dist}js/`));
+
+  jsPageBundle();
 });
 
 gulp.task('dist', ['dist:less', 'dist:js']);
@@ -106,6 +112,17 @@ function beautifyJs(fail) {
         .pipe(gulp.dest(file.base));
     }))
   );
+}
+
+function jsPageBundle() {
+  glob(paths.public.js.compile.pages, function(err, files) {
+    files.forEach(function(file) {
+      var bundleStream = browserify(file).bundle();
+      bundleStream
+        .pipe(source(`js/pages${file.slice(file.indexOf('pages') + 5)}`))
+        .pipe(gulp.dest(paths.public.dist));
+    });
+  });
 }
 
 function onWatchError(err) {

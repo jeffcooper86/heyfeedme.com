@@ -12,11 +12,13 @@ block adminBody
     table.tbl.tbl-full.tbl-small.tbl-spaced-l2.tbl-color.tbl-h-1col
       -var newCount = 0
       thead
-        tr
+        tr.tbl-sort.js-tbl-sort
           th
-          th _id
+          th
+            span(data-sort='_id').sort.js-sort _id
           each key in tableColumns
-            th= key
+            th
+              span(data-sort=key).sort.js-sort= key
       tbody
         each doc in docs
           -var d = doc.toObject()
@@ -30,3 +32,6 @@ block adminBody
                   td= filters.moment(d[key]).format('MMM DD YYYY HH:mm:ss')
                 else
                   td= d[key]
+
+block js
+  script(src='/dist/js/pages/admin/model.js')

@@ -6,7 +6,8 @@ exports = module.exports = function(req, res, next) {
     modelName = req.params.model,
     Model,
     MongooseModel,
-    template = 'admin/model';
+    template = 'admin/model',
+    sort = req.query.sort;
   l.modelName = modelName;
 
   // Load the model.
@@ -42,8 +43,14 @@ exports = module.exports = function(req, res, next) {
   }
 
   function getAll(cb) {
+    var sortObj;
+    if (sort) {
+      sortObj = {};
+      sortObj[sort] = 1;
+    }
+
     MongooseModel.find()
-      .sort(Model.adminModelSort || {
+      .sort(sortObj || Model.adminModelSort || {
         _id: 1
       })
       .select(Model.adminModelSelect || {})

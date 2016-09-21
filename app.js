@@ -58,7 +58,6 @@ app.get('/search', routes.search.index);
 
 // API - To do: Make admin section a router module
 app.all('/api/recipes/:html(html)?', routes._api.recipes.recipes);
-app.all('/api/:model', routes._api.model);
 
 // Private
 app.all('/auth', routes.auth);
