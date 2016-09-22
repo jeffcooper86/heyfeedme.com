@@ -5,10 +5,28 @@ var recipeUtils = require(process.cwd() + '/utils/recipes');
 var categories = recipeUtils.getCategories();
 var classifications = recipeUtils.getClassifications();
 
+var ingredientSchema = new Schema({
+  qty: {
+    type: Number
+  },
+  measurement: {
+    type: String
+  },
+  text: {
+    type: String,
+    required: true
+  },
+  recipe: {
+    type: Schema.Types.ObjectId,
+    ref: 'Recipe'
+  }
+});
+
 var recipeSchema = new Schema({
   name: {
     type: String,
     required: true,
+    lowercase: true
   },
   categories: [{
     type: String,
@@ -18,11 +36,7 @@ var recipeSchema = new Schema({
     type: String,
     enum: classifications
   }],
-
-  // To do: reference other recipe as ingredients
-  ingredients: [{
-    type: String
-  }],
+  ingredients: [ingredientSchema],
   steps: [{
     type: String
   }],
