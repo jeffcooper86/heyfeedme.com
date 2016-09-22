@@ -107,6 +107,22 @@ label {
     }
   }
 
+  &.fg-subfg {
+    width: calc(~'50% - '@spacing-s1 * 2);
+    margin: @spacing-s1;
+  }
+
+  &.fg-subfg-wrap {
+    display: flex;
+
+    padding: @spacing;
+
+    background: @color-white-d1;
+
+    .form-border();
+    flex-wrap: wrap;
+  }
+
   &.fg-no-space {
     margin: 0;
   }

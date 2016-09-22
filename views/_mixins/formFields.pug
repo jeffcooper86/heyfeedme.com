@@ -1,11 +1,18 @@
-mixin formFieldsFromSchema(fields, fgClass)
+mixin subdocField(field, fielPrefix)
+  +formFieldsFromSchema(field.schema.paths, 'fg-subfg', fieldPrefix)
+
+mixin formFieldsFromSchema(fields, fgClass, fieldPrefix)
   each field, key in fields
     -var type = field.instance
     .form-group(class=fgClass)
       label(for=key).label.heading.h4= key
 
       if type === 'Array'
-        if field.caster.enumValues && field.caster.enumValues.length
+        if field.$isMongooseDocumentArray
+          .form-group.fg-subfg-wrap(class=`fg-${key}`)
+            +subdocField(field)
+
+        else if field.caster.enumValues && field.caster.enumValues.length
           .form-group.fg-spread
             each option in field.caster.enumValues
               .form-group

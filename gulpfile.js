@@ -11,12 +11,17 @@ var csscomb = require('gulp-csscomb');
 var diff = require('gulp-diff');
 var glob = require('glob');
 
+var utils = require(process.cwd() + '/utils/global.js');
+
 var paths = {
   js: ['./*.js', './routes/**/*.js', './utils/**/*.js', './models/**/*.js'],
   public: {
     dist: './public/dist/',
     less: {
-      compile: ['./public/styles/site.less'],
+      compile: {
+        main: ['./public/styles/site.less'],
+        pages: './public/styles/pages/**/*.less'
+      },
       watch: ['./public/styles/**/*.less']
     },
     js: {
@@ -33,13 +38,15 @@ gulp.task('default', ['dist']);
 
 // Build tasks
 gulp.task('dist:less', function() {
-  return gulp.src(paths.public.less.compile)
+  gulp.src(paths.public.less.compile.main)
     .pipe(less({}))
     .on('error', onWatchError)
     .pipe(autoprefixer({
       browsers: ['> 5%']
     }))
     .pipe(gulp.dest(`${paths.public.dist}styles/`));
+
+  lessPageCompile();
 });
 
 gulp.task('dist:js', function() {
@@ -112,6 +119,26 @@ function beautifyJs(fail) {
         .pipe(gulp.dest(file.base));
     }))
   );
+}
+
+function lessPageCompile() {
+  glob(paths.public.less.compile.pages, function(err, files) {
+    files.forEach(function(f) {
+      gulp.src(f)
+        .pipe(less({}))
+        .on('error', onWatchError)
+        .pipe(autoprefixer({
+          browsers: ['> 5%']
+        }))
+        .pipe(gulp.dest(buildDest(f)));
+    });
+  });
+
+  function buildDest(f) {
+    var dest = `${paths.public.dist}styles/pages`,
+      filePath = f.slice(f.indexOf('pages') + 5);
+    return `${dest}${utils.i.trimDirectories(filePath, 1)}`;
+  }
 }
 
 function jsPageBundle() {
