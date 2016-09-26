@@ -43,6 +43,12 @@ input, select, .btn {
   &.no-space {
     margin: 0;
   }
+
+  .form-small & {
+    font-size: @font-size-s1;
+    height: @font-size-s1 * 2.4;
+    line-height: @font-size-s1 * 2.4;
+  }
 }
 
 label {
@@ -52,6 +58,12 @@ label {
 
   vertical-align: middle;
   text-transform: capitalize;
+}
+
+.form {
+  .heading {
+    font-size: @font-size-s1;
+  }
 }
 
 .form-color {
@@ -110,17 +122,6 @@ label {
   &.fg-subfg {
     width: calc(~'50% - '@spacing-s1 * 2);
     margin: @spacing-s1;
-  }
-
-  &.fg-subfg-wrap {
-    display: flex;
-
-    padding: @spacing;
-
-    background: @color-white-d1;
-
-    .form-border();
-    flex-wrap: wrap;
   }
 
   &.fg-no-space {

@@ -1,27 +1,39 @@
-mixin subdocField(field, fieldScope)
-  +formFieldsFromSchema(field.schema.paths, 'fg-subfg', fieldScope)
+mixin subdocField(field, fieldScope, data, i)
+  -var schema = field.schema.paths
+  if data
+    -var schemaPopulated = filters.db.schemaPopulated(data, schema)
+  +formFieldsFromSchema(
+    filters.stripPrivates(schemaPopulated || schema),
+    'fg-subfg',
+    fieldScope,
+    i
+  )
 
-mixin formFieldsFromSchema(fields, fgClass, fieldScope)
+mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
   each field, key in fields
     -var type = field.instance
     -var sName = fieldScope ? `${fieldScope}.${key}` : key
+    -var siName = i !== undefined ? `${i}${sName}` : sName
 
     .form-group(class=fgClass)
-      label(for=sName).label.heading.h4= key
+      label(for=siName).label.heading.h4= key
 
       if type === 'Array'
         if field.$isMongooseDocumentArray
-          .form-group.fg-subfg-wrap(class=`fg-${key}`)
+          each value, i in field.data
+            .form-group.fg-spread(class=`fg-${key}`)
+              +subdocField(field, key, value, i)
+          .form-group.fg-spread(class=`fg-${key}`)
             +subdocField(field, key)
 
         else if field.caster.enumValues && field.caster.enumValues.length
           .form-group.fg-spread
             each option in field.caster.enumValues
               .form-group
-                label(for=sName + option).label-2= option
+                label(for=siName + option).label-2= option
                 input(
                   type='checkbox'
-                  id=`${sName}${option}`
+                  id=`${siName}${option}`
                   name=sName
                   value=option
                   checked=field.data && field.data.indexOf(option) > -1
@@ -30,27 +42,27 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope)
         else
           .form-group
             each value in field.data
-              input(id=key type='text' name=sName value=value).form-field.ff-wide
+              input(id=siName type='text' name=sName value=value).form-field.ff-wide
             input(id=sName type='text' name=sName).form-field.ff-wide
 
       else if type === 'Boolean'
-        input(id=key name=sName type='checkbox').form-field
+        input(id=siName name=sName type='checkbox').form-field
 
       else if type === 'Date'
         if field.options.fixed
           input(
-            id=sName
+            id=siName
             type='text'
             value=filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss')
             readonly
           ).form-field.ff-wide
         else
           input(
-            id=key
+            id=siName
             name=sName
             type='date'
             value=filters.moment(field.data).format('YYYY-MM-DD')
           ).form-field.ff-wide
 
       else if type === 'String' || type === 'Number'
-        input(id=sName name=sName type='text' value=field.data).form-field.ff-wide
+        input(id=siName name=sName type='text' value=field.data).form-field.ff-wide

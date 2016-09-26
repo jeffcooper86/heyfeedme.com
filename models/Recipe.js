@@ -6,15 +6,18 @@ var categories = recipeUtils.getCategories();
 var classifications = recipeUtils.getClassifications();
 
 var ingredientSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String
+  },
   qty: {
     type: Number
   },
   measurement: {
     type: String
-  },
-  name: {
-    type: String,
-    required: true
   },
   recipe: {
     type: Schema.Types.ObjectId,
