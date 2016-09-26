@@ -1,26 +1,28 @@
-mixin subdocField(field, fielPrefix)
-  +formFieldsFromSchema(field.schema.paths, 'fg-subfg', fieldPrefix)
+mixin subdocField(field, fieldScope)
+  +formFieldsFromSchema(field.schema.paths, 'fg-subfg', fieldScope)
 
-mixin formFieldsFromSchema(fields, fgClass, fieldPrefix)
+mixin formFieldsFromSchema(fields, fgClass, fieldScope)
   each field, key in fields
     -var type = field.instance
+    -var sName = fieldScope ? `${fieldScope}.${key}` : key
+
     .form-group(class=fgClass)
-      label(for=key).label.heading.h4= key
+      label(for=sName).label.heading.h4= key
 
       if type === 'Array'
         if field.$isMongooseDocumentArray
           .form-group.fg-subfg-wrap(class=`fg-${key}`)
-            +subdocField(field)
+            +subdocField(field, key)
 
         else if field.caster.enumValues && field.caster.enumValues.length
           .form-group.fg-spread
             each option in field.caster.enumValues
               .form-group
-                label(for=key + option).label-2= option
+                label(for=sName + option).label-2= option
                 input(
                   type='checkbox'
-                  id=`${key}${option}`
-                  name=key
+                  id=`${sName}${option}`
+                  name=sName
                   value=option
                   checked=field.data && field.data.indexOf(option) > -1
                 ).no-space
@@ -28,16 +30,16 @@ mixin formFieldsFromSchema(fields, fgClass, fieldPrefix)
         else
           .form-group
             each value in field.data
-              input(id=key type='text' name=key value=value).form-field.ff-wide
-            input(type='text' name=key).form-field.ff-wide
+              input(id=key type='text' name=sName value=value).form-field.ff-wide
+            input(id=sName type='text' name=sName).form-field.ff-wide
 
       else if type === 'Boolean'
-        input(id=key name=key type='checkbox').form-field
+        input(id=key name=sName type='checkbox').form-field
 
       else if type === 'Date'
         if field.options.fixed
           input(
-            id=key
+            id=sName
             type='text'
             value=filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss')
             readonly
@@ -45,10 +47,10 @@ mixin formFieldsFromSchema(fields, fgClass, fieldPrefix)
         else
           input(
             id=key
-            name=key
+            name=sName
             type='date'
             value=filters.moment(field.data).format('YYYY-MM-DD')
           ).form-field.ff-wide
 
       else if type === 'String' || type === 'Number'
-        input(id=key name=key type='text' value=field.data).form-field.ff-wide
+        input(id=sName name=sName type='text' value=field.data).form-field.ff-wide

@@ -12,7 +12,7 @@ var ingredientSchema = new Schema({
   measurement: {
     type: String
   },
-  text: {
+  name: {
     type: String,
     required: true
   },
