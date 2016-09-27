@@ -12,13 +12,15 @@ exports = module.exports = function(req, res, next) {
     action = req.body.action || '',
     Model,
     MongooseModel,
-    template = 'admin/document';
+    template = 'admin/document',
+    reqData;
 
   l.crumbs = [
     [modelName, utils.i.trimDirectories(req.path, 1)],
     [documentId]
   ];
   l.docId = documentId;
+  l.filters.db = dbUtils;
 
   // Load the model.
   try {
@@ -28,6 +30,7 @@ exports = module.exports = function(req, res, next) {
     next(err);
   }
   MongooseModel = Model.model;
+  reqData = formatReqData(req.body, MongooseModel.schema.paths);
 
   async.waterfall([
     getDocument,
@@ -58,17 +61,50 @@ exports = module.exports = function(req, res, next) {
     });
   }
 
+  function formatReqData(data, schema) {
+
+    // Group scoped values belonging to document arrays as an object.
+    var docArrays = {};
+    _.forEach(data, function(v, k) {
+      k = k.split('.');
+      if (k.length > 1 &&
+        utils.i.getNested(schema, k[0] + '.$isMongooseDocumentArray')) {
+        if (!(k[0] in docArrays)) docArrays[k[0]] = {};
+        docArrays[k[0]][k[1]] = v;
+        delete data[k.join('.')];
+      }
+    });
+
+    // Loop the scoped values objects.
+    _.forEach(docArrays, function(scopedVs, k) {
+      var docArray = [];
+
+      // Turn the object of array values into an array of objects.
+      _.forEach(scopedVs, function(vArray, k) {
+        vArray.forEach(function(v, i) {
+          if (!(docArray[i])) docArray[i] = {};
+          docArray[i][k] = v;
+        });
+      });
+
+      utils.trimEmptyObjectsFromArray(docArray);
+      data[k] = docArray;
+    });
+
+    return data;
+  }
+
   function removeDocument(cb) {
     if (req.method !== 'POST' || action !== 'delete') return cb();
-    query.remove(function(err) {
+    query.remove(function() {
       res.redirect('/admin/' + modelName);
     });
   }
 
   function updateDocument(cb) {
     if (req.method !== 'POST' || action !== 'update') return cb();
-    _trimEmptyArrayReuqestData(req.body);
-    doc.update(req.body, function(err, res) {
+    _trimEmptyArrayReuqestData(reqData);
+    doc.update(reqData, function(err) {
 
       if (err) console.log(err);
 
@@ -81,8 +117,8 @@ exports = module.exports = function(req, res, next) {
   function _trimEmptyArrayReuqestData(data) {
     _.forEach(data, function(value) {
       if (_.isArray(value)) {
-        _.remove(value, function(val) {
-          return val.length === 0;
+        _.remove(value, function(v) {
+          return v.length === 0;
         });
       }
     });

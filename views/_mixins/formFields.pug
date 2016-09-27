@@ -46,6 +46,8 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
             each value in field.data
               input(id=siName type='text' name=sName value=value).form-field.ff-wide
             input(id=sName type='text' name=sName).form-field.ff-wide
+            if !field.data.length
+              input(id=sName type='text' name=sName).form-field.ff-wide
 
       else if type === 'Boolean'
         input(id=siName name=sName type='checkbox').form-field
@@ -67,4 +69,11 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
           ).form-field.ff-wide
 
       else if type === 'String' || type === 'Number'
-        input(id=siName name=sName type='text' value=field.data).form-field.ff-wide
+        if field.options.longText
+          textarea(
+            id=siName
+            name=sName
+            maxlength=field.options.maxlength
+          ).form-field.ff-wide= field.data
+        else
+          input(id=siName name=sName type='text' value=field.data).form-field.ff-wide

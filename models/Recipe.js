@@ -43,7 +43,11 @@ var recipeSchema = new Schema({
   steps: [{
     type: String
   }],
-  shortDescription: String,
+  shortDescription: {
+    type: String,
+    longText: true,
+    maxlength: 140
+  },
   uploaded: {
     type: Date,
     default: Date.now,

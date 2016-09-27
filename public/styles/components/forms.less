@@ -8,10 +8,26 @@ input[readonly] {
   background: @color-2-l3;
 }
 
-input, select, .btn {
+input, select, textarea, .btn {
   font-family: @font-1;
   font-size: @font-size;
   font-weight: @font-weight-light;
+
+  color: @color-gray-d3;
+  background: white;
+
+  .form-border;
+
+  &:focus {
+    outline-color: @color-1-l1;
+  }
+
+  .form-small & {
+    font-size: @font-size-s1;
+  }
+}
+
+input, select, .btn {
   line-height: @font-size * 2.4;
 
   display: inline-block;
@@ -22,15 +38,6 @@ input, select, .btn {
   padding: 0 @spacing;
 
   vertical-align: middle;
-
-  color: @color-gray-d3;
-  background: white;
-
-  .form-border;
-
-  &:focus {
-    outline-color: @color-1-l1;
-  }
 
   &::placeholder {
     color: @color-gray-d2;
@@ -45,10 +52,11 @@ input, select, .btn {
   }
 
   .form-small & {
-    font-size: @font-size-s1;
     line-height: @font-size-s1 * 2.4;
 
     height: @font-size-s1 * 2.4;
+    padding-right: @spacing-s2;
+    padding-left: @spacing-s2;
   }
 }
 
@@ -62,6 +70,20 @@ label {
 
   + .form-group {
     margin-top: @spacing-s2;
+  }
+}
+
+textarea {
+  line-height: @line-height;
+
+  height: (@font-size * @line-height * 2) + (@spacing * 2) + 2;
+  padding: @spacing;
+
+  resize: vertical;
+
+  .form-small & {
+    height: (@font-size-s1 * @line-height * 2) + (@spacing-s2 * 2) + 2;
+    padding: @spacing-s2;
   }
 }
 
@@ -109,6 +131,7 @@ label {
 
   &.fg-spread {
     display: flex;
+
     padding: @spacing-s2;
 
     background: @color-white;
