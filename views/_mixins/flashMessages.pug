@@ -1,0 +1,5 @@
+mixin flashMessages(messages)
+  if messages.length
+    .m-flash-messages
+      while message = messages.shift()
+        p(class=message.type).fmm-message= message.message

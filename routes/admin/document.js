@@ -106,7 +106,11 @@ exports = module.exports = function(req, res, next) {
     _trimEmptyArrayReuqestData(reqData);
     doc.update(reqData, function(err) {
 
-      if (err) console.log(err);
+      if (err) {
+        console.log(err);
+        req.flash('error', 'Error updating the document.');
+      }
+      req.flash('success', 'Document saved.');
 
       // Need to get document again - findByIdAndUpdate is limiting
       // http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
