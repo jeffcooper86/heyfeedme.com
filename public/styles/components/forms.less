@@ -59,6 +59,10 @@ label {
 
   vertical-align: middle;
   text-transform: capitalize;
+
+  + .form-group {
+    margin-top: @spacing-s2;
+  }
 }
 
 .form {
@@ -105,9 +109,6 @@ label {
 
   &.fg-spread {
     display: flex;
-
-    margin-top: @spacing-s1;
-    margin-bottom: @spacing-s1;
     padding: @spacing-s2;
 
     background: @color-white;

@@ -17,6 +17,8 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
 
     .form-group(class=fgClass)
       label(for=siName).label.heading.h4= key
+        if type === 'Array'
+          span= ` (${field.data.length})`
 
       if type === 'Array'
         if field.$isMongooseDocumentArray
