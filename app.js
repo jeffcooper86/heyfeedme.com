@@ -15,7 +15,7 @@ var globalUtils = require(process.cwd() + '/utils/global');
 var recipeUtils = require(process.cwd() + '/utils/recipes');
 
 /*
- * Settings
+ * Settings.
  * ----------------------------
  */
 app.enable('strict routing');
@@ -43,27 +43,37 @@ app.use(setGlobalData);
 app.use(setTemplateFilters);
 
 /*
- * Routes
+ * Routes.
  * ----------------------------
  */
 var routes = requireDir('routes', {
   recurse: true
 });
 
-// Public
+/**
+ * Public.
+ */
 app.get('/', routes.recipes.recipes);
 app.get('/recipe/[a-z\-]+/:recipeId([a-f0-9]{24})', routes.recipes.recipe);
 app.get('/search', routes.search.index);
 
-
-// API - To do: Make admin section a router module
+/**
+ * API.
+ */
+// To do: Make api section a router module
 app.all('/api/recipes/:html(html)?', routes._api.recipes.recipes);
 
-// Private
+/**
+ * Auth.
+ * Everything below requires auth.
+ */
 app.all('/auth', routes.auth);
-app.all('/admin', requireAuthentication);
+app.use(requireAuthentication);
 
-// Admin - To do: Make admin section a router module http://expressjs.com/en/guide/routing.html#express-router
+/**
+ * Admin.
+ */
+// To do: Make admin section a router module http://expressjs.com/en/guide/routing.html#express-router
 app.route('/admin')
   .get(routes.admin.index);
 app.route('/admin/:model')
@@ -79,7 +89,7 @@ app.get('/style-guide', function(req, res) {
 });
 
 /*
- * Error Handling
+ * Error Handling.
  * ----------------------------
  */
 app.use(function(err, req, res, next) {
@@ -94,7 +104,7 @@ app.use(function(req, res) {
 
 
 /*
- * Start server
+ * Start server.
  * ----------------------------
  */
 app.listen(process.env.PORT || 3000, function() {});
