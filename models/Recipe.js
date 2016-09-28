@@ -31,6 +31,20 @@ var recipeSchema = new Schema({
     required: true,
     lowercase: true
   },
+  photo: {
+    type: String,
+    file: true
+  },
+  summary: {
+    type: String,
+    longText: true,
+    maxlength: 140
+  },
+  seoDescription: {
+    type: String,
+    longText: true,
+    maxlength: 140
+  },
   categories: [{
     type: String,
     enum: categories
@@ -43,11 +57,6 @@ var recipeSchema = new Schema({
   steps: [{
     type: String
   }],
-  shortDescription: {
-    type: String,
-    longText: true,
-    maxlength: 140
-  },
   uploaded: {
     type: Date,
     default: Date.now,
@@ -59,7 +68,7 @@ module.exports.model = mongoose.model('Recipe', recipeSchema);
 
 // For admin model/collection views.
 module.exports.adminModelDefaults = 'name'.split(' ');
-module.exports.adminModelTable = 'name categories shortDescription uploaded'.split(' ');
+module.exports.adminModelTable = 'name categories summary uploaded'.split(' ');
 
 // For admin model view queries.
 module.exports.adminModelSelect = '';
