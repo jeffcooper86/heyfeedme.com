@@ -30,7 +30,8 @@ exports = module.exports = function(req, res, next) {
     next(err);
   }
   MongooseModel = Model.model;
-  reqData = formatReqData(req.body, MongooseModel.schema.paths);
+  reqData = dbUtils.formatReqDataDocArrays(req.body, MongooseModel.schema.paths);
+  console.log(req.files);
 
   async.waterfall([
     getDocument,
@@ -59,39 +60,6 @@ exports = module.exports = function(req, res, next) {
       doc = document;
       cb();
     });
-  }
-
-  function formatReqData(data, schema) {
-
-    // Group scoped values belonging to document arrays as an object.
-    var docArrays = {};
-    _.forEach(data, function(v, k) {
-      k = k.split('.');
-      if (k.length > 1 &&
-        utils.i.getNested(schema, k[0] + '.$isMongooseDocumentArray')) {
-        if (!(k[0] in docArrays)) docArrays[k[0]] = {};
-        docArrays[k[0]][k[1]] = v;
-        delete data[k.join('.')];
-      }
-    });
-
-    // Loop the scoped values objects.
-    _.forEach(docArrays, function(scopedVs, k) {
-      var docArray = [];
-
-      // Turn the object of array values into an array of objects.
-      _.forEach(scopedVs, function(vArray, k) {
-        vArray.forEach(function(v, i) {
-          if (!(docArray[i])) docArray[i] = {};
-          docArray[i][k] = v;
-        });
-      });
-
-      utils.trimEmptyObjectsFromArray(docArray);
-      data[k] = docArray;
-    });
-
-    return data;
   }
 
   function removeDocument(cb) {

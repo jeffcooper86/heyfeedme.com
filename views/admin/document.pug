@@ -8,7 +8,10 @@ block adminBody
     .container.container-2
       .form-color
         .container.container-3
-          form(method='post').form.form-small.form-admin
+          form(
+            method='post'
+            enctype='multipart/form-data'
+          ).form.form-small.form-admin
             include ./includes/update-delete
             +formFieldsFromSchema(populatedSchema, 'fg-l1')
             include ./includes/update-delete

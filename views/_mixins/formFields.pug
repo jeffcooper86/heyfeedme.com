@@ -75,7 +75,10 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
             name=sName
             maxlength=field.options.maxlength
           ).form-field.ff-wide= field.data
-        else if field.options.image
-          input(type='file')
+        else if field.options.file
+          input(
+            type='file'
+            name=sName
+          )
         else
           input(id=siName name=sName type='text' value=field.data).form-field.ff-wide

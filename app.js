@@ -73,6 +73,15 @@ app.use(requireAuthentication);
 /**
  * Admin.
  */
+app.route('/admin/:model(recipes)/:documentId')
+  .get(routes.admin.document)
+  .post(
+    upload([{
+      name: 'photo',
+      maxCount: 1
+    }]),
+    routes.admin.document);
+
 // To do: Make admin section a router module http://expressjs.com/en/guide/routing.html#express-router
 app.route('/admin')
   .get(routes.admin.index);
@@ -145,6 +154,14 @@ function requireAuthentication(req, res, next) {
 function setTemplateFilters(req, res, next) {
   res.locals.filters = globalUtils;
   next();
+}
+
+function upload(opts) {
+  var multerUpload = multer({
+    dest: `_uploads/`
+  });
+
+  return multerUpload.fields(opts);
 }
 
 function setGlobalData(req, res, next) {

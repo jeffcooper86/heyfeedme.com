@@ -3,11 +3,6 @@
   border-radius: @border-radius;
 }
 
-input[readonly] {
-  color: @color-black-l3;
-  background: @color-2-l3;
-}
-
 input, select, textarea, .btn {
   font-family: @font-1;
   font-size: @font-size;
@@ -58,6 +53,19 @@ input, select, .btn {
     padding-right: @spacing-s2;
     padding-left: @spacing-s2;
   }
+}
+
+input[readonly] {
+  color: @color-black-l3;
+  background: @color-2-l3;
+}
+
+input[type=file] {
+  height: auto;
+  padding: 0;
+
+  border: none;
+  background: transparent;
 }
 
 label {
