@@ -5,8 +5,10 @@ block styles
 
 block adminBody
   .admin-content
-    .container.container-3
-      form(method='post').form.form-small
-        include ./includes/update-delete
-        +formFieldsFromSchema(populatedSchema, 'fg-l1')
-        include ./includes/update-delete
+    .container.container-2
+      .form-color
+        .container.container-3
+          form(method='post').form.form-small.form-admin
+            include ./includes/update-delete
+            +formFieldsFromSchema(populatedSchema, 'fg-l1')
+            include ./includes/update-delete
