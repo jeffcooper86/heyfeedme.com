@@ -31,7 +31,6 @@ exports = module.exports = function(req, res, next) {
   }
   MongooseModel = Model.model;
   reqData = dbUtils.formatReqDataDocArrays(req.body, MongooseModel.schema.paths);
-  console.log(req.files);
 
   async.waterfall([
     getDocument,

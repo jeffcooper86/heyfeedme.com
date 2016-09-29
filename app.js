@@ -5,10 +5,14 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var slash = require('express-slash');
 var cookieParser = require('cookie-parser');
+var mkdirp = require('mkdirp');
+var _ = require('lodash');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('flash');
 const MongoStore = require('connect-mongo')(session);
+
+var fs = require('fs');
 
 // App
 var globalUtils = require(process.cwd() + '/utils/global');
@@ -76,10 +80,11 @@ app.use(requireAuthentication);
 app.route('/admin/:model(recipes)/:documentId')
   .get(routes.admin.document)
   .post(
-    upload([{
+    uploadRecipe([{
       name: 'photo',
       maxCount: 1
     }]),
+    filesAsPaths,
     routes.admin.document);
 
 // To do: Make admin section a router module http://expressjs.com/en/guide/routing.html#express-router
@@ -156,12 +161,49 @@ function setTemplateFilters(req, res, next) {
   next();
 }
 
-function upload(opts) {
-  var multerUpload = multer({
-    dest: `_uploads/`
+function filesAsPaths(req, res, next) {
+  _.forEach(req.files, function(file) {
+    var f = file[0];
+    req.body[f.fieldname] = f.path.slice(7);
+  });
+  next();
+}
+
+function uploadRecipe(opts) {
+  var storage = multer.diskStorage({
+
+    destination: function(req, file, cb) {
+      var path = `./public/images/photos/recipes/u/${req.params.documentId}/${file.fieldname}/`,
+        fileName = makeFileName(req, file);
+
+      try {
+        fs.accessSync(path);
+      } catch (err) {
+        mkdirp.sync(path);
+      }
+
+      // Remove any old file of the same name.
+      try {
+        fs.unlinkSync(path + fileName);
+      } catch (err) {}
+
+      cb(null, path);
+    },
+
+    filename: function(req, file, cb) {
+      cb(null, makeFileName(req, file));
+    }
   });
 
-  return multerUpload.fields(opts);
+  function makeFileName(req, file) {
+    var n = req.body.name ?
+      globalUtils.i.slugify(req.body.name) : file.originalname;
+    n = `${n}.${globalUtils.i.getFileExt(file.originalname)}`;
+    return n.toLowerCase();
+  }
+  return multer({
+    storage: storage
+  }).fields(opts);
 }
 
 function setGlobalData(req, res, next) {

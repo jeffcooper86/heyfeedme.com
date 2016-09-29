@@ -80,5 +80,9 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
             type='file'
             name=sName
           )
+          if field.options.file === 'image'
+            img(src=`/${field.data}`)
+          else
+            p= field.data
         else
           input(id=siName name=sName type='text' value=field.data).form-field.ff-wide

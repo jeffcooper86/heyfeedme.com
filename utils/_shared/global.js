@@ -1,11 +1,17 @@
 // Server and client side global utils - avoid large libraries.
 
+module.exports.getFileExt = getFileExt;
 module.exports.getNested = getNested;
 module.exports.slugify = slugify;
 module.exports.stringifyArray = stringifyArray;
 module.exports.tally = tally;
 module.exports.trimDirectories = trimDirectories;
 module.exports.unslugify = unslugify;
+
+function getFileExt(s) {
+  var a = s.split('.');
+  return a[a.length - 1];
+}
 
 function getNested(obj, p) {
   if (!obj) return;

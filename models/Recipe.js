@@ -33,7 +33,7 @@ var recipeSchema = new Schema({
   },
   photo: {
     type: String,
-    file: true
+    file: 'image'
   },
   summary: {
     type: String,
