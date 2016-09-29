@@ -7,7 +7,7 @@ mixin recipes(recipes)
         each r in recipes
           a(href=filters.i.slugify(`/recipe/${r.name}/${r.id}`)).rlm-recipe
             .rlm-title= filters.capitalizeTitles(r.name)
-            img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rlm-photo
+            .rlm-photo(style=`background-image:url(/${r.photo});`)
 
       if !recipes.length
         p.rlm-none.text-center

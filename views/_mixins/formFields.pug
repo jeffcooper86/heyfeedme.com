@@ -79,9 +79,9 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
           input(
             type='file'
             name=sName
-          )
-          if field.options.file === 'image'
-            img(src=`/${field.data}`)
+          ).form-field.ff-wide
+          if field.options.file === 'image' && field.data
+            img(src=`/${field.data}`).form-field.ff-wide
           else
             p= field.data
         else

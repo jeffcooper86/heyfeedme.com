@@ -36,6 +36,16 @@ function formatReqDataDocArrays(data, schema) {
 
     // Turn the object of array values into an array of objects.
     _.forEach(scopedVs, function(vArray, k) {
+
+      if (!Array.isArray(vArray)) {
+
+        // There is only one document, so it is not an array of values.
+        if (!docArray.length) docArray.push({});
+        docArray[0][k] = vArray;
+        return;
+      }
+
+      // Add the values in the array to each corresponding document.
       vArray.forEach(function(v, i) {
         if (!(docArray[i])) docArray[i] = {};
         docArray[i][k] = v;
