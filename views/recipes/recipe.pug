@@ -26,6 +26,6 @@ block bodyContent
               span.rsm-count= ++stepsCount
               =step
 
-      if r.uploaded
+      if r.updated
         .rm-footer
-          p.rm-date Updated #{filters.moment(r.uploaded).format('MMMM DD, YYYY')}
+          p.rm-date Updated #{filters.moment(r.updated).format('MMMM DD, YYYY')}

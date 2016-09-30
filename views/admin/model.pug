@@ -29,7 +29,7 @@ block adminBody
                 | #{d._id}
               each key in tableColumns
                 if filters.i.getNested(schema, `${key}.instance`) === 'Date'
-                  td= filters.moment(d[key]).format('MMM DD YYYY HH:mm:ss')
+                  td= d[key] ? filters.moment(d[key]).format('MMM DD YYYY HH:mm:ss') : null
                 else
                   td= d[key]
 

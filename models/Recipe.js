@@ -81,6 +81,11 @@ var recipeSchema = new Schema({
     type: Date,
     default: Date.now,
     fixed: true
+  },
+  updated: {
+    type: Date,
+    fixed: true,
+    current: true
   }
 });
 
@@ -88,7 +93,7 @@ module.exports.model = mongoose.model('Recipe', recipeSchema);
 
 // For admin model/collection views.
 module.exports.adminModelDefaults = 'name'.split(' ');
-module.exports.adminModelTable = 'name categories summary uploaded'.split(' ');
+module.exports.adminModelTable = 'name categories summary updated'.split(' ');
 
 // For admin model view queries.
 module.exports.adminModelSelect = '';

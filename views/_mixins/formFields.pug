@@ -57,9 +57,15 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
           input(
             id=siName
             type='text'
-            value=filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss')
+            value=field.data ? filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss') : null
             readonly
           ).form-field.ff-wide
+          if field.options.current
+            input(
+              type='hidden'
+              name=siName
+              value=filters.moment()
+            )
         else
           input(
             id=siName
