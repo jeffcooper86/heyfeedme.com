@@ -1,24 +1,32 @@
 extends ../_layouts/content
 
 block bodyContent
+  -var r = data.recipe
   .container.container-1
     .m-recipe
-      h1.heading.no-space-top.h2= filters.capitalizeTitles(data.recipe.name)
+      h1.heading.no-space-top.h2= filters.capitalizeTitles(r.name)
 
-      if data.recipe.uploaded
-        p.rm-date= filters.moment(data.recipe.uploaded).format('MMMM DD, YYYY')
-      +recipeClasses(data.recipe.classifications)
-      img(src='/images/photos/recipes/pastel-de-choclo/small.jpg').rm-main-photo
+      +recipeClasses(r.classifications)
+
+      p.rm-summary= r.summary
+
+      img(src=`/${r.photo}`).rm-main-photo
+
       .m-recipe-ingredients
+        h2.heading.h3 Ingredients
         ul
+          each i in r.ingredients
+            li= i.description
 
-          each ingredient in data.recipe.ingredients
-            li.rim-ingredient= ingredient
       .m-recipe-steps
         -var stepsCount = 0;
 
-        each step in data.recipe.steps
+        h2.heading.h3 Steps
+        each step in r.steps
           .rsm-step
             p.rsm-text
               span.rsm-count= ++stepsCount
               =step
+
+      if r.uploaded
+        p.rm-date updated #{filters.moment(r.uploaded).format('MMMM DD, YYYY')}

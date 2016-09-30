@@ -25,6 +25,20 @@ var ingredientSchema = new Schema({
   }
 });
 
+ingredientSchema.virtual('description').get(function() {
+  var name = this.name,
+    type = this.type,
+    qty = this.qty,
+    measurement = this.measurement,
+    d;
+
+  d = `${name}`;
+  d = d + (type ? `, ${type}:` : ':');
+  d = d + (qty ? ` ${qty}` : '');
+  d = d + (measurement ? ` ${measurement}` : '');
+  return d;
+});
+
 var recipeSchema = new Schema({
   name: {
     type: String,

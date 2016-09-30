@@ -14,17 +14,20 @@
 .rlm-recipe {
   position: relative;
 
-  width: calc(~'50% - '@spacing-s2);
+  width: 100%;
   margin-bottom: @spacing;
 
   background: @color-gray-l2;
 
-  &:nth-child(2n) {
-    margin-left: @spacing-s2;
-  }
+  @media(min-width: @bp-m4-min) {
+    width: calc(~'50% - '@spacing-s2);
+    &:nth-child(2n) {
+      margin-left: @spacing-s2;
+    }
 
-  &:nth-child(2n + 1) {
-    margin-right: @spacing-s2;
+    &:nth-child(2n + 1) {
+      margin-right: @spacing-s2;
+    }
   }
 }
 
