@@ -7,7 +7,9 @@ mixin recipes(recipes)
         each r in recipes
           a(href=filters.i.slugify(`/recipe/${r.name}/${r.id}`)).rlm-recipe
             .rlm-title= filters.capitalizeTitles(r.name)
-            .rlm-photo(style=`background-image:url(/${r.photo});`)
+            .rlm-photo(
+              style= r.photo ? `background-image:url(/${r.photo});` : null
+            )
 
       if !recipes.length
         p.rlm-none.text-center
