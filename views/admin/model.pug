@@ -26,7 +26,7 @@ block adminBody
             th= ++newCount
             td
               a(href='/admin/' + modelName + '/' + d._id)
-                | #{d._id}
+                | #{filters.i.truncate(d._id, 6)}
               each key in tableColumns
                 if filters.i.getNested(schema, `${key}.instance`) === 'Date'
                   td= d[key] ? filters.moment(d[key]).format('MMM DD YYYY HH:mm:ss') : null

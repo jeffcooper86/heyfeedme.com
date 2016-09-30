@@ -6,6 +6,7 @@ module.exports.slugify = slugify;
 module.exports.stringifyArray = stringifyArray;
 module.exports.tally = tally;
 module.exports.trimDirectories = trimDirectories;
+module.exports.truncate = truncate;
 module.exports.unslugify = unslugify;
 
 function getFileExt(s) {
@@ -42,6 +43,20 @@ function tally(data, labels) {
 function trimDirectories(path, trimAmount) {
   if (path[-1] === '/') path = path.slice(0, -1);
   return path.split('/').slice(0, -trimAmount).join('/');
+}
+
+function truncate(s, n) {
+  var newS = '',
+    i = 0;
+  s = String(s);
+
+  while (i < s.length && i < n) {
+    newS += s[i];
+    i += 1;
+  }
+
+  if (newS.length < s.length) newS = newS + '...';
+  return newS;
 }
 
 function unslugify(route) {
