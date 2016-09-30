@@ -2,4 +2,6 @@ mixin recipeClasses(classes)
   ul.m-recipe-classes
 
     each recipeClass in classes
-      li= recipeClass
+      li.rcm-class
+        i.icon.no-click.fa.fa-check
+        | #{recipeClass}

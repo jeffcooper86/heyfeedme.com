@@ -25,18 +25,24 @@ var ingredientSchema = new Schema({
   }
 });
 
-ingredientSchema.virtual('description').get(function() {
+ingredientSchema.virtual('amount').get(function() {
+  var qty = this.qty,
+    measurement = this.measurement,
+    a;
+  if (!(qty || measurement)) return '';
+  a = ': ';
+  a = a + (qty ? ` ${qty}` : '');
+  a = a + (measurement ? ` ${measurement}` : '');
+  return a;
+});
+
+ingredientSchema.virtual('text').get(function() {
   var name = this.name,
     type = this.type,
-    qty = this.qty,
-    measurement = this.measurement,
-    d;
-
-  d = `${name}`;
-  d = d + (type ? `, ${type}:` : ':');
-  d = d + (qty ? ` ${qty}` : '');
-  d = d + (measurement ? ` ${measurement}` : '');
-  return d;
+    t;
+  t = `${name}`;
+  t = t + (type ? `, ${type}` : '');
+  return t;
 });
 
 var recipeSchema = new Schema({

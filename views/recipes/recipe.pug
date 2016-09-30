@@ -4,19 +4,18 @@ block bodyContent
   -var r = data.recipe
   .container.container-1
     .m-recipe
-      h1.heading.no-space-top.h2= filters.capitalizeTitles(r.name)
-
-      +recipeClasses(r.classifications)
+      h1.heading.no-space.h2= filters.capitalizeTitles(r.name)
 
       p.rm-summary= r.summary
+      +recipeClasses(r.classifications)
 
       img(src=`/${r.photo}`).rm-main-photo
 
       .m-recipe-ingredients
-        h2.heading.h3 Ingredients
+        h2.heading.h3.rim-h Ingredients
         ul
           each i in r.ingredients
-            li= i.description
+            li= `${i.text}${i.amount}`
 
       .m-recipe-steps
         -var stepsCount = 0;
