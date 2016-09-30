@@ -1,8 +1,18 @@
-
+.m-recipe {
+  margin-top: @spacing-s2;
+}
 
 .rm-main-photo {
+  width: 100vw;
+  max-width: 100vw;
   margin-top: @spacing-s1;
   margin-bottom: @spacing-s1;
+  margin-left: -@container-padding;
+
+  @media(min-width: @bp-m4-min) {
+    max-width: 100%;
+    margin-left: 0;
+  }
 }
 
 .rm-summary {

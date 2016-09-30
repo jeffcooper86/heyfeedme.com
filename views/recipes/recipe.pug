@@ -4,7 +4,7 @@ block bodyContent
   -var r = data.recipe
   .container.container-1
     .m-recipe
-      h1.heading.no-space.h2= filters.capitalizeTitles(r.name)
+      h1.heading.h2= filters.capitalizeTitles(r.name)
 
       p.rm-summary= r.summary
       +recipeClasses(r.classifications)
@@ -12,7 +12,7 @@ block bodyContent
       img(src=`/${r.photo}`).rm-main-photo
 
       .m-recipe-ingredients
-        h2.heading.h3.rim-h Ingredients
+        h2.heading.h3 Ingredients
         ul
           each i in r.ingredients
             li= `${i.text}${i.amount}`

@@ -1,11 +1,31 @@
 .m-search {
-  background: @color-1-l2;
+  @media(min-width: @bp-m4-min) {
+    background: @color-1-l2;
+  }
+  .module-content-wrap {
+    @media(max-width: @bp-m3-max) {
+      padding: 0;
+    }
+  }
 }
 
 .sm-search {
   @media(max-width: @bp-m3-max) {
     width: 100%;
-    margin: 0;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: @spacing-s1;
+    padding-left: @spacing-s1;
+
+    border-color: @color-gray-l1;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+
+    &::placeholder {
+      color: @color-gray-d3;
+    }
   }
 }
 

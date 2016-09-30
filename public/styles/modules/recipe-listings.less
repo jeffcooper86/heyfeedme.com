@@ -32,24 +32,36 @@
 .rlm-recipes-wrap {
   display: flex;
 
+  width: 100vw;
+  margin-left: -@container-padding;
+
   flex-wrap: wrap;
+
+  @media(min-width: @bp-m4-min) {
+    width: 100%;
+    margin-top: @spacing-s1;
+    margin-left: 0;
+  }
 }
 
 .rlm-tally {
   font-size: @font-size-s1;
 
-  margin: @spacing-s2 0;
+  margin: @spacing-s1 0;
+
+  text-align: center;
 }
 
 .rlm-title {
-  font-size: @font-size-s1;
+  font-size: @font-size;
 
-  position: absolute;
-  right: 0;
-  left: 0;
+  padding: @spacing-s2 @container-padding;
 
-  padding: @spacing-s2;
+  color: @color-1-d3;
+  background: @color-white;
 
-  color: @color-white;
-  background: fade(@color-black, 50%);
+  @media(min-width: @bp-m4-min) {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
