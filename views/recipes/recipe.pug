@@ -2,13 +2,12 @@ extends ../_layouts/content
 
 block bodyContent
   -var r = data.recipe
-  .container.container-1
+  .container.container-3
     .m-recipe
-      h1.heading.h2= filters.capitalizeTitles(r.name)
+      h1.heading.h2.rlm-h= filters.capitalizeTitles(r.name)
 
       p.rm-summary= r.summary
       +recipeClasses(r.classifications)
-
       img(src=`/${r.photo}`).rm-main-photo
 
       .m-recipe-ingredients
@@ -28,4 +27,5 @@ block bodyContent
               =step
 
       if r.uploaded
-        p.rm-date updated #{filters.moment(r.uploaded).format('MMMM DD, YYYY')}
+        .rm-footer
+          p.rm-date Updated #{filters.moment(r.uploaded).format('MMMM DD, YYYY')}

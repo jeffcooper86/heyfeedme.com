@@ -8,7 +8,7 @@ mixin recipeFilters(filterItems, activeFilters)
         span(
           data-filter='all'
           class={active: activeFilters.indexOf('all') > -1}
-        ) all recipes
+        ).filter-all all recipes
 
         each filter in filterItems
           -var activeFilter = activeFilters && activeFilters.indexOf(filter) > -1

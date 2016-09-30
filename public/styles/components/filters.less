@@ -6,12 +6,14 @@
 
 .filters {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
   margin: @spacing-s2 0;
-  padding: @spacing;
+  padding: @spacing @spacing-s2;
 
   background: @color-white;
+
+  flex-wrap: wrap;
   span {
     margin-bottom: @spacing-s2;
 
@@ -28,6 +30,16 @@
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  > span {
+    width: 50%;
+    padding-right: @spacing-s2;
+    padding-left: @spacing-s2;
+
+    &.filter-all {
+      width: 100%;
     }
   }
 }
