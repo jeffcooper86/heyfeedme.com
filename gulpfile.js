@@ -10,6 +10,7 @@ var jsPrettify = require('gulp-jsbeautifier');
 var csscomb = require('gulp-csscomb');
 var diff = require('gulp-diff');
 var glob = require('glob');
+var cssmin = require('gulp-cssmin');
 
 var utils = require(process.cwd() + '/utils/global.js');
 
@@ -44,6 +45,7 @@ gulp.task('dist:less', function() {
     .pipe(autoprefixer({
       browsers: ['> 5%']
     }))
+    .pipe(cssmin())
     .pipe(gulp.dest(`${paths.public.dist}styles/`));
 
   lessPageCompile();
