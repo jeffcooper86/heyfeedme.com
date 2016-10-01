@@ -132,6 +132,7 @@ function lessPageCompile() {
         .pipe(autoprefixer({
           browsers: ['> 5%']
         }))
+        .pipe(cssmin())
         .pipe(gulp.dest(buildDest(f)));
     });
   });
