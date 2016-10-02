@@ -18,14 +18,15 @@ function addField(opts) {
     if ($newField.is('input, textarea')) {
       $newField.val('');
     } else {
+      var scope = String(Math.random()).slice(2);
       $newField.find('input').each(function(i, input) {
         var $input = $(input);
         $input.val('');
-        $input.attr('id', `${fieldsLength}${$input.attr('id')}`);
+        $input.attr('id', `${scope}${$input.attr('id')}`);
       });
       $newField.find('label').each(function(i, label) {
         var $label = $(label);
-        $label.attr('for', `${fieldsLength}${$label.attr('for')}`);
+        $label.attr('for', `${scope}${$label.attr('for')}`);
       });
     }
 
