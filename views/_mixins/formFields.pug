@@ -22,11 +22,12 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
 
       if type === 'Array'
         if field.$isMongooseDocumentArray
-          each value, i in field.data
-            .form-group.fg-spread(class=`fg-${key}`)
-              +subdocField(field, key, value, i)
-          .form-group.fg-spread(class=`fg-${key}`)
-            +subdocField(field, key)
+          div(class=`js-form-add-${key}`)
+            each value, i in field.data
+              .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
+                +subdocField(field, key, value, i)
+          .text-center
+            button(data-form-add=key).btn.btn-2.js-form-add Add more
 
         else if field.caster.enumValues && field.caster.enumValues.length
           .form-group.fg-spread
@@ -42,12 +43,13 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
                 ).no-space
 
         else
-          .form-group
+          .form-group(class=`js-form-add-${key}`)
             each value in field.data
               input(id=siName type='text' name=sName value=value).form-field.ff-wide
-            input(id=sName type='text' name=sName).form-field.ff-wide
             if !field.data.length
               input(id=sName type='text' name=sName).form-field.ff-wide
+          .text-center
+            button(data-form-add=key).btn.btn-2.js-form-add Add more
 
       else if type === 'Boolean'
         input(id=siName name=sName type='checkbox').form-field
