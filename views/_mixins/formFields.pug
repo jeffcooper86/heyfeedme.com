@@ -9,6 +9,27 @@ mixin subdocField(field, fieldScope, data, i)
     i
   )
 
+mixin formFieldStringNum(val, options, sName, siName)
+  if Array.isArray(options.type)
+    - options = options.type[0]
+  if options.longText
+    textarea(
+      id=siName
+      name=sName
+      maxlength=options.maxlength
+    ).form-field.ff-wide= val
+  else if options.file
+    input(
+      type='file'
+      name=sName
+    ).form-field.ff-wide
+    if options.file === 'image' && val
+      img(src=`/${val}`).form-field.ff-wide
+    else
+      p= val
+  else
+    input(id=siName name=sName type='text' value=val).form-field.ff-wide
+
 mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
   each field, key in fields
     -var type = field.instance
@@ -26,6 +47,9 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
             each value, i in field.data
               .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
                 +subdocField(field, key, value, i)
+            if !field.data.length
+              .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
+                +subdocField(field, key, value)
           .text-center
             button(data-form-add=key).btn.btn-2.js-form-add Add more
 
@@ -45,9 +69,9 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
         else
           .form-group(class=`js-form-add-${key}`)
             each value in field.data
-              input(id=siName type='text' name=sName value=value).form-field.ff-wide
+              +formFieldStringNum(value, field.options, sName, siName)
             if !field.data.length
-              input(id=sName type='text' name=sName).form-field.ff-wide
+              +formFieldStringNum(value, field.options, sName, siName)
           .text-center
             button(data-form-add=key).btn.btn-2.js-form-add Add more
 
@@ -77,20 +101,4 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
           ).form-field.ff-wide
 
       else if type === 'String' || type === 'Number'
-        if field.options.longText
-          textarea(
-            id=siName
-            name=sName
-            maxlength=field.options.maxlength
-          ).form-field.ff-wide= field.data
-        else if field.options.file
-          input(
-            type='file'
-            name=sName
-          ).form-field.ff-wide
-          if field.options.file === 'image' && field.data
-            img(src=`/${field.data}`).form-field.ff-wide
-          else
-            p= field.data
-        else
-          input(id=siName name=sName type='text' value=field.data).form-field.ff-wide
+        +formFieldStringNum(field.data, field.options, sName, siName)

@@ -75,7 +75,9 @@ var recipeSchema = new Schema({
   }],
   ingredients: [ingredientSchema],
   steps: [{
-    type: String
+    type: String,
+    longText: true,
+    maxlength: 140
   }],
   uploaded: {
     type: Date,
