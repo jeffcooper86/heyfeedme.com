@@ -1,6 +1,5 @@
 var forms = require('../../components/forms');
-var overlays = require('../../components/overlays');
-var modals = require('../../components/modals');
+var ui = require('../../ui');
 
 forms.addField({
   el: '.js-form-add'
@@ -8,24 +7,8 @@ forms.addField({
 
 $('.js-form-actions .js-delete').on('click', function(e) {
   e.preventDefault();
-  overlays.showOverlay({
-    noScroll: true,
-    el: '.js-overlay',
-    cb: showModal
+  ui.showModalWithOverlay({
+    modalEl: '.js-modal',
+    overlayEl: '.js-overlay'
   });
 });
-
-function hideOverlay() {
-  overlays.hideOverlay({
-    el: '.js-overlay'
-  });
-}
-
-function showModal() {
-  modals.showModal({
-    el: '.js-modal',
-    hide: {
-      cb: hideOverlay
-    }
-  });
-}
