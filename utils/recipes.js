@@ -37,8 +37,12 @@ function getRecipes(Recipes, cats, cb) {
   var q;
   if (cats && cats.indexOf('all') < 0) {
     q = Recipes.model.find()
-      .where('categories').in(cats);
-  } else q = Recipes.model.find();
+      .where('categories').in(cats)
+      .where('published').equals(true);
+  } else {
+    q = Recipes.model.find()
+      .where('published').equals(true);
+  }
   q.exec(function(err, recipes) {
     cb(err, recipes);
   });

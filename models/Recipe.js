@@ -98,7 +98,7 @@ module.exports.model = mongoose.model('Recipe', recipeSchema);
 
 // For admin model/collection views.
 module.exports.adminModelDefaults = 'name'.split(' ');
-module.exports.adminModelTable = 'name categories summary updated'.split(' ');
+module.exports.adminModelTable = 'name categories summary updated published'.split(' ');
 
 // For admin model view queries.
 module.exports.adminModelSelect = '';

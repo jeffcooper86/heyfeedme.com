@@ -19,10 +19,11 @@ mixin formFieldStringNum(val, options, sName, siName)
       maxlength=options.maxlength
     ).form-field.ff-wide= val
   else if options.file
-    input(
-      type='file'
-      name=sName
-    ).form-field.ff-wide
+    .form-field.ff-wide
+      input(
+        type='file'
+        name=sName
+      )
     if options.file === 'image' && val
       img(src=`/${val}`).form-field.ff-wide
     else
@@ -76,12 +77,13 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
             button(data-form-add=key).btn.btn-2.js-form-add Add more
 
       else if type === 'Boolean'
-        input(
-          id=siName
-          name=sName
-          type='checkbox'
-          checked=field.data
-        ).form-field
+        .form-field.ff-wide
+          input(
+            id=siName
+            name=sName
+            type='checkbox'
+            checked=field.data
+          )
 
       else if type === 'Date'
         if field.options.fixed
