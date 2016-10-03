@@ -2,7 +2,9 @@ var _ = require('lodash');
 var utils = require(process.cwd() + '/utils/global');
 
 module.exports.buildModelPath = buildModelPath;
+module.exports.formatReqData = formatReqData;
 module.exports.formatReqDataDocArrays = formatReqDataDocArrays;
+module.exports.formatReqDataBools = formatReqDataBools;
 module.exports.schemaDefaults = schemaDefaults;
 module.exports.schemaDefaultsPopulated = schemaDefaultsPopulated;
 module.exports.schemaOfModel = schemaOfModel;
@@ -12,6 +14,10 @@ module.exports.schemaPopulated = schemaPopulated;
 function buildModelPath(modelName) {
   return process.cwd() + '/models/' + _.capitalize(modelName.slice(0, -1)) +
     '.js';
+}
+
+function formatReqData(data, schema) {
+  return formatReqDataBools(formatReqDataDocArrays(data, schema), schema);
 }
 
 function formatReqDataDocArrays(data, schema) {
@@ -56,6 +62,14 @@ function formatReqDataDocArrays(data, schema) {
     data[k] = docArray;
   });
 
+  return data;
+}
+
+function formatReqDataBools(data, schema) {
+  data = _.cloneDeep(data);
+  _.forEach(schema, function(s, k) {
+    if (s.instance === 'Boolean') data[k] = !!data[k];
+  });
   return data;
 }
 

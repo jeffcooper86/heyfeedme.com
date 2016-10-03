@@ -30,7 +30,7 @@ exports = module.exports = function(req, res, next) {
     next(err);
   }
   MongooseModel = Model.model;
-  reqData = dbUtils.formatReqDataDocArrays(req.body, MongooseModel.schema.paths);
+  reqData = dbUtils.formatReqData(req.body, MongooseModel.schema.paths);
 
   async.waterfall([
     getDocument,
@@ -76,8 +76,7 @@ exports = module.exports = function(req, res, next) {
       if (err) {
         console.log(err);
         req.flash('error', 'Error updating the document.');
-      }
-      req.flash('success', 'Document saved.');
+      } else req.flash('success', 'Document saved.');
 
       // Need to get document again - findByIdAndUpdate is limiting
       // http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate

@@ -46,6 +46,9 @@ ingredientSchema.virtual('text').get(function() {
 });
 
 var recipeSchema = new Schema({
+  published: {
+    type: Boolean
+  },
   name: {
     type: String,
     required: true,

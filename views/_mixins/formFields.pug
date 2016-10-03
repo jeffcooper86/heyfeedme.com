@@ -76,7 +76,12 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
             button(data-form-add=key).btn.btn-2.js-form-add Add more
 
       else if type === 'Boolean'
-        input(id=siName name=sName type='checkbox').form-field
+        input(
+          id=siName
+          name=sName
+          type='checkbox'
+          checked=field.data
+        ).form-field
 
       else if type === 'Date'
         if field.options.fixed
