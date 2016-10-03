@@ -14,9 +14,9 @@ function updateRecipes($recipes) {
     ui.loadingStop($recipesWrap);
     $recipes.replaceWith(data.recipesHtml);
 
-    // No recipes, suggest updating filters.
-    if (!data.recipesCount) nav.doNav({
-      el: '.rlm-none .js-nav-ctrl'
+    // Attach new listeners.
+    nav.doNav({
+      el: '.rlm-none .js-nav-ctrl, .rlm-tally .js-nav-ctrl'
     });
   });
 }

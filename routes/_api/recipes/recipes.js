@@ -5,10 +5,11 @@ var pug = require('pug');
 exports = module.exports = function(req, res) {
   var l = res.locals,
     t = process.cwd() + '/views/_mixins/recipes.pug',
-    searchQ = req.query.search;
+    searchQ = req.query.search,
+    activeSections = res.locals.data.recipes.activeCats;
 
   recipesUtils.getRecipes(
-    Recipes, res.locals.data.recipes.activeCats, searchRecipes
+    Recipes, activeSections, searchRecipes
   );
 
   function searchRecipes(err, recipes) {
@@ -22,6 +23,7 @@ exports = module.exports = function(req, res) {
     if (err) res.render('_error500');
     else if (req.params.html) {
       l.recipes = recipes;
+      l.activeSections = activeSections;
       l.compileRecipes = true;
       data.recipesHtml = pug.renderFile(t, l);
       data.recipesCount = recipes.length;

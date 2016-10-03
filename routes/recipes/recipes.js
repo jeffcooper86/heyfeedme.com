@@ -5,14 +5,15 @@ var recipesUtils = require(process.cwd() + '/utils/recipes');
 exports = module.exports = function(req, res) {
   var l = res.locals,
     template = 'recipes/recipes',
-    activeRecipeSections = res.locals.data.recipes.activeCats,
+    activeSections = res.locals.data.recipes.activeCats,
     searchQ = req.query.search;
 
   // Set locals.
   l.data.search = searchQ;
+  l.activeSections = activeSections;
 
-  // Reset the activeRecipeSections cookies.
-  recipesUtils.setActiveCategories(res, activeRecipeSections);
+  // Reset the activeSections cookies.
+  recipesUtils.setActiveCategories(res, activeSections);
 
   async.waterfall([
     getAll,
@@ -24,7 +25,7 @@ exports = module.exports = function(req, res) {
   });
 
   function getAll(cb) {
-    recipesUtils.getRecipes(Recipes, activeRecipeSections, cb);
+    recipesUtils.getRecipes(Recipes, activeSections, cb);
   }
 
   function search(recipes, cb) {

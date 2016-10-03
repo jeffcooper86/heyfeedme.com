@@ -26,12 +26,15 @@ function slugify(route) {
   return '';
 }
 
-function stringifyArray(arr, separator, limit) {
+function stringifyArray(arr, separator, limit, more) {
   var str,
-    extra = limit && arr.length - limit;
+    extra = limit && arr.length - limit,
+    moreTxt1 = more ? more[0] : 'and',
+    moreTxt2 = more ? more[1] : 'more...';
+
   arr = extra ? arr.slice(0, arr.length - extra) : arr;
   str = arr.join(separator);
-  if (extra > 0) str += separator + 'and ' + extra + ' more...';
+  if (extra > 0) str += `${separator}${moreTxt1}${extra}${moreTxt2}`;
   return str;
 }
 

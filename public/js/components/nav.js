@@ -5,7 +5,8 @@ function doNav(opts) {
     $navControl = $(el),
     $nav;
 
-  $navControl.on('click', function() {
+  $navControl.on('click', function(e) {
+    e.preventDefault();
     $nav = $($(this).data('nav'));
     $nav.toggleClass('active');
   });

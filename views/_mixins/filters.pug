@@ -1,9 +1,7 @@
-mixin recipeFilters(filterItems, activeFilters)
+mixin filtersSections(filterItems, activeFilters)
 
   if filterItems && activeFilters
     .filters-wrap
-      span.snm-section
-        =filters.capitalizeTitles(filters.i.stringifyArray(activeFilters, ', ', 2), ['and', 'more...'])
       .filters.js-filters(data-filters='sections')
         span(
           data-filter='all'
