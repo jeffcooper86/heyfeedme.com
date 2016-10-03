@@ -2,10 +2,12 @@
   .module-content-wrap.mcw-s1.text-center
     .container.container-1
       form
-        input(
-          type='text'
-          name='search'
-          placeholder='What to eat?'
-          value=data.search
-        ).sm-search
+        .input-icon.sm-search
+          i.icon.fa.fa-search.no-click
+          input(
+            type='text'
+            name='search'
+            placeholder='What to eat?'
+            value=data.search
+          )
         input(type='submit' value='Search').btn.btn-1.sm-submit

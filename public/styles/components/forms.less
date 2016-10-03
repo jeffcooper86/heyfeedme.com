@@ -181,6 +181,27 @@ textarea {
   height: @font-size-l1 * 2;
 }
 
+.input-icon {
+  position: relative;
+
+  display: inline-block;
+
+  > .icon {
+    position: absolute;
+    top: 50%;
+    left: @spacing + 5;
+
+    transform: translate(0, -50%);
+    pointer-events: none;
+
+    color: @color-gray-d1;
+  }
+
+  input {
+    padding-left: @spacing * 2;
+  }
+}
+
 .label-2 {
   font-size: @font-size-s1;
 }

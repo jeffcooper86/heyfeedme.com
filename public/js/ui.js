@@ -1,4 +1,4 @@
-var modals = require('.components/modals');
+var modals = require('./components/modals');
 var overlays = require('./components/overlays');
 
 module.exports.loadingStart = loadingStart;

@@ -12,19 +12,26 @@
 .sm-search {
   @media(max-width: @bp-m3-max) {
     width: 100%;
-    margin-right: 0;
-    margin-left: 0;
-    padding-right: @spacing-s1;
-    padding-left: @spacing-s1;
 
-    border-color: @color-gray-l1;
-    border-top: 0;
-    border-right: 0;
-    border-left: 0;
-    border-radius: 0;
+    input {
+      width: 100%;
+      margin-right: 0;
+      margin-left: 0;
+      padding-right: @spacing-s1;
 
-    &::placeholder {
-      color: @color-gray-d3;
+      border-color: @color-gray-l1;
+      border-top: 0;
+      border-right: 0;
+      border-left: 0;
+      border-radius: 0;
+
+      &::placeholder {
+        color: @color-gray-d3;
+      }
+    }
+
+    .icon {
+      left: @spacing-s2;
     }
   }
 }
