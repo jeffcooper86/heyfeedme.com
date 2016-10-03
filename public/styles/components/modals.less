@@ -1,0 +1,22 @@
+.modal {
+  position: fixed;
+  z-index: @z-index-modal;
+  top: 50%;
+  left: 50%;
+
+  display: none;
+
+  width: 600px;
+
+  transform: translate(-50%, -50%);
+
+  background: @color-white;
+
+  &.active {
+    display: block;
+  }
+}
+
+.modal-content {
+  margin: @spacing-l1;
+}

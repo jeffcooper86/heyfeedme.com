@@ -24,6 +24,11 @@ html
                 a(href='/') Home
                 span &copy; HeyFeedMe #{filters.moment().format('YYYY')}
 
+    block modals
+      .modal.js-modal
+    block overlays
+      .overlay.js-overlay
+
     script(src='/bower_components/jquery/dist/jquery.min.js')
     script(src='/dist/js/main.js')
     block js

@@ -1,18 +1,22 @@
 .overlay {
-  position: absolute;
+  position: fixed;
+  z-index: @z-index-overlay;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+
+  display: none;
+
+  background: @color-white;
+
+  &.active {
+    display: block;
+  }
 }
 
 .overlay-1 {
   background: fade(@color-black, 10%);
-}
-
-.overlay-content {
-  position: relative;
-  z-index: @z-index-overlay;
 }
 
 .overlay-wrap {

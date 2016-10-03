@@ -11,10 +11,30 @@ block adminBody
           form(
             method='post'
             enctype='multipart/form-data'
+            id='formDocument'
           ).form.form-small.form-admin
             include ./includes/update-delete
             +formFieldsFromSchema(populatedSchema, 'fg-l1')
             include ./includes/update-delete
+
+block modals
+  .modal.js-modal
+    .modal-content
+      p
+        i.icon.no-click.fa.fa-exclamation-triangle
+      p
+        | Are you sure you want to delete #{doc.name || doc.id}?
+      .form-group.text-center
+        button.btn.btn-3.js-modal-confirm(
+          form='formDocument'
+          value='delete'
+          name='action'
+          type='submit'
+        ) Delete
+        button.btn.btn-1.js-modal-dismiss Cancel
+
+block overlays
+  .overlay.overlay-1.js-overlay
 
 block js
   script(src='/dist/js/pages/admin/document.js')

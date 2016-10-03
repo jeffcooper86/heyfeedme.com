@@ -57,6 +57,7 @@ exports = module.exports = function(req, res, next) {
         res.render('_error500');
       }
       doc = document;
+      l.doc = doc;
       cb();
     });
   }
