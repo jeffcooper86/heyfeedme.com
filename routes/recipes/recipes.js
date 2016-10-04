@@ -6,6 +6,7 @@ exports = module.exports = function(req, res) {
   var l = res.locals,
     template = 'recipes/recipes',
     activeSections = res.locals.data.recipes.activeCats,
+    activeClasses = res.locals.data.recipes.activeClasses,
     searchQ = req.query.search;
 
   // Set locals.
@@ -25,7 +26,11 @@ exports = module.exports = function(req, res) {
   });
 
   function getAll(cb) {
-    recipesUtils.getRecipes(Recipes, activeSections, cb);
+    var filters = {
+      activeSections: activeSections,
+      activeClasses: activeClasses
+    };
+    recipesUtils.getRecipes(Recipes, filters, cb);
   }
 
   function search(recipes, cb) {

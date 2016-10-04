@@ -2,26 +2,39 @@ var utils = require(process.cwd() + '/utils/global');
 var _ = require('lodash');
 
 module.exports.getActiveCategories = getActiveCategories;
+module.exports.getActiveClassifications = getActiveClassifications;
+module.exports.getActiveFilters = getActiveFilters;
 module.exports.getCategories = getCategories;
 module.exports.getClassifications = getClassifications;
 module.exports.getRecipes = getRecipes;
 module.exports.searchRecipes = searchRecipes;
 module.exports.setActiveCategories = setActiveCategories;
 
-function getActiveCategories(req) {
+function getActiveFilters(req, filter) {
 
   // First check request for params and fall back to cookies.
-  var activeCats = _getActiveCategoriesFromUrl(req) ||
-    req.cookies.sections;
+  var actives = _getFiltersFromUrl(req, filter) ||
+    utils.i.getNested(req, `cookies.${filter}`);
 
-  if (typeof(activeCats) === 'string') {
-    activeCats = JSON.parse(activeCats);
+  if (typeof(actives) === 'string') {
+    actives = JSON.parse(actives);
   }
 
   // Default to All.
-  if (!activeCats || !activeCats.length) activeCats = ['all'];
+  if (!actives ||
+    !actives.length ||
+    (actives.length === 1 && !actives[0])
+  ) actives = ['all'];
 
-  return activeCats;
+  return actives;
+}
+
+function getActiveCategories(req) {
+  return getActiveFilters(req, 'sections');
+}
+
+function getActiveClassifications(req) {
+  return getActiveFilters(req, 'diets');
 }
 
 function getCategories() {
@@ -33,18 +46,18 @@ function getClassifications() {
   return 'vegetarian;vegan;gluten free'.split(';').sort();
 }
 
-function getRecipes(Recipes, cats, cb) {
-  var q;
-  if (cats && cats.indexOf('all') < 0) {
-    q = Recipes.model.find()
-      .where('categories').in(cats)
-      .where('published').equals(true)
-      .sort('name');
-  } else {
-    q = Recipes.model.find()
-      .where('published').equals(true)
-      .sort('name');
+function getRecipes(Recipes, filters, cb) {
+  var q = Recipes.model.find()
+    .where('published').equals(true),
+    cats = filters.activeSections,
+    classes = filters.activeClasses;
+
+  if (cats && cats.indexOf('all') < 0) q.where('categories').in(cats);
+  if (classes && classes.indexOf('all') < 0) {
+    q.where('classifications').in(classes);
   }
+
+  q.sort('name');
   q.exec(function(err, recipes) {
     cb(err, recipes);
   });
@@ -84,9 +97,11 @@ function setActiveCategories(res, cats) {
   res.cookie('sections', cats);
 }
 
-function _getActiveCategoriesFromUrl(req) {
+function _getFiltersFromUrl(req, param) {
 
   // To do: Restrict to valid categories
-  return req.query.sections &&
-    utils.i.unslugify(req.query.sections.toLowerCase()).split(',');
+  return req.query[param] &&
+    utils.i.unslugify(
+      utils.i.getNested(req, `query.${param}`)
+    ).toLowerCase().split(',');
 }

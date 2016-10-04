@@ -6,11 +6,14 @@ exports = module.exports = function(req, res) {
   var l = res.locals,
     t = process.cwd() + '/views/_mixins/recipes.pug',
     searchQ = req.query.search,
-    activeSections = res.locals.data.recipes.activeCats;
+    activeSections = res.locals.data.recipes.activeCats,
+    activeClasses = res.locals.data.recipes.activeClasses,
+    filters = {
+      activeSections: activeSections,
+      activeClasses: activeClasses
+    };
 
-  recipesUtils.getRecipes(
-    Recipes, activeSections, searchRecipes
-  );
+  recipesUtils.getRecipes(Recipes, filters, searchRecipes);
 
   function searchRecipes(err, recipes) {
     if (err) return sendRecipes(err);

@@ -10,7 +10,7 @@ function addValToCookieArray(name, v) {
   var cookieV = getCookie(name);
 
   // If it was all before, reset to empty array before adding.
-  if (cookieV.length === 1 && cookieV.indexOf('all') > -1) {
+  if (!cookieV || cookieV.length === 1 && cookieV.indexOf('all') > -1) {
     cookieV = [];
   }
 
@@ -20,6 +20,7 @@ function addValToCookieArray(name, v) {
 
 function getCookie(n) {
   var cookie = cookiesJs.get(n);
+  if (!cookie) return;
 
   // Not sure why but cookies saved by server start with 'j:'
   if (cookie.length > 2 && cookie[1] === ':') {

@@ -27,6 +27,9 @@ block bodyContent
               span.rsm-count= ++stepsCount
               =step
 
+      h2.heading.h3 Note
+      p.rm-notes= r.notes
+
       if r.updated
         .rm-footer
           p.rm-date Updated #{filters.moment(r.updated).format('MMMM DD, YYYY')}

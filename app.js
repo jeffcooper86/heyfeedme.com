@@ -210,7 +210,9 @@ function setGlobalData(req, res, next) {
   res.locals.data = {};
   res.locals.data.recipes = {
     categories: recipeUtils.getCategories(),
-    activeCats: recipeUtils.getActiveCategories(req)
+    activeCats: recipeUtils.getActiveCategories(req),
+    classifications: recipeUtils.getClassifications(),
+    activeClasses: recipeUtils.getActiveClassifications(req)
   };
   next();
 }

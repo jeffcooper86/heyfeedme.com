@@ -1,12 +1,12 @@
-mixin filtersSections(filterItems, activeFilters)
+mixin filtersSections(filterItems, activeFilters, opts)
 
   if filterItems && activeFilters
     .filters-wrap
-      .filters.js-filters(data-filters='sections')
+      .filters.js-filters(data-filters=opts.filterName)
         span(
           data-filter='all'
           class={active: activeFilters.indexOf('all') > -1}
-        ).filter-all all recipes
+        ).filter-all= opts.allLabel
 
         each filter in filterItems
           -var activeFilter = activeFilters && activeFilters.indexOf(filter) > -1

@@ -82,6 +82,11 @@ var recipeSchema = new Schema({
     longText: true,
     maxlength: 140
   }],
+  notes: {
+    type: String,
+    longText: true,
+    maxlength: 300
+  },
   uploaded: {
     type: Date,
     default: Date.now,
