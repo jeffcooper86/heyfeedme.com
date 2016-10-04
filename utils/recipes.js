@@ -38,10 +38,12 @@ function getRecipes(Recipes, cats, cb) {
   if (cats && cats.indexOf('all') < 0) {
     q = Recipes.model.find()
       .where('categories').in(cats)
-      .where('published').equals(true);
+      .where('published').equals(true)
+      .sort('name');
   } else {
     q = Recipes.model.find()
-      .where('published').equals(true);
+      .where('published').equals(true)
+      .sort('name');
   }
   q.exec(function(err, recipes) {
     cb(err, recipes);
