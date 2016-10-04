@@ -17,7 +17,10 @@ function buildModelPath(modelName) {
 }
 
 function formatReqData(data, schema) {
-  return formatReqDataBools(formatReqDataDocArrays(data, schema), schema);
+  return trimEmptyReqDataArrays(
+    formatReqDataBools(formatReqDataDocArrays(data, schema), schema),
+    schema
+  );
 }
 
 function formatReqDataDocArrays(data, schema) {
@@ -97,4 +100,14 @@ function schemaPopulated(data, schema) {
     if (newSchema[key]) newSchema[key].data = data[key];
   }
   return newSchema;
+}
+
+function trimEmptyReqDataArrays(data, schema) {
+  data = _.cloneDeep(data);
+  _.forEach(schema, function(field) {
+    if (field.instance === 'Array') {
+      if (data[field.path] === '') data[field.path] = [];
+    }
+  });
+  return data;
 }
