@@ -9,7 +9,7 @@ mixin recipes(recipes)
       .rlm-recipes-wrap
         each r in recipes
           a(href=filters.i.slugify(`/recipe/${r.name}/${r.id}`)).rlm-recipe
-            .rlm-title= filters.capitalizeTitles(r.name)
+            p.rlm-title= filters.capitalizeTitles(r.name)
             .rlm-photo(
               style= r.photo ? `background-image:url(/${r.photo});` : null
             )
