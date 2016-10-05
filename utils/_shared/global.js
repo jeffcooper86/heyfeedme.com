@@ -8,6 +8,7 @@ module.exports.tally = tally;
 module.exports.trimDirectories = trimDirectories;
 module.exports.truncate = truncate;
 module.exports.unslugify = unslugify;
+module.exports.verticalFlowColumns = verticalFlowColumns;
 
 function getFileExt(s) {
   var a = s.split('.');
@@ -65,4 +66,17 @@ function truncate(s, n) {
 function unslugify(route) {
   if (route) return route.replace('-', ' ');
   return '';
+}
+
+function verticalFlowColumns(data) {
+  var newD = [],
+    l = data.length;
+
+  for (var i = 0; i < Math.floor(l / 2); i += 1) {
+    newD.push(data[i]);
+    newD.push(data[Math.floor(l / 2) + (i + 1)]);
+  }
+
+  if (l % 2 === 1) newD.push(data[Math.floor(l / 2)]);
+  return newD;
 }

@@ -5,7 +5,7 @@ nav.m-right-nav.js-right-nav
     .rnm-sections
       span.h3 Sections
       +filtersSections(
-        data.recipes.categories,
+        filters.i.verticalFlowColumns(data.recipes.categories),
         data.recipes.activeCats,
         {
           filterName: 'sections',
@@ -14,7 +14,7 @@ nav.m-right-nav.js-right-nav
       )
       span Diets
       +filtersSections(
-        data.recipes.classifications,
+        filters.i.verticalFlowColumns(data.recipes.classifications),
         data.recipes.activeClasses,
         {
           filterName: 'diets',
