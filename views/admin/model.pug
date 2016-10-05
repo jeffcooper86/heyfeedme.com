@@ -8,30 +8,30 @@ block adminBody
       +formFieldsFromSchema(populatedSchema)
       .text-center
         input(type='submit', value='create').btn.btn-1
-
-    table.tbl.tbl-full.tbl-small.tbl-spaced-l2.tbl-color.tbl-h-1col
-      -var newCount = 0
-      thead
-        tr.tbl-sort.js-tbl-sort
-          th
-          th
-            span(data-sort='_id').sort.js-sort _id
-          each key in tableColumns
+    .table-wrap
+      table.tbl.tbl-full.tbl-small.tbl-spaced-l2.tbl-color.tbl-h-1col
+        -var newCount = 0
+        thead
+          tr.tbl-sort.js-tbl-sort
             th
-              span(data-sort=key).sort.js-sort= key
-      tbody
-        each doc in docs
-          -var d = doc.toObject()
-          tr
-            th= ++newCount
-            td
-              a(href='/admin/' + modelName + '/' + d._id)
-                | #{filters.i.truncate(d._id, 6)}
-              each key in tableColumns
-                if filters.i.getNested(schema, `${key}.instance`) === 'Date'
-                  td= d[key] ? filters.moment(d[key]).format('MMM DD YYYY HH:mm:ss') : null
-                else
-                  td= d[key]
+            th
+              span(data-sort='_id').sort.js-sort _id
+            each key in tableColumns
+              th
+                span(data-sort=key).sort.js-sort= key
+        tbody
+          each doc in docs
+            -var d = doc.toObject()
+            tr
+              th= ++newCount
+              td
+                a(href='/admin/' + modelName + '/' + d._id)
+                  | #{filters.i.truncate(d._id, 6)}
+                each key in tableColumns
+                  if filters.i.getNested(schema, `${key}.instance`) === 'Date'
+                    td= d[key] ? filters.moment(d[key]).format('MMM DD YYYY HH:mm:ss') : null
+                  else
+                    td= d[key]
 
 block js
   script(src='/dist/js/pages/admin/model.js')
