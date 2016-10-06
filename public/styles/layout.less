@@ -51,8 +51,13 @@
   margin-right: auto;
   margin-left: auto;
   padding-bottom: 40px;
+  margin-top: @header-height;
 
   background: @color-white;
+
+  @media(min-width: @bp-m4-min) {
+    margin-top: (@header-height-d + 1);
+  }
 }
 
 .spaced-1 {

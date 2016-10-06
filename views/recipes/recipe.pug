@@ -1,5 +1,8 @@
 extends ../_layouts/content
 
+block styles
+  link(rel='stylesheet' href='/dist/styles/pages/recipes/recipe.css')
+
 block bodyContent
   -var r = data.recipe
   .container.container-3
