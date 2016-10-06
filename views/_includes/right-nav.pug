@@ -3,7 +3,7 @@ nav.m-right-nav.js-right-nav
     span.rnm-ctrl
       i(data-nav='.js-right-nav').icon.fa.fa-times.js-nav-ctrl
     .rnm-sections
-      span.h3 Sections
+      span.heading.h3.no-space-top Sections
       +filtersSections(
         filters.i.sortVerticalFlowColumns(data.recipes.categories),
         data.recipes.activeCats,
@@ -12,7 +12,7 @@ nav.m-right-nav.js-right-nav
           allLabel: 'all recipes'
         }
       )
-      span Diets
+      span.heading.h3 Diets
       +filtersSections(
         filters.i.sortVerticalFlowColumns(data.recipes.classifications),
         data.recipes.activeClasses,
