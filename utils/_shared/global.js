@@ -4,12 +4,12 @@ module.exports.chunk = chunk;
 module.exports.getFileExt = getFileExt;
 module.exports.getNested = getNested;
 module.exports.slugify = slugify;
+module.exports.sortVerticalFlowColumns = sortVerticalFlowColumns;
 module.exports.stringifyArray = stringifyArray;
 module.exports.tally = tally;
 module.exports.trimDirectories = trimDirectories;
 module.exports.truncate = truncate;
 module.exports.unslugify = unslugify;
-module.exports.verticalFlowColumns = verticalFlowColumns;
 
 function chunk(data, n) {
   var newD = [],
@@ -54,6 +54,21 @@ function slugify(route) {
   return '';
 }
 
+function sortVerticalFlowColumns(data, n) {
+
+  // Default to 2 columns.
+  n = (!n || n < 2) ? 2 : n;
+  var chunked = chunk(data, n),
+    newD = [];
+
+  for (var i = 0; i < Math.ceil((1 / n) * data.length); i += 1) {
+    for (var j = 0; j < n; j += 1) {
+      if (chunked[j][i]) newD.push(chunked[j][i]);
+    }
+  }
+  return newD;
+}
+
 function stringifyArray(arr, separator, limit, more) {
   var str,
     extra = limit && arr.length - limit,
@@ -93,19 +108,4 @@ function truncate(s, n) {
 function unslugify(route) {
   if (route) return route.replace('-', ' ');
   return '';
-}
-
-function verticalFlowColumns(data, n) {
-
-  // Default to 2 columns.
-  n = (!n || n < 2) ? 2 : n;
-  var chunked = chunk(data, n),
-    newD = [];
-
-  for (var i = 0; i < Math.ceil((1 / n) * data.length); i += 1) {
-    for (var j = 0; j < n; j += 1) {
-      if (chunked[j][i]) newD.push(chunked[j][i]);
-    }
-  }
-  return newD;
 }
