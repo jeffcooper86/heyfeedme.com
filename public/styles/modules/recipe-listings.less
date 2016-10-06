@@ -20,6 +20,10 @@
 
   background: @color-gray-l2;
 
+  @media(min-width: @bp-m4-min) {
+    margin-bottom: @spacing;
+  }
+
   @media(min-width: @bp-m4-min) and (max-width: @bp-d1-max) {
     width: calc(~'50% - '@spacing-s2);
 
@@ -79,15 +83,38 @@
 .rlm-tally {
   font-size: @font-size-s1;
 
-  margin: @spacing-s1 0;
+  margin-top: @spacing-l1;
+  margin-bottom: @spacing-l1;
+  padding: @spacing-s1;
 
   text-align: left;
+
+  border-radius: @border-radius;
+  background: @color-2-l2;
+
+  @media(min-width: @bp-m4-min) {
+    margin-top: @spacing;
+    margin-bottom: @spacing;
+    padding: 0;
+
+    background: none;
+  }
+
+  a {
+    color: @color-2-d2;
+
+    @media(min-width: @bp-m4-min) {
+      color: @color-1-d1;
+    }
+  }
 }
 
 .rlm-title {
   font-size: @font-size;
 
-  padding: @spacing-s2 @container-padding;
+  padding-right: @container-padding;
+  padding-bottom: @spacing-s2;
+  padding-left: @container-padding;
 
   color: @color-1-d3;
   background: @color-white;
