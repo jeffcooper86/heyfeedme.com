@@ -21,6 +21,11 @@
   padding-right: @container-padding;
   padding-left: @container-padding;
 
+  @media(min-width: @bp-d1-min) {
+    padding-right: @container-padding-d;
+    padding-left: @container-padding-d;
+  }
+
   &.container-no-space {
     padding-right: 0;
     padding-left: 0;
@@ -29,7 +34,7 @@
 
 .container-1 {
   width: 100%;
-  max-width: 1500px;
+  max-width: 1400px;
 }
 
 .container-2 {
