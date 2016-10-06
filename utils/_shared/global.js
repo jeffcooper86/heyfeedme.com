@@ -1,5 +1,6 @@
 // Server and client side global utils - avoid large libraries.
 
+module.exports.chunk = chunk;
 module.exports.getFileExt = getFileExt;
 module.exports.getNested = getNested;
 module.exports.slugify = slugify;
@@ -9,6 +10,32 @@ module.exports.trimDirectories = trimDirectories;
 module.exports.truncate = truncate;
 module.exports.unslugify = unslugify;
 module.exports.verticalFlowColumns = verticalFlowColumns;
+
+function chunk(data, n) {
+  var newD = [],
+    l = data.length;
+
+  // Default to 2 chunks.
+  n = (!n || n < 2) ? 2 : n;
+
+  var chunk = Math.ceil(1 / n * l),
+    chunked = 0;
+
+  // Add each chunk.
+  for (var chunkI = 0; chunkI < n; chunkI += 1) {
+    newD.push([]);
+
+    // Reduce the chunk amount by one after chunking all the left overs.
+    if (chunkI === n - ((chunk * n) - l)) chunk -= 1;
+
+    // Add to the chunks.
+    for (var i = 0; i < chunk; i += 1) {
+      chunked += 1;
+      newD[chunkI][i] = data[chunked - 1];
+    }
+  }
+  return newD;
+}
 
 function getFileExt(s) {
   var a = s.split('.');
@@ -68,15 +95,17 @@ function unslugify(route) {
   return '';
 }
 
-function verticalFlowColumns(data) {
-  var newD = [],
-    l = data.length;
+function verticalFlowColumns(data, n) {
 
-  for (var i = 0; i < Math.floor(l / 2); i += 1) {
-    newD.push(data[i]);
-    newD.push(data[Math.floor(l / 2) + (i + 1)]);
+  // Default to 2 columns.
+  n = (!n || n < 2) ? 2 : n;
+  var chunked = chunk(data, n),
+    newD = [];
+
+  for (var i = 0; i < Math.ceil((1 / n) * data.length); i += 1) {
+    for (var j = 0; j < n; j += 1) {
+      if (chunked[j][i]) newD.push(chunked[j][i]);
+    }
   }
-
-  if (l % 2 === 1) newD.push(data[Math.floor(l / 2)]);
   return newD;
 }
