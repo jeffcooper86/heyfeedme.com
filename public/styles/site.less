@@ -1,17 +1,27 @@
 @root-path: '../../';
 
-// Libraries
+/**
+ * Libraries.
+ * ----------------------------
+ */
 @import '@{root-path}public/bower_components/reset-css/reset.less';
 
-// Core
+/**
+ * Core.
+ * ----------------------------
+ */
 @import '_variables.less';
+@import '_mixins.less';
 @import 'base.less';
 @import 'layout.less';
 @import 'type.less';
 @import 'ui.less';
 @import 'utils.less';
 
-// Components
+/**
+ * Components.
+ * ----------------------------
+ */
 @import 'components/buttons.less';
 @import 'components/crumbs.less';
 @import 'components/filters.less';
@@ -23,7 +33,10 @@
 @import 'components/overlays.less';
 @import 'components/tables.less';
 
-// Modules
+/**
+ * Modules.
+ * ----------------------------
+ */
 @import 'modules/admin-header';
 @import 'modules/flash-messages';
 @import 'modules/footer.less';
@@ -39,5 +52,8 @@
 @import 'modules/search.less';
 @import 'modules/site-nav.less';
 
-// Fonts
+/**
+ * Fonts.
+ * ----------------------------
+ */
 @import '@{root-path}public/fonts/fonts.less';

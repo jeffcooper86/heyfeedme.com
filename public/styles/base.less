@@ -10,6 +10,14 @@ body {
 
   color: @color-black-l3;
 
+  &.active-right-nav {
+    @media(max-width: @bp-m3-max) {
+      overflow: hidden;
+
+      height: 100%;
+    }
+  }
+
   &.no-scroll {
     overflow: hidden;
 
@@ -37,25 +45,4 @@ p {
   text-transform: capitalize;
 
   color: @color-1;
-}
-
-// Move to pages
-.admin-collection {
-  display: flex;
-
-  align-items: baseline;
-  flex-wrap: wrap;
-}
-
-.admin-field {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.admin-item {
-  width: 25%;
-  margin-bottom: 40px;
-  padding-right: 20px;
-
-  flex-basis: auto;
 }

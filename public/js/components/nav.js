@@ -1,13 +1,20 @@
-module.exports.doNav = doNav;
+module.exports.toggle = toggle;
 
-function doNav(opts) {
+function toggle(opts) {
   var el = opts.el || '.js-nav-ctrl',
-    $navControl = $(el),
-    $nav;
+    beforeShow = opts.beforeShow,
+    afterHide = opts.afterHide,
+    $navControl = $(el);
 
   $navControl.on('click', function(e) {
     e.preventDefault();
-    $nav = $($(this).data('nav'));
+    var $this = $(this),
+      $nav = $($this.data('nav'));
+
+    if (!($nav.hasClass('active')) && beforeShow) beforeShow();
+
     $nav.toggleClass('active');
+
+    if (!$nav.hasClass('active') && afterHide) afterHide();
   });
 }

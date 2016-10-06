@@ -5,7 +5,7 @@ mixin recipes(recipes)
         p.js-recipes-tally.rlm-tally
           | #{filters.i.tally(recipes, ['recipe', 'recipes'])} -
           a(href='#' data-nav='.js-right-nav').js-nav-ctrl
-            |  #{filters.capitalizeTitles(filters.i.stringifyArray(activeSections, ', ', 2, ['and ', ' more...']), ['more...', 'and'])}
+            |  #{filters.capitalizeTitles(filters.i.stringifyArray(activeSections, ', ', 5, ['and ', ' more...']), ['more...', 'and'])}
       .rlm-recipes-wrap
         each r in recipes
           a(href=filters.i.slugify(`/recipe/${r.name}/${r.id}`)).rlm-recipe

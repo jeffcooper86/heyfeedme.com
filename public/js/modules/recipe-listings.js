@@ -1,5 +1,5 @@
 var ui = require('../ui');
-var nav = require('../components/nav');
+var rightNav = require('../modules/right-nav');
 
 module.exports.updateRecipes = updateRecipes;
 
@@ -15,7 +15,7 @@ function updateRecipes($recipes) {
     $recipes.replaceWith(data.recipesHtml);
 
     // Attach new listeners.
-    nav.doNav({
+    rightNav.toggle({
       el: '.rlm-none .js-nav-ctrl, .rlm-tally .js-nav-ctrl'
     });
   });
