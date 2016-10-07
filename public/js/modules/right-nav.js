@@ -20,24 +20,33 @@ function init() {
 function toggle(opts) {
   var el = opts.el;
 
-  nav.toggle({
+  nav.toggleCtrl({
     el: el || '.js-nav-ctrl',
-    beforeShow: _beforeShow,
-    afterHide: _afterHide
+    beforeShow: _beforeShowNav,
+    afterHide: _afterHideNav
   });
 }
 
-function _afterHide() {
+function _afterHideNav() {
   $('body').removeClass(bodyClass);
   overlays.hideOverlay({
     el: '.js-overlay'
   });
 }
 
-function _beforeShow() {
+function _beforeShowNav() {
   $('body').addClass(bodyClass);
   overlays.showOverlay({
-    // noScroll: true,
-    el: '.js-overlay'
+    el: '.js-overlay',
+    hide: {
+      clickToHide: true,
+      cb: _afterHideOverlay
+    }
   });
+
+  function _afterHideOverlay() {
+    nav.toggle({
+      el: '.js-right-nav'
+    });
+  }
 }
