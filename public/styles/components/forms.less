@@ -84,14 +84,22 @@ label {
 textarea {
   line-height: @line-height;
 
-  height: (@font-size * @line-height * 2) + (@spacing * 2) + 2;
+  height: (@font-size * @line-height * 6) + (@spacing * 2) + 2;
   padding: @spacing;
 
   resize: vertical;
 
+  @media(min-width: @bp-m4-min) {
+    height: (@font-size * @line-height * 2) + (@spacing * 2) + 2;
+  }
+
   .form-small & {
-    height: (@font-size-s1 * @line-height * 2) + (@spacing-s2 * 2) + 2;
+    height: (@font-size-s1 * @line-height * 6) + (@spacing-s2 * 2) + 2;
     padding: @spacing-s2;
+
+    @media(min-width: @bp-m4-min) {
+      height: (@font-size-s1 * @line-height * 2) + (@spacing-s2 * 2) + 2;
+    }
   }
 }
 
@@ -102,9 +110,13 @@ textarea {
 }
 
 .form-color {
-  padding: @spacing;
+  padding: @spacing-s2;
 
   background: @color-white-d1;
+
+  @media(min-width: @bp-m4-min) {
+    padding: @container-padding-d;
+  }
 }
 
 .form-field {
@@ -122,8 +134,13 @@ textarea {
 }
 
 .form-group {
-  margin-top: @spacing;
-  margin-bottom: @spacing;
+  margin-top: @spacing-s1;
+  margin-bottom: @spacing-s1;
+
+  @media(min-width: @bp-m4-min) {
+    margin-top: @spacing;
+    margin-bottom: @spacing;
+  }
 
   &.fg-color {
     padding: @spacing;
@@ -132,13 +149,23 @@ textarea {
   }
 
   &.fg-s1 {
-    margin-top: @spacing-s1;
-    margin-bottom: @spacing-s1;
+    margin-top: @spacing-s2;
+    margin-bottom: @spacing-s2;
+
+    @media(min-width: @bp-m4-min) {
+      margin-top: @spacing-s1;
+      margin-bottom: @spacing-s1;
+    }
   }
 
   &.fg-l1 {
-    margin-top: @spacing-l1;
-    margin-bottom: @spacing-l1;
+    margin-top: @spacing;
+    margin-bottom: @spacing;
+
+    @media(min-width: @bp-m4-min) {
+      margin-top: @spacing-l1;
+      margin-bottom: @spacing-l1;
+    }
   }
 
   &.fg-spread {
@@ -152,7 +179,11 @@ textarea {
     flex-wrap: wrap;
 
     .form-group {
-      margin: @spacing-s2 @spacing-s1;
+      margin: @spacing-s3;
+
+      @media(min-width: @bp-m4-min) {
+        margin: @spacing-s2 @spacing-s1;
+      }
     }
   }
 
@@ -161,8 +192,17 @@ textarea {
   }
 
   &.fg-subfg {
-    width: calc(~'50% - '@spacing-s1 * 2);
-    margin: @spacing-s1;
+    width: 100%;
+
+    @media(min-width: @bp-m3-min) {
+      width: calc(~'50% - '@spacing-s3 * 2);
+      margin: @spacing-s1;
+    }
+
+    @media(min-width: @bp-m4-min) {
+      width: calc(~'50% - '@spacing-s1 * 2);
+      margin: @spacing-s1;
+    }
   }
 
   &.fg-no-space {

@@ -56,8 +56,13 @@
   font-size: @font-size;
   font-weight: @font-weight-regular;
 
-  margin-top: @spacing-s1;
-  margin-bottom: @spacing-s1;
+  margin-top: @spacing-s2;
+  margin-bottom: @spacing-s2;
+
+  @media(min-width: @bp-m4-min) {
+    margin-top: @spacing-s1;
+    margin-bottom: @spacing-s1;
+  }
 }
 
 .text-center {
