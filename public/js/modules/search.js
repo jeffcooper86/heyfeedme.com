@@ -8,10 +8,15 @@ function init() {
   forms.eventSubmit({
     el: '.js-search',
     cb: function($form) {
-      var search = $form.find('input[name=search]').val(),
+      var s = $form.find('input[name=search]').val(),
+        oldS = urlQuery.getQueryParamValsFromQuery(
+          window.location.search, 'search'
+        ),
         $recipes = $('.m-recipe-listings');
+
+      if (!s.length && !oldS.length || s === oldS[0]) return;
       urlQuery.updateUrlQuery(
-        urlQuery.updateQueryParam(window.location.search, 'search', [search])
+        urlQuery.updateQueryParam(window.location.search, 'search', [s])
       );
       recipeListings.updateRecipes($recipes);
     }

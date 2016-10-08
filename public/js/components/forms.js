@@ -15,9 +15,11 @@ function addField(opts) {
     if (!fieldsLength) return;
     $newField = $fields.last().clone();
 
-    if ($newField.is('input, textarea')) {
-      $newField.val('');
-    } else {
+    // Reset the field values.
+    if ($newField.is('input, textarea')) $newField.val('');
+    else {
+
+      // Scope the fields so labels still focus fields correctly.
       var scope = String(Math.random()).slice(2);
       $newField.find('input').each(function(i, input) {
         var $input = $(input);
