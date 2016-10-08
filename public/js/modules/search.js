@@ -17,7 +17,7 @@ function init() {
       ),
       $recipes = $('.m-recipe-listings');
 
-    if (!s.length && !oldS.length || s === oldS[0]) return;
+    if (!s.length && !oldS.length) return;
     urlQuery.updateUrlQuery(
       urlQuery.updateQueryParam(window.location.search, 'search', [s])
     );
