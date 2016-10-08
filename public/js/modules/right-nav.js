@@ -11,7 +11,7 @@ var bodyClass = 'active-right-nav';
 function init() {
   filters.doFilters(function() {
     var $recipes = $('.m-recipe-listings');
-    recipeListings.updateRecipes($recipes);
+    if ($recipes.length) recipeListings.updateRecipes($recipes);
   });
 
   toggle({});
