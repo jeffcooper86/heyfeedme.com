@@ -97,10 +97,16 @@ app.route('/admin/:model/:documentId')
   .get(routes.admin.document)
   .post(routes.admin.document);
 
+/**
+ * Styleguide.
+ */
+app.get('/style', function(req, res) {
+  var l = res.locals;
+  l.title = 'Styles';
 
-app.get('/style-guide', function(req, res) {
-  res.render('_style-guide.pug');
+  res.render('_styles.pug');
 });
+
 
 /*
  * Error Handling.
