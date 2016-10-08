@@ -104,7 +104,7 @@ app.get('/style', function(req, res) {
   var l = res.locals;
   l.title = 'Styles';
 
-  res.render('_style.pug');
+  res.render('_style/_style.pug');
 });
 
 

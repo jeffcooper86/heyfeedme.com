@@ -1,0 +1,51 @@
+h3.heading.h2 Forms
+form.form
+  h4.heading.h3 Colored form group
+  .form-group.fg-color
+    label checkbox
+    input(type='checkbox')
+
+  .form-group.fg-color
+    label Text
+    input(type='text').form-field
+
+  .form-group.fg-color
+    label file
+    input(type='file')
+
+  .form-group.fg-color
+    label file wide
+    .form-field.ff-wide
+      input(type='file')
+
+  .form-group.fg-color
+    label Icon
+    .input-icon-wrap
+      i.icon.fa.fa-search.no-click
+      input(
+        type='text'
+        placeholder='What to eat?'
+      )
+
+  .form-group
+    label Full width
+    input(type='text' value='ff-wide').form-field.ff-wide
+    textarea.form-field.ff-wide
+
+  .form-group
+    label Read only
+    input(type='text' value='Can\'t touch this' readonly).form-field.ff-wide
+    textarea(readonly).form-field.ff-wide Or this
+
+  .text-center
+    input(type='submit' value='Input submit')
+    button(type='submit').btn.btn-1 Button submit
+
+.gap.l2
+
+form.form.form-color
+  h4.h4 Color Form
+  .form-group
+    .form-group
+
+.break.l1

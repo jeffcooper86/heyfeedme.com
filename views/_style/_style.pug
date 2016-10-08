@@ -1,0 +1,31 @@
+extends ../_layouts/content-spaced-top
+
+block bodyContent
+  .container.container-3
+    // Less variables.
+      ---------------------
+
+
+    // Foundation.
+      ---------------------
+    .m-foundation
+      include foundation/type
+      include foundation/ui
+      include foundation/utils
+      .gap.l2
+
+    // Components.
+      ---------------------
+    .m-components
+      .module-content-wrap
+        h2.heading.h1 Components
+        include components/buttons
+        include components/crumbs
+        include components/filters
+        include components/forms
+        include components/icons
+        include components/links
+        include components/modals
+        include components/modules
+        include components/overlays
+        include components/tables
