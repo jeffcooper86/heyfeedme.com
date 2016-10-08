@@ -1,5 +1,5 @@
 var forms = require('../components/forms');
-var urlQuery = require('../utils/urlQuery');
+var urlQuery = require('../utils/url-query');
 var recipeListings = require('./recipe-listings');
 
 module.exports.init = init;

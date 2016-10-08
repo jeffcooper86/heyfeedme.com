@@ -1,4 +1,4 @@
-var urlQuery = require('../utils/urlQuery');
+var urlQuery = require('../utils/url-query');
 
 module.exports.sortedTable = sortedTable;
 
