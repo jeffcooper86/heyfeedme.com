@@ -1,8 +1,3 @@
-.form-border() {
-  border: 1px solid @color-gray-l1;
-  border-radius: @border-radius;
-}
-
 input, select, textarea, .btn {
   font-family: @font-1;
   font-size: @font-size;
@@ -11,7 +6,7 @@ input, select, textarea, .btn {
   color: @color-black-l2;
   background: white;
 
-  .form-border;
+  .mi-border(@color-border-form);
 
   &:focus {
     outline-color: @color-1-l1;
@@ -175,7 +170,7 @@ textarea {
 
     background: @color-white;
 
-    .form-border();
+    .mi-border-l1;
     flex-wrap: wrap;
 
     .form-group {
