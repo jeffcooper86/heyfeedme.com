@@ -13,7 +13,7 @@ function hideOverlay(opts) {
 
 function showOverlay(opts) {
   var noScroll = opts.noScroll,
-    clickToHide = opts.hide.clickToHide,
+    clickToHide = opts.hide && opts.hide.clickToHide,
     cb = opts.cb,
     $el = $(opts.el);
 
