@@ -8,7 +8,11 @@ forms.addField({
 $('.js-form-actions .js-delete').on('click', function(e) {
   e.preventDefault();
   ui.showModalWithOverlay({
-    modalEl: '.js-modal',
-    overlayEl: '.js-overlay'
+    modal: {
+      el: '.js-modal'
+    },
+    overlay: {
+      el: '.js-overlay'
+    }
   });
 });

@@ -1,7 +1,39 @@
 h3.heading.h2 Modals
 p
-  i.icon Modal
+  i.icon(data-modal='.js-modal-full').js-modal-ctrl Modal
 p
-  i.icon Modal with overlay
+  i.icon(data-modal='.js-modal').js-modal-overlay-ctrl Modal with overlay
 
 .break.l1
+
+block modals
+  .modal.js-modal
+    .modal-content
+      p Hi modal.
+
+  .modal.js-modal-full
+    .modal-content
+      .text-center
+        button.btn.btn-1.js-modal-dismiss Close
+      span.heading.h1 Filled with content
+      p So much content
+      span.heading.h2 So so
+      p Much content
+      span.heading.h2 Overflowing
+      p With content
+      .text-center
+        button.btn.btn-1.js-modal-dismiss Close
+      span.heading.h1 Filled with content
+      p So much content
+      span.heading.h2 So so
+      p Much content
+      span.heading.h2 Overflowing
+      p With content
+      .text-center
+        button.btn.btn-1.js-modal-dismiss Close
+      span.heading.h1 Filled with content
+      p So much content
+      span.heading.h2 So so
+      p Much content
+      span.heading.h2 Overflowing
+      p With content

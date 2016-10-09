@@ -14,14 +14,25 @@ function loadingStop($el) {
 }
 
 function showModalWithOverlay(opts) {
-  var modalEl = opts.modalEl,
-    overlayEl = opts.overlayEl;
+  var modalEl = opts.modal.el,
+    overlayEl = opts.overlay.el,
+    clickOverlayToHide = opts.overlay.clickToHide;
 
   overlays.showOverlay({
     noScroll: true,
     el: overlayEl,
-    cb: showModal
+    cb: showModal,
+    hide: {
+      clickToHide: clickOverlayToHide,
+      cb: hideModal
+    }
   });
+
+  function hideModal() {
+    modals.hideModal({
+      el: modalEl
+    });
+  }
 
   function hideOverlay() {
     overlays.hideOverlay({
