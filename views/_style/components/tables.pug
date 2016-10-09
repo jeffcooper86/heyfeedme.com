@@ -1,3 +1,55 @@
-h3.heading.h2 Tables
+h3.heading.h2(id='tables') Tables
+-var tableData = 'just some sample table data for fun'.split(' ');
 
+mixin tableContent(tableData)
+  thead.sort
+    tr
+      th
+      each d, i in tableData
+        th= i
+  tbody
+    tr
+      th :)
+      each d in tableData
+        td= d
+
+.table-wrap
+  table.tbl
+    +tableContent(tableData)
+
+.table-wrap
+  table.tbl.tbl-sort.tbl-color
+    caption Color
+    +tableContent(tableData)
+
+.table-wrap
+  table.tbl.tbl-small
+    caption Small
+    +tableContent(tableData)
+
+.table-wrap
+  table.tbl.tbl-full
+    caption Full
+    +tableContent(tableData)
+.gap
+.table-wrap
+  p spaced before
+  table.tbl.tbl-spaced
+    +tableContent(tableData)
+  p spaced after
+
+.table-wrap
+  p spaced L1 before
+  table.tbl.tbl-spaced-l1
+    +tableContent(tableData)
+  p spaced L1 after
+
+.table-wrap
+  p spaced L2 before
+  table.tbl.tbl-spaced-l2
+    +tableContent(tableData)
+  p spaced L2 after
+
+.table-wrap
+  p
 .break.l1

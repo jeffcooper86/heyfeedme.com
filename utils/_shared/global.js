@@ -6,6 +6,7 @@ module.exports.getNested = getNested;
 module.exports.slugify = slugify;
 module.exports.sortVerticalFlowColumns = sortVerticalFlowColumns;
 module.exports.stringifyArray = stringifyArray;
+module.exports.stripFileExtension = stripFileExtension;
 module.exports.tally = tally;
 module.exports.trimDirectories = trimDirectories;
 module.exports.truncate = truncate;
@@ -79,6 +80,12 @@ function stringifyArray(arr, separator, limit, more) {
   str = arr.join(separator);
   if (extra > 0) str += `${separator}${moreTxt1}${extra}${moreTxt2}`;
   return str;
+}
+
+function stripFileExtension(s) {
+  var a = s.split('.');
+  a.pop();
+  return a.join();
 }
 
 function tally(data, labels) {

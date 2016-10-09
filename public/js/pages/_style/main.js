@@ -1,3 +1,4 @@
+var forms = require('../../components/forms');
 var modals = require('../../components/modals');
 var overlays = require('../../components/overlays');
 var ui = require('../../ui');
@@ -7,6 +8,12 @@ var ui = require('../../ui');
  * ----------------------------
  */
 
+/**
+ * Forms.
+ */
+forms.eventSubmit({
+  el: '.js-form-submit'
+});
 
 /**
  * Modals.

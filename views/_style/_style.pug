@@ -1,7 +1,20 @@
 extends ../_layouts/content-spaced-top
 
+block styles
+  link(rel='stylesheet' href='/dist/styles/pages/_style.css')
+
 block bodyContent
   .container.container-3
+    nav
+      span Foundation -
+      each l in foundationLinks
+        a(href=`#${l}`)= l
+
+    nav
+      span Components -
+      each l in componentsLinks
+        a(href=`#${l}`)= l
+
     // Less variables.
       ---------------------
 
@@ -9,6 +22,7 @@ block bodyContent
     // Foundation.
       ---------------------
     .m-foundation
+      h2.heading.h1(id='foundation') Foundation
       include foundation/type
       include foundation/ui
       include foundation/utils
@@ -17,7 +31,7 @@ block bodyContent
     // Components.
       ---------------------
     .m-components
-      h2.heading.h1 Components
+      h2.heading.h1(id='components') Components
       include components/buttons
       include components/crumbs
       include components/filters
