@@ -8,7 +8,10 @@ block bodyContent
   .container.container-3
     .m-recipe
       h1.heading.h2.rlm-h= filters.capitalizeTitles(r.name)
-      img(src=`/${r.photo}`).rm-main-photo
+      .rm-main-photo
+        .rm-photo(
+        style= r.photo ? `background-image:url(/${r.photo});` : null
+        )
 
       +recipeClasses(r.classifications)
       p.rm-categories= r.categories
