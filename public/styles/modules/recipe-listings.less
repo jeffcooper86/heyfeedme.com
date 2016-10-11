@@ -1,3 +1,24 @@
+.mi-rlm-pad-text {
+  padding-right: @container-padding;
+  padding-left: @container-padding;
+
+  @media(min-width: @bp-m5-min) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.rlm-categorizations {
+  font-size: @font-size-s1;
+
+  margin-top: @spacing-s2;
+
+  color: @color-gray-d2;
+  background: @color-white;
+
+  .mi-rlm-pad-text;
+}
+
 .rlm-h {
   margin-bottom: 0;
 }
@@ -8,23 +29,19 @@
 
 .rlm-photo {
   width: 100%;
-  height: 0;
-  padding-bottom: (2/3) * 100%;
 
-  background-position: center;
-  background-size: cover;
+  .mi-responsive-height(2/3);
+  .mi-background-image;
 }
 
 .rlm-recipe {
   position: relative;
 
   width: 100%;
-  margin-bottom: @spacing-s1;
-
-  background: @color-gray-l2;
+  margin-bottom: @spacing;
 
   @media(min-width: @bp-m5-min) {
-    margin-bottom: @spacing;
+    margin-bottom: @spacing-l1;
   }
 
   @media(min-width: @bp-m5-min) and (max-width: @bp-d1-max) {
@@ -140,17 +157,11 @@
 .rlm-title {
   font-size: @font-size;
 
-  padding-right: @container-padding;
   padding-bottom: @spacing-s2;
-  padding-left: @container-padding;
 
   color: @color-1-d3;
   background: @color-white;
 
-  .text-clip();
-
-  @media(min-width: @bp-m5-min) {
-    padding-right: 0;
-    padding-left: 0;
-  }
+  .mi-text-clip;
+  .mi-rlm-pad-text;
 }

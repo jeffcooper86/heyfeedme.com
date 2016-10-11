@@ -22,6 +22,9 @@ mixin recipes(recipes)
             .rlm-photo(
               style= r.photo ? `background-image:url(/${r.photo});` : null
             )
+            .rlm-categorizations
+              .rlm-diets
+                p= filters.capitalizeTitles(filters.i.stringifyArray(r.classifications, ', '))
 
       if !recipes.length
         p.rlm-none.text-center
