@@ -55,6 +55,9 @@ input, select, .btn {
 input[readonly], textarea[readonly] {
   color: @color-black-l3;
   background: @color-2-l3;
+  &:focus {
+    outline: none;
+  }
 }
 
 input[type=file] {
