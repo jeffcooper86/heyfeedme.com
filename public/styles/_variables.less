@@ -1,8 +1,37 @@
-// Animations
+/**
+ * Animations.
+ */
 @animate:                 .5s;
 @animate-s1:              .4s;
 
-// Colors
+
+/**
+ * Breakpoints.
+ */
+
+// Mobile.
+@bp-m1-max:               320px;                  // iPhone5 portrait
+@bp-m2-min:               (@bp-m1-max + 1);
+@bp-m2-max:               375px;                  // iPhone6 portrait
+@bp-m3-min:               (@bp-m2-max + 1);
+@bp-m3-max:               414px;                  // iPhone6+ portrait
+@bp-m4-min:               (@bp-m3-max + 1);
+@bp-m4-max:               540px;
+@bp-m5-min:               (@bp-m4-max + 1);
+@bp-m5-max:               768px;                  // iPad portrait
+@bp-m-max:                1024px;                 // iPad landscape
+
+// Desktop.
+@bp-d1-min:               (@bp-m4-max + 1);
+@bp-d1-max:               1000px;
+@bp-d2-min:               (@bp-d1-max + 1);
+@bp-d2-max:               1200px;
+@bp-d3-min:               (@bp-d2-max + 1);
+
+
+/**
+ * Colors.
+ */
 @color-1:                 rgb(150,190,190);
 @color-1-l1:              lighten(@color-1, 15%);
 @color-1-l2:              lighten(@color-1, 25%);
@@ -43,7 +72,17 @@
 @color-border-form:       @color-gray-l1;
 @color-heading:           @color-2-d2;
 
-// Layout
+
+/**
+ * Forms.
+ */
+@form-input-height:       @font-size * 2.4;
+@form-input-height-s1:    @font-size-s1 * 2.4;
+
+
+/**
+ * Layout.
+ */
 @admin-header-height:     40px;
 @border-radius:           4px;
 @header-height:           50px;
@@ -62,22 +101,10 @@
 @container-padding:       @spacing-s1;
 @container-padding-d:     @spacing;
 
-// Responsive
-@bp-m1-max:               320px;                  // iPhone5 portrait
-@bp-m2-min:               (@bp-m1-max + 1);
-@bp-m2-max:               375px;                  // iPhone6 portrait
-@bp-m3-min:               (@bp-m2-max + 1);
-@bp-m3-max:               414px;                  // iPhone6+ portrait
-@bp-m4-min:               (@bp-m3-max + 1);
-@bp-m4-max:               768px;                  // iPad portrait
-@bp-m-max:                1024px;                 // iPad landscape
-@bp-d1-min:               (@bp-m4-max + 1);
-@bp-d1-max:               1000px;
-@bp-d2-min:               (@bp-d1-max + 1);
-@bp-d2-max:               1200px;
-@bp-d3-min:               (@bp-d2-max + 1);
 
-// Type
+/**
+ * Type.
+ */
 @font-1:                  'Lato', sans-serif;
 @font-icons:              'FontAwesome';
 
@@ -100,7 +127,9 @@
 @line-height-l2:          1.8;
 
 
-// Z index
+/**
+ * Z Index.
+ */
 @z-index-nav:             500;
 @z-index-overlay:         1000;
 @z-index-supernav:        (@z-index-overlay + @z-index-nav);

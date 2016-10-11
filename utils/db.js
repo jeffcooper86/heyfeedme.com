@@ -10,6 +10,24 @@ module.exports.schemaDefaultsPopulated = schemaDefaultsPopulated;
 module.exports.schemaOfModel = schemaOfModel;
 module.exports.schemaPopulated = schemaPopulated;
 
+function formatCurrentDateFromReqData(data) {
+  data = _.cloneDeep(data);
+  _.forEach(data, function(d, k) {
+    if (d === 'dateCurrent') data[k] = Date.now();
+  });
+  console.log(data);
+  return data;
+}
+
+function addPublishedDate(data, schema) {
+  data = _.cloneDeep(data);
+  if (!data.publish) return data;
+
+  if (!data.published && schema.published) {
+    data.published = Date.now();
+  }
+  return data;
+}
 
 function buildModelPath(modelName) {
   return process.cwd() + '/models/' + _.capitalize(modelName.slice(0, -1)) +
@@ -17,10 +35,13 @@ function buildModelPath(modelName) {
 }
 
 function formatReqData(data, schema) {
-  return trimEmptyReqDataArrays(
-    formatReqDataBools(formatReqDataDocArrays(data, schema), schema),
-    schema
-  );
+  var newD = formatCurrentDateFromReqData(data);
+  newD = addPublishedDate(newD, schema);
+  newD = formatReqDataDocArrays(newD, schema);
+  newD = formatReqDataBools(newD, schema);
+  newD = trimEmptyReqDataArrays(newD, schema);
+  console.log(newD);
+  return newD;
 }
 
 function formatReqDataDocArrays(data, schema) {

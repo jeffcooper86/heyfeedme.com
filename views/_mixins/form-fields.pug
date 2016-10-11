@@ -97,7 +97,13 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
             input(
               type='hidden'
               name=siName
-              value=filters.moment()
+              value='dateCurrent'
+            )
+          else if field.options.dependent
+            input(
+              type='hidden'
+              name=siName
+              value=field.data ? filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss') : null
             )
         else
           input(

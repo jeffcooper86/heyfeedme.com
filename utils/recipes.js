@@ -49,7 +49,7 @@ function getClassifications() {
 
 function getRecipes(Recipes, filters, sort, cb) {
   var q = Recipes.model.find()
-    .where('published').equals(true),
+    .where('publish').equals(true),
     cats = filters.activeSections,
     classes = filters.activeClasses;
 

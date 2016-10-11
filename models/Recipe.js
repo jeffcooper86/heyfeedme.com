@@ -46,12 +46,8 @@ ingredientSchema.virtual('text').get(function() {
 });
 
 var recipeSchema = new Schema({
-  published: {
+  publish: {
     type: Boolean
-  },
-  publishedDate: {
-    type: Date,
-    fixed: true
   },
   name: {
     type: String,
@@ -96,6 +92,11 @@ var recipeSchema = new Schema({
     default: Date.now,
     fixed: true
   },
+  published: {
+    type: Date,
+    fixed: true,
+    dependent: true
+  },
   updated: {
     type: Date,
     fixed: true,
@@ -107,7 +108,7 @@ module.exports.model = mongoose.model('Recipe', recipeSchema);
 
 // For admin model/collection views.
 module.exports.adminModelDefaults = 'name'.split(' ');
-module.exports.adminModelTable = 'name categories summary updated published'.split(' ');
+module.exports.adminModelTable = 'name categories summary published updated'.split(' ');
 
 // For admin model view queries.
 module.exports.adminModelSelect = '';
