@@ -5,6 +5,15 @@ mixin recipes(recipes)
         | #{filters.i.tally(recipes, ['recipe', 'recipes'])} -
         a(href='#' data-nav='.js-right-nav').js-nav-ctrl
           |  #{filters.capitalizeTitles(filters.i.stringifyArray(activeSections, ', ', 5, ['and ', ' more...']), ['more...', 'and'])}
+      .rlm-settings
+        select(
+          name=displaySettings
+          data-sort='recipesListingsSort').js-rlm-sort
+          each v, k in data.sortOptions
+            option(
+              value=k
+              selected = data.sort === k
+            )= v
       .rlm-recipes-wrap
         each r in recipes
           a(href=filters.i.slugify(`/recipe/${r.name}/${r.id}`)).rlm-recipe

@@ -7,10 +7,13 @@ exports = module.exports = function(req, res) {
     template = 'recipes/recipes',
     activeSections = res.locals.data.recipes.activeCats,
     activeClasses = res.locals.data.recipes.activeClasses,
-    searchQ = req.query.search;
+    searchQ = req.query.search,
+    sort = req.cookies.recipesListingsSort;
 
   // Set locals.
   l.data.search = searchQ;
+  l.data.sort = sort;
+  l.data.sortOptions = recipesUtils.getSortOptions();
   l.activeSections = activeSections;
 
   // Reset the activeSections cookies.
@@ -30,7 +33,7 @@ exports = module.exports = function(req, res) {
       activeSections: activeSections,
       activeClasses: activeClasses
     };
-    recipesUtils.getRecipes(Recipes, filters, cb);
+    recipesUtils.getRecipes(Recipes, filters, sort, cb);
   }
 
   function search(recipes, cb) {

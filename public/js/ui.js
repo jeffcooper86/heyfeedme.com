@@ -1,9 +1,20 @@
 var modals = require('./components/modals');
 var overlays = require('./components/overlays');
 
+module.exports.eventChange = eventChange;
 module.exports.loadingStart = loadingStart;
 module.exports.loadingStop = loadingStop;
 module.exports.showModalWithOverlay = showModalWithOverlay;
+
+function eventChange(opts) {
+  var $el = $(opts.el),
+    cb = opts.cb;
+
+  $el.on('change', function(e) {
+    e.preventDefault();
+    cb($(this), opts);
+  });
+}
 
 function loadingStart($el) {
   $el.addClass('ui-loading');

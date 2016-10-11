@@ -49,6 +49,10 @@ var recipeSchema = new Schema({
   published: {
     type: Boolean
   },
+  publishedDate: {
+    type: Date,
+    fixed: true
+  },
   name: {
     type: String,
     required: true,

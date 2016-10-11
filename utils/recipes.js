@@ -7,6 +7,7 @@ module.exports.getActiveFilters = getActiveFilters;
 module.exports.getCategories = getCategories;
 module.exports.getClassifications = getClassifications;
 module.exports.getRecipes = getRecipes;
+module.exports.getSortOptions = getSortOptions;
 module.exports.searchRecipes = searchRecipes;
 module.exports.setActiveCategories = setActiveCategories;
 
@@ -46,7 +47,7 @@ function getClassifications() {
   return 'vegetarian;vegan;gluten free'.split(';').sort();
 }
 
-function getRecipes(Recipes, filters, cb) {
+function getRecipes(Recipes, filters, sort, cb) {
   var q = Recipes.model.find()
     .where('published').equals(true),
     cats = filters.activeSections,
@@ -57,11 +58,37 @@ function getRecipes(Recipes, filters, cb) {
     q.where('classifications').in(classes);
   }
 
-  q.sort('name');
+  switch (sort) {
+    case 'new':
+      q.sort('published');
+      break;
+    case 'old':
+      q.sort({
+        published: -1
+      });
+      break;
+    case 'za':
+      q.sort({
+        name: -1
+      });
+      break;
+    default:
+      q.sort('name');
+  }
   q.exec(function(err, recipes) {
     cb(err, recipes);
   });
 }
+
+function getSortOptions() {
+  return {
+    az: 'az',
+    za: 'za',
+    new: 'new',
+    old: 'old',
+  };
+}
+
 
 function searchRecipes(recipes, q) {
   if (!q) return recipes;

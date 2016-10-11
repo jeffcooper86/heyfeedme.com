@@ -4,3 +4,6 @@ block bodyContent
   include ../_includes/search.pug
   .container.container-1
     +recipes(data.recipes.recipes)
+
+block contentJs
+  script(src='/dist/js/pages/recipes/recipes.js')

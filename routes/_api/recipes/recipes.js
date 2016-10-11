@@ -11,9 +11,10 @@ exports = module.exports = function(req, res) {
     filters = {
       activeSections: activeSections,
       activeClasses: activeClasses
-    };
+    },
+    sort = req.cookies.recipesListingsSort;
 
-  recipesUtils.getRecipes(Recipes, filters, searchRecipes);
+  recipesUtils.getRecipes(Recipes, filters, sort, searchRecipes);
 
   function searchRecipes(err, recipes) {
     if (err) return sendRecipes(err);
@@ -28,6 +29,8 @@ exports = module.exports = function(req, res) {
       l.recipes = recipes;
       l.activeSections = activeSections;
       l.compileRecipes = true;
+      l.data.sort = sort;
+      l.data.sortOptions = recipesUtils.getSortOptions();
       data.recipesHtml = pug.renderFile(t, l);
       data.recipesCount = recipes.length;
       res.send(JSON.stringify(data));

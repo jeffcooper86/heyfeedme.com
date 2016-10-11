@@ -1,6 +1,6 @@
 // Server and client side global utils - avoid large libraries.
 
-module.exports.chunk = chunk;
+module.exports.arrayChunk = arrayChunk;
 module.exports.getFileExt = getFileExt;
 module.exports.getNested = getNested;
 module.exports.slugify = slugify;
@@ -12,7 +12,7 @@ module.exports.trimDirectories = trimDirectories;
 module.exports.truncate = truncate;
 module.exports.unslugify = unslugify;
 
-function chunk(data, n) {
+function arrayChunk(data, n) {
   var newD = [],
     l = data.length;
 
@@ -59,7 +59,7 @@ function sortVerticalFlowColumns(data, n) {
 
   // Default to 2 columns.
   n = (!n || n < 2) ? 2 : n;
-  var chunked = chunk(data, n),
+  var chunked = arrayChunk(data, n),
     newD = [];
 
   for (var i = 0; i < Math.ceil((1 / n) * data.length); i += 1) {
