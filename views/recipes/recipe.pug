@@ -36,6 +36,9 @@ block bodyContent
       h2.heading.h3 Note
       p.rm-notes= r.notes
 
-      if r.updated
-        .rm-footer
+      .rm-footer
+        if r.published
+          p.rm-date Published #{filters.moment(r.updated).format('MMMM DD, YYYY')}
+
+        if r.updated && filters.moment(r.updated).diff(filters.moment(r.published), 'days') < 0
           p.rm-date Updated #{filters.moment(r.updated).format('MMMM DD, YYYY')}
