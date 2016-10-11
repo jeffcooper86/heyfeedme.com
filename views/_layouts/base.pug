@@ -17,13 +17,7 @@ html
       block body
 
     block footer
-      .m-footer
-        .module-content-wrap
-          .module-content
-            .container.container-1
-              p.text-center
-                a(href='/') Home
-                span &copy; HeyFeedMe #{filters.moment().format('YYYY')}
+      include ../_includes/footer
 
     block modals
       .modal.js-modal
