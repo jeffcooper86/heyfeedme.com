@@ -60,12 +60,15 @@ function getRecipes(Recipes, filters, sort, cb) {
 
   switch (sort) {
     case 'new':
-      q.sort('published');
-      break;
-    case 'old':
       q.sort({
         published: -1
       });
+      break;
+    case 'old':
+      q.sort('published');
+      break;
+    case 'az':
+      q.sort('name');
       break;
     case 'za':
       q.sort({
@@ -73,7 +76,9 @@ function getRecipes(Recipes, filters, sort, cb) {
       });
       break;
     default:
-      q.sort('name');
+      q.sort({
+        published: -1
+      });
   }
   q.exec(function(err, recipes) {
     cb(err, recipes);
@@ -82,10 +87,10 @@ function getRecipes(Recipes, filters, sort, cb) {
 
 function getSortOptions() {
   return {
-    az: 'az',
-    za: 'za',
     new: 'new',
     old: 'old',
+    az: 'az',
+    za: 'za'
   };
 }
 

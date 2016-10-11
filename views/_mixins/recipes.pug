@@ -22,7 +22,8 @@ mixin recipes(recipes)
             .rlm-photo(
               style= r.photo ? `background-image:url(/${r.photo});` : null
             )
-            .rlm-categorizations
+            .rlm-details
+              p= filters.moment(r.published).fromNow()
               .rlm-diets
                 p= filters.capitalizeTitles(filters.i.stringifyArray(r.classifications, ', '))
 
