@@ -1,15 +1,36 @@
 .m-footer {
   font-size: @font-size-s1;
 
-  border-top: 1px solid @color-gray-l1;
+  border-top: 1px solid @color-border-l1;
   background: @color-gray-l2;
 
   a {
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-right: @spacing-s2;
+    margin-left: @spacing-s2;
 
     &:first-child {
       margin-left: 0;
+    }
+  }
+
+  .fm-copyright {
+    display: block;
+
+    margin-top: @spacing-s1;
+
+    color: @color-gray-d3;
+
+    @media(min-width: @bp-m3-max) {
+      display: inline;
+    }
+  }
+
+  .fm-links {
+    text-align: center;
+
+    > span {
+      margin-right: @spacing-s2;
+      margin-left: @spacing-s2;
     }
   }
 }
