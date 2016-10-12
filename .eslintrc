@@ -1,0 +1,17 @@
+{
+  "extends": "standard",
+
+  "globals": {
+    "jQuery": true,
+    "$": true
+  },
+
+  "rules": {
+    "handle-callback-err": 0,
+    "no-multiple-empty-lines": [2, { "max": 2 }],
+    "one-var": 0,
+    "padded-blocks": 0,
+    "semi": [2, "always"],
+    "space-before-function-paren": 0,
+  }
+}
