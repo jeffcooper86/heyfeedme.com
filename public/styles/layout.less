@@ -81,7 +81,7 @@
 
 .site-content {
   max-width: 2000px;
-  min-height: 100%;
+  min-height: calc(100% ~'-' @header-height + 15);
   margin-top: @header-height;
   margin-right: auto;
   margin-left: auto;
@@ -90,6 +90,7 @@
   background: @color-white;
 
   @media(min-width: @bp-m4-min) {
+    min-height: calc(100% ~'-' @header-height-d + 15);
     margin-top: (@header-height-d);
   }
 }
@@ -97,8 +98,12 @@
 .site-content-spaced {
   height: @spacing-l1;
 
-  @media(min-width: @bp-m4-min) {
-    height: @spacing-l1;
+  + .site-content {
+    min-height: calc(100% ~'-' @header-height + 15 + @spacing-l1);
+
+    @media(min-width: @bp-m4-min) {
+      min-height: calc(100% ~'-' @header-height-d + 15 +@spacing-l1);
+    }
   }
 }
 
