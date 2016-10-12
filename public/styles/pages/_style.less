@@ -1,15 +1,71 @@
 @import '../_variables.less';
 
-nav {
-  margin-bottom: @spacing;
-  a {
-    display: inline-flex;
+.color {
+  display: inline-block;
 
-    margin-right: @spacing-s3;
-    margin-left: @spacing-s3;
+  width: @spacing * 4;
+  height: @spacing * 4;
+  margin-top: @spacing-s3;
+  margin-right: @spacing;
+  margin-bottom: @spacing-s3;
+
+  vertical-align: middle;
+
+  &.c1 {
+    background: @color-1;
+  }
+
+  &.c2 {
+    background: @color-2;
+  }
+
+  &.c3 {
+    background: @color-3;
+  }
+
+  &.gray {
+    background: @color-gray;
+  }
+}
+
+.font-size {
+  &.l1 {
+    font-size: @font-size-l1;
+  }
+  &.l2 {
+    font-size: @font-size-l2;
+  }
+  &.l3 {
+    font-size: @font-size-l3;
+  }
+  &.s1 {
+    font-size: @font-size-s1;
+  }
+  &.s2 {
+    font-size: @font-size-s2;
+  }
+}
+
+.font-weight {
+  &.light {
+    font-weight: @font-weight-light;
+  }
+  &.bold {
+    font-weight: @font-weight-bold;
   }
 }
 
 .style-nav {
   margin-bottom: 80px;
+
+  nav {
+    margin-bottom: @spacing;
+
+    a {
+      display: inline-flex;
+
+      margin-right: @spacing-s3;
+      margin-left: @spacing-s3;
+    }
+  }
 }
