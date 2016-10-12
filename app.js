@@ -59,7 +59,7 @@ var routes = requireDir('routes', {
  */
 app.get('/', routes.recipes.recipes);
 app.get('/recipe/[a-z\-]+/:recipeId([a-f0-9]{24})', routes.recipes.recipe);
-app.get('/search', routes.search.index);
+app.get('/about', routes.about.index);
 
 /**
  * API.
