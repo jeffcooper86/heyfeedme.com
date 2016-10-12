@@ -36,6 +36,7 @@ exports = module.exports = function(req, res, next) {
     getDocument,
     updateDocument,
     removeDocument,
+    cancelEdit,
     populateSchema
   ], function(err) {
     if (err) return res.render('_error500');
@@ -48,6 +49,11 @@ exports = module.exports = function(req, res, next) {
       dbUtils.schemaPopulated(data, dbUtils.schemaOfModel(Model))
     );
     cb();
+  }
+
+  function cancelEdit(cb) {
+    if (req.method !== 'POST' || action !== 'cancel') return cb();
+    res.redirect('/admin/' + modelName);
   }
 
   function getDocument(cb) {

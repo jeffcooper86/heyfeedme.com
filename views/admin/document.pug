@@ -13,9 +13,11 @@ block adminBody
             enctype='multipart/form-data'
             id='formDocument'
           ).form.form-small.form-admin
-            include ./includes/update-delete
+            .form-actions
+              include ./includes/update-delete
             +formFieldsFromSchema(populatedSchema, 'fg-l1')
-            include ./includes/update-delete
+            .form-actions
+              include ./includes/update-delete
 
 block modals
   .modal.js-modal
@@ -31,7 +33,7 @@ block modals
           name='action'
           type='submit'
         ) Delete
-        button.btn.btn-1.js-modal-dismiss Cancel
+        button.btn.js-modal-dismiss Cancel
 
 block adminJs
   script(src='/dist/js/pages/admin/document.js')
