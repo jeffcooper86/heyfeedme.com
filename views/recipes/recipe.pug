@@ -1,5 +1,8 @@
 extends ../_layouts/content-spaced-top
 
+block seoDescription
+  meta(name='description' content=data.recipe.seoDescription)
+
 block styles
   link(rel='stylesheet' href='/dist/styles/pages/recipes/recipe.css')
 

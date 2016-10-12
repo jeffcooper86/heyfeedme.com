@@ -17,7 +17,7 @@ exports = module.exports = function(req, res) {
   function getRecipe(cb) {
     recipeQuery.exec(function(err, data) {
       l.data.recipe = data;
-      l.title = data.seoDescription + ' - Heyfeedme';
+      l.title = data.seoDescription;
       cb(null);
     });
   }
