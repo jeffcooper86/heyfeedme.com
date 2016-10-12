@@ -3,6 +3,8 @@
 
   "globals": {
     "jQuery": true,
+    "history": true,
+    "location": true,
     "$": true
   },
 

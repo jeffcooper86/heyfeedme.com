@@ -1,6 +1,7 @@
 var cookies = require('../utils/cookies');
 var rightNav = require('../modules/right-nav');
 var ui = require('../ui');
+var urlQuery = require('../utils/url-query');
 
 module.exports.sortOrder = sortOrder;
 module.exports.updateRecipes = updateRecipes;
@@ -21,7 +22,6 @@ function updateRecipes($recipes) {
       el: '.rlm-none .js-nav-ctrl, .rlm-tally .js-nav-ctrl'
     });
     sortOrder();
-    ui.updateState();
   });
 }
 
@@ -36,6 +36,9 @@ function sortOrder() {
       sort = $this.val(),
       $recipes = $('.m-recipe-listings');
     cookies.setCookie(cookie, sort);
+    urlQuery.updateUrlQuery(
+      urlQuery.updateQueryParam(window.location.search, 'sort', [sort])
+    );
     updateRecipes($recipes);
   }
 }

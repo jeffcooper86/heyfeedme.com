@@ -10,6 +10,8 @@ module.exports.getRecipes = getRecipes;
 module.exports.getSortOptions = getSortOptions;
 module.exports.searchRecipes = searchRecipes;
 module.exports.setActiveCategories = setActiveCategories;
+module.exports.setActiveClasses = setActiveClasses;
+module.exports.setSort = setSort;
 
 function getActiveFilters(req, filter) {
 
@@ -127,6 +129,14 @@ function searchRecipes(recipes, q) {
 
 function setActiveCategories(res, cats) {
   res.cookie('sections', cats);
+}
+
+function setActiveClasses(res, classes) {
+  res.cookie('diets', classes);
+}
+
+function setSort(res, sort) {
+  res.cookie('recipesListingsSort', sort);
 }
 
 function _getFiltersFromUrl(req, param) {

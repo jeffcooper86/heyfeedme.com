@@ -8,7 +8,7 @@ exports = module.exports = function(req, res) {
     activeSections = res.locals.data.recipes.activeCats,
     activeClasses = res.locals.data.recipes.activeClasses,
     searchQ = req.query.search,
-    sort = req.cookies.recipesListingsSort;
+    sort = req.query.sort || req.cookies.recipesListingsSort;
 
   // Set locals.
   l.data.search = searchQ;
@@ -16,8 +16,10 @@ exports = module.exports = function(req, res) {
   l.data.sortOptions = recipesUtils.getSortOptions();
   l.activeSections = activeSections;
 
-  // Reset the activeSections cookies.
+  // Reset the cookies because the user may have edited them from the url.
   recipesUtils.setActiveCategories(res, activeSections);
+  recipesUtils.setActiveClasses(res, activeClasses);
+  recipesUtils.setSort(res, sort);
 
   async.waterfall([
     getAll,

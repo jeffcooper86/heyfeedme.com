@@ -63,5 +63,5 @@ function showModalWithOverlay(opts) {
 }
 
 function updateState(url) {
-  history.replaceState({}, '', url || window.location.pathname);
+  window.history.replaceState({}, '', url || window.location.pathname);
 }
