@@ -28,7 +28,7 @@ function toggle(opts) {
 }
 
 function _afterHideNav() {
-  $('body').removeClass(bodyClass);
+  _whenHideNav();
   overlays.hideOverlay({
     el: '.js-overlay'
   });
@@ -45,8 +45,13 @@ function _beforeShowNav() {
   });
 
   function _afterHideOverlay() {
+    _whenHideNav();
     nav.toggle({
       el: '.js-right-nav'
     });
   }
+}
+
+function _whenHideNav() {
+  $('body').removeClass(bodyClass);
 }
