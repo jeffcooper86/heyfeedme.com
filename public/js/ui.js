@@ -5,6 +5,7 @@ module.exports.eventChange = eventChange;
 module.exports.loadingStart = loadingStart;
 module.exports.loadingStop = loadingStop;
 module.exports.showModalWithOverlay = showModalWithOverlay;
+module.exports.updateState = updateState;
 
 function eventChange(opts) {
   var $el = $(opts.el),
@@ -59,4 +60,8 @@ function showModalWithOverlay(opts) {
       }
     });
   }
+}
+
+function updateState(url) {
+  history.replaceState({}, '', url || window.location.pathname);
 }

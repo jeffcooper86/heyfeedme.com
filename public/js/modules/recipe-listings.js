@@ -21,6 +21,7 @@ function updateRecipes($recipes) {
       el: '.rlm-none .js-nav-ctrl, .rlm-tally .js-nav-ctrl'
     });
     sortOrder();
+    ui.updateState();
   });
 }
 
