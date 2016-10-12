@@ -13,11 +13,11 @@ block bodyContent
       h1.heading.h2.rlm-h= filters.capitalizeTitles(r.name)
       .rm-main-photo
         .rm-photo(
-        style= r.photo ? `background-image:url(/${r.photo});` : null
+          style= r.photo ? `background-image:url(/${r.photo});` : null
         )
 
       +recipeClasses(r.classifications)
-      p.rm-categories= r.categories
+      p.rm-categories= filters.capitalizeTitles(filters.i.stringifyArray(r.categories, ', '))
       p.rm-summary= r.summary
 
       .m-recipe-ingredients
