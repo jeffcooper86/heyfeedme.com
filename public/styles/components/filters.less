@@ -15,6 +15,7 @@
   background: @color-white;
 
   flex-wrap: wrap;
+
   span {
     margin-bottom: @spacing-s2;
 
@@ -31,6 +32,24 @@
 
     &:last-child {
       margin-bottom: 0;
+    }
+
+    &.match {
+      &:after {
+        font-family: @font-icons;
+
+        margin-left: @spacing-s2;
+
+        content: @fa-var-star;
+
+        color: @color-gray-d1;
+      }
+
+      &.active {
+        &:after {
+          color: @color-white;
+        }
+      }
     }
   }
 

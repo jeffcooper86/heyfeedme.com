@@ -1,4 +1,4 @@
-mixin filtersSections(filterItems, activeFilters, opts)
+mixin filters(filterItems, activeFilters, matchFilters, opts)
 
   if filterItems && activeFilters
     .filters-wrap
@@ -10,7 +10,9 @@ mixin filtersSections(filterItems, activeFilters, opts)
 
         each filter in filterItems
           -var activeFilter = activeFilters && activeFilters.indexOf(filter) > -1
+          -var matchFilter = matchFilters.indexOf(filter) > -1
           span(
             data-filter=filters.i.slugify(filter)
-            class={active: activeFilter}
+            class={active: activeFilter,
+                  match: matchFilter}
           )= filter

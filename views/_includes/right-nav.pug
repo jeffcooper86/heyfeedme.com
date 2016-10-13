@@ -4,18 +4,20 @@ nav.m-right-nav.js-right-nav
       i(data-nav='.js-right-nav').icon.fa.fa-times.js-nav-ctrl
     .rnm-sections
       span.heading.h3.no-space-top Sections
-      +filtersSections(
+      +filters(
         filters.i.sortVerticalFlowColumns(data.recipes.categories),
         data.recipes.activeCats,
+        data.recipe ? data.recipe.categories : [],
         {
           filterName: 'sections',
           allLabel: 'all recipes'
         }
       )
       span.heading.h3 Diets
-      +filtersSections(
+      +filters(
         filters.i.sortVerticalFlowColumns(data.recipes.classifications),
         data.recipes.activeClasses,
+        data.recipe ? data.recipe.classifications : [],
         {
           filterName: 'diets',
           allLabel: 'all diets'
