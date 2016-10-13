@@ -3,10 +3,12 @@ var urlQuery = require('../utils/url-query');
 
 module.exports.doFilters = doFilters;
 
-function doFilters(cb) {
-  var $filterItems = $('.js-filters > span');
+function doFilters(opts) {
+  var afterUpdate = opts.afterUpdate,
+    updateUrl = opts.updateUrl,
+    $el = $(opts.el);
 
-  $filterItems.on('click', function() {
+  $el.on('click', function() {
     var $this = $(this),
       filter = $this.data('filter'),
       param = $this.closest('.js-filters').data('filters');
@@ -32,8 +34,8 @@ function doFilters(cb) {
       }
     }
 
-    _updateUrlQueryFromCookie(param);
-    if (cb) cb();
+    if (updateUrl) _updateUrlQueryFromCookie(param);
+    if (afterUpdate) afterUpdate();
   });
 }
 

@@ -6,12 +6,15 @@ var recipeListings = require('./recipe-listings');
 module.exports.init = init;
 module.exports.toggle = toggle;
 
-var bodyClass = 'active-right-nav';
+var bodyClass = 'active-right-nav',
+  $recipes = $('.m-recipe-listings');
 
 function init() {
-  filters.doFilters(function() {
-    var $recipes = $('.m-recipe-listings');
-    if ($recipes.length) recipeListings.updateRecipes($recipes);
+
+  filters.doFilters({
+    afterUpdate: _afterFilterUpdate,
+    updateUrl: !!$recipes.length,
+    el: '.js-filters > span'
   });
 
   toggle({});
@@ -19,12 +22,15 @@ function init() {
 
 function toggle(opts) {
   var el = opts.el;
-
   nav.toggleCtrl({
     el: el || '.js-nav-ctrl',
     beforeShow: _beforeShowNav,
     afterHide: _afterHideNav
   });
+}
+
+function _afterFilterUpdate() {
+  if ($recipes.length) recipeListings.updateRecipes($recipes);
 }
 
 function _afterHideNav() {
