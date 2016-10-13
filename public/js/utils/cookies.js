@@ -15,7 +15,7 @@ function addValToCookieArray(name, v) {
   }
 
   cookieV.push(iUtils.unslugify(v));
-  setCookie(name, cookieV);
+  return setCookie(name, cookieV);
 }
 
 function getCookie(n) {
@@ -36,10 +36,11 @@ function removeValFromCookieArray(name, v, defaultV) {
     cookieV.splice(i, 1);
   }
   if (!cookieV.length) cookieV = defaultV;
-  setCookie(name, cookieV);
+  return setCookie(name, cookieV);
 }
 
 function setCookie(name, v) {
   if (typeof(v) !== 'string') v = JSON.stringify(v);
   cookiesJs.set(name, v);
+  return v;
 }

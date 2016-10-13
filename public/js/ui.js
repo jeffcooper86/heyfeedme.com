@@ -2,6 +2,8 @@ var modals = require('./components/modals');
 var overlays = require('./components/overlays');
 
 module.exports.eventChange = eventChange;
+module.exports.flash = flash;
+module.exports.flashRemove = flashRemove;
 module.exports.loadingStart = loadingStart;
 module.exports.loadingStop = loadingStop;
 module.exports.showModalWithOverlay = showModalWithOverlay;
@@ -15,6 +17,46 @@ function eventChange(opts) {
     e.preventDefault();
     cb($(this), opts);
   });
+}
+
+function flash(opts) {
+  var $container = $(opts.container || '.site-content'),
+    $flash = $container.find('.m-flash-messages'),
+    $el = $flash.find(opts.el),
+    type = opts.type,
+    msg = opts.msg,
+    newFlash;
+
+  // Ensure the flash message container el exists.
+  if (!$flash.length) {
+    $flash = $('<div>').addClass('m-flash-messages');
+    newFlash = true;
+  }
+
+  // Update the message in the flash message el.
+  if (!$el.length) {
+    $el = $('<div>');
+    _updateEl();
+    $flash.append($el);
+  } else _updateEl();
+
+  // If there weren't flash messages in the dom before, add them.
+  if (newFlash) $container.prepend($flash);
+
+  function _updateEl() {
+    $el.removeClass()
+      .addClass(`fmm-message ${type} ${opts.el.slice(1)}`)
+      .html(msg);
+  }
+}
+
+function flashRemove(opts) {
+  var $container = $(opts.container || '.site-content'),
+    $flash = $container.find('.m-flash-messages'),
+    $el = $flash.find(opts.el);
+
+  if ($flash.find('.fmm-message').length === 1) $flash.remove();
+  else $el.remove();
 }
 
 function loadingStart($el) {

@@ -9,7 +9,7 @@ block styles
 block bodyContent
   -var r = data.recipe
   .container.container-3
-    .m-recipe
+    .m-recipe(data-recipe=filters.stripPrivates(data.recipe._doc))
       h1.heading.h2.rlm-h= filters.capitalizeTitles(r.name)
       .rm-main-photo
         .rm-photo(

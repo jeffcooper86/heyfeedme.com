@@ -2,6 +2,7 @@
   "extends": "standard",
 
   "globals": {
+    "heyfeedme": true,
     "jQuery": true,
     "history": true,
     "location": true,
@@ -15,5 +16,6 @@
     "padded-blocks": 0,
     "semi": [2, "always"],
     "space-before-function-paren": 0,
+    "space-unary-ops": 0
   }
 }

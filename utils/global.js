@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var moment = require('moment');
+var momentJs = require('moment');
 var isomorphicUtils = require(process.cwd() + '/utils/_shared/global');
 
 module.exports.i = isomorphicUtils;
@@ -22,11 +22,11 @@ function capitalizeTitles(title, skip) {
 }
 
 function moment(date) {
-  return moment(date);
+  return momentJs(date);
 }
 
-function stripPrivates(schema) {
-  return _.omitBy(schema, function(val, key) {
+function stripPrivates(d) {
+  return _.omitBy(d, function(val, key) {
     return key[0] === '_';
   });
 }

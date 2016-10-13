@@ -35,7 +35,7 @@ function doFilters(opts) {
     }
 
     if (updateUrl) _updateUrlQueryFromCookie(param);
-    if (afterUpdate) afterUpdate();
+    if (afterUpdate) afterUpdate($this, opts);
   });
 }
 
