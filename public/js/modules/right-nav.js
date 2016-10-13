@@ -9,10 +9,10 @@ var utils = require('../utils/iUtils');
 module.exports.init = init;
 module.exports.toggle = toggle;
 
-var bodyClass = 'active-right-nav',
-  $recipes = $('.m-recipe-listings');
+var bodyClass = 'active-right-nav';
 
 function init() {
+  var $recipes = $('.m-recipe-listings');
 
   filters.doFilters({
     afterUpdate: _afterFilterUpdate,
@@ -33,7 +33,8 @@ function toggle(opts) {
 }
 
 function _afterFilterUpdate() {
-  var $recipe = $('.m-recipe');
+  var $recipe = $('.m-recipe'),
+    $recipes = $('.m-recipe-listings');
   if ($recipes.length) recipeListings.updateRecipes($recipes);
   else if ($recipe.length === 1) _recipeMatchesFilters($recipe);
 }
