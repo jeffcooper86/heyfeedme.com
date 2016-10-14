@@ -1,7 +1,7 @@
 var forms = require('../../components/forms');
 var modals = require('../../components/modals');
 var overlays = require('../../components/overlays');
-var ui = require('../../ui');
+var modalOverlay = require('../../components/groups/modal-with-overlay');
 
 /**
  * Components.
@@ -27,7 +27,7 @@ $('.js-modal-ctrl').on('click', function() {
 
 $('.js-modal-overlay-ctrl').on('click', function() {
   var modal = $(this).data('modal');
-  ui.showModalWithOverlay({
+  modalOverlay.showModalWithOverlay({
     modal: {
       el: modal
     },

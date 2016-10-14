@@ -1,5 +1,5 @@
 var forms = require('../../components/forms');
-var ui = require('../../ui');
+var modalOverlay = require('../../components/groups/modal-with-overlay');
 
 forms.addField({
   el: '.js-form-add'
@@ -7,7 +7,7 @@ forms.addField({
 
 $('.js-form-actions .js-delete').on('click', function(e) {
   e.preventDefault();
-  ui.showModalWithOverlay({
+  modalOverlay.showModalWithOverlay({
     modal: {
       el: '.js-modal'
     },

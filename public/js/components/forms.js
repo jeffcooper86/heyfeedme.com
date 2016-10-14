@@ -1,5 +1,6 @@
 module.exports.eventSubmit = eventSubmit;
 module.exports.addField = addField;
+module.exports.allowNewline = allowNewline;
 
 function addField(opts) {
   var $el = $(opts.el);
@@ -50,4 +51,8 @@ function eventSubmit(opts) {
     e.preventDefault();
     cb($form);
   });
+}
+
+function allowNewline(opts) {
+
 }
