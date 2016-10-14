@@ -2,6 +2,29 @@
   margin-top: @spacing-l1;
 }
 
+.rm-count {
+  font-size: @font-size-s1;
+
+  display: inline-block;
+
+  width: 10px;
+  margin-right: 10px;
+  margin-left: -20px;
+
+  color: @color-3-d1;
+}
+
+.rm-count-wrap {
+  margin-left: 20px;
+}
+
+.rm-list {
+  > li {
+    margin-top: @spacing-s2;
+    margin-bottom: @spacing-s2;
+  }
+}
+
 .rm-main-photo {
   width: 100vw;
   max-width: 100vw;
@@ -20,7 +43,13 @@
   }
 }
 
+.rm-section {
+  + .rm-section {
+    margin-top: @spacing;
+  }
+}
+
 .rm-summary {
-  margin-top: @spacing-s3;
+  margin-top: @spacing-s2;
   margin-bottom: @spacing-s2;
 }

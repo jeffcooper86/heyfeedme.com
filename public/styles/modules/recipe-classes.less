@@ -3,11 +3,27 @@
 }
 
 .rcm-class {
-  .icon {
+  margin-right: @spacing-l1;
+  margin-bottom: @spacing-s3;
+
+  text-transform: capitalize;
+}
+
+.rcm-classes {
+  display: flex;
+
+  flex-wrap: wrap;
+}
+
+.rcm-icon {
+  &:before {
+    font-family: @font-icons;
     font-size: @font-size-s1;
 
-    margin-right: @spacing-s3;
+    margin-right: @spacing-s2;
 
-    color: @color-3;
+    content: @fa-var-star;
+
+    color: @color-gray;
   }
 }

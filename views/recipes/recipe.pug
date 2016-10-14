@@ -10,36 +10,58 @@ block bodyContent
   -var r = data.recipe
   .container.container-3
     .m-recipe(data-recipe=filters.stripPrivates(data.recipe._doc))
-      h1.heading.h2.rlm-h= filters.capitalizeTitles(r.name)
-      .rm-main-photo
-        .rm-photo(
-          style= r.photo ? `background-image:url(/${r.photo});` : null
-        )
 
-      +recipeClasses(r.classifications)
-      p.rm-categories= filters.capitalizeTitles(filters.i.stringifyArray(r.categories, ', '))
-      p.rm-summary= r.summary
+      //
+        Header.
+        -------------------
+      .rm-section.rm-header
+        h1.heading.h1.rlm-h= filters.capitalizeTitles(r.name)
+        .rm-main-photo
+          .rm-photo(
+            style= r.photo ? `background-image:url(/${r.photo});` : null
+          )
 
-      .m-recipe-ingredients
-        h2.heading.h3 Ingredients
-        ul
-          each i in r.ingredients
-            li= `${i.text}${i.amount}`
+      //
+        Intro.
+        -------------------
+      .rm-section.rm-intro
+        if r.classifications.length || r.summary
+          .note
+            .rm-classes
+              +recipeClasses(r.classifications)
+            p.rm-summary= r.summary
 
-      .m-recipe-steps
-        -var stepsCount = 0;
+      //
+        Recipe.
+        -------------------
+      .rm-section.rm-recipe
+        .m-recipe-ingredients
+          -var ingredientsCount = 0;
+          h2.heading.h2 Ingredients: #{r.ingredients.length}
+          ul.rm-list
+            each i in r.ingredients
+              li.rm-count-wrap
+                span.rm-count.rim-count= ++ingredientsCount
+                = `${i.text}${i.amount}`
 
-        h2.heading.h3 Steps
-        each step in r.steps
-          .rsm-step
-            p.rsm-text
-              span.rsm-count= ++stepsCount
-              =step
+        .m-recipe-steps
+          -var stepsCount = 0;
+          h2.heading.h2 Steps: #{r.steps.length}
+          ul.rm-list
+            each step in r.steps
+              li.rm-count-wrap
+                p
+                  span.rm-count.rsm-count= ++stepsCount
+                  =step
 
-      h2.heading.h3 Note
-      p.rm-notes= r.notes
+        if r.notes
+          .note
+            p.rm-notes= r.notes
 
-      .rm-footer
+      //
+        Footer.
+        -------------------
+      .rm-section.rm-footer
         if r.published
           p.rm-date Published #{filters.moment(r.updated).format('MMMM DD, YYYY')}
 
