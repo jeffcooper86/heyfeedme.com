@@ -30,6 +30,8 @@ block adminBody
                 each key in tableColumns
                   if filters.i.getNested(schema, `${key}.instance`) === 'Date'
                     td= d[key] ? filters.moment(d[key]).format('MMM DD YYYY HH:mm:ss') : null
+                  else if filters.i.getNested(schema, `${key}.instance`) === 'Array'
+                    td= d[key] ? filters.i.stringifyArray(d[key], ', ') : null
                   else
                     td= d[key]
 
