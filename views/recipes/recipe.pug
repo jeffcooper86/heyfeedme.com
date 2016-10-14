@@ -6,9 +6,11 @@ block seoDescription
 block styles
   link(rel='stylesheet' href='/dist/styles/pages/recipes/recipe.css')
 
+block flashMessages
 block bodyContent
   -var r = data.recipe
   .container.container-3
+    +flashMessages(flash)
     .m-recipe(data-recipe=filters.stripPrivates(data.recipe._doc))
 
       //

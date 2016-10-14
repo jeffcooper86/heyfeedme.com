@@ -15,7 +15,6 @@ function formatCurrentDateFromReqData(data) {
   _.forEach(data, function(d, k) {
     if (d === 'dateCurrent') data[k] = Date.now();
   });
-  console.log(data);
   return data;
 }
 
@@ -40,7 +39,6 @@ function formatReqData(data, schema) {
   newD = formatReqDataDocArrays(newD, schema);
   newD = formatReqDataBools(newD, schema);
   newD = trimEmptyReqDataArrays(newD, schema);
-  console.log(newD);
   return newD;
 }
 
