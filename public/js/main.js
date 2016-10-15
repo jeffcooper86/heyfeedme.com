@@ -1,5 +1,4 @@
 var rightNav = require('./modules/right-nav');
-var search = require('./modules/search');
 
 /**
  * Components.
@@ -12,4 +11,3 @@ var search = require('./modules/search');
  * ----------------------------
  */
 rightNav.init();
-search.init();
