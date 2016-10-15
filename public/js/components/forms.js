@@ -1,5 +1,6 @@
 module.exports.eventSubmit = eventSubmit;
 module.exports.addField = addField;
+module.exports.shortcutSubmit = shortcutSubmit;
 
 function addField(opts) {
   var $el = $(opts.el);
@@ -52,6 +53,15 @@ function eventSubmit(opts) {
   });
 }
 
-// function _eventComandEnter(e) {
-//   return (e.metaKey || e.ctrlKey) && e.keyCode === 13;
-// }
+function shortcutSubmit(opts) {
+  var $el = $(opts.el),
+    $submitEl = $(opts.submitEl);
+
+  $el.on('keydown', function(e) {
+    if (_eventCommandEnter(e)) $submitEl.click();
+  });
+}
+
+function _eventCommandEnter(e) {
+  return (e.metaKey || e.ctrlKey) && e.keyCode === 13;
+}

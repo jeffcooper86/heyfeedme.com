@@ -16,3 +16,8 @@ $('.js-form-actions .js-delete').on('click', function(e) {
     }
   });
 });
+
+forms.shortcutSubmit({
+  el: 'input, textarea',
+  submitEl: '.js-form-update'
+});
