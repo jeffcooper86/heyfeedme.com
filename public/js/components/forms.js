@@ -1,6 +1,5 @@
 module.exports.eventSubmit = eventSubmit;
 module.exports.addField = addField;
-module.exports.allowNewline = allowNewline;
 
 function addField(opts) {
   var $el = $(opts.el);
@@ -53,6 +52,6 @@ function eventSubmit(opts) {
   });
 }
 
-function allowNewline(opts) {
-
-}
+// function _eventComandEnter(e) {
+//   return (e.metaKey || e.ctrlKey) && e.keyCode === 13;
+// }
