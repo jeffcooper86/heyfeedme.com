@@ -1,19 +1,32 @@
-var gulp = require('gulp');
-var less = require('gulp-less');
 var autoprefixer = require('gulp-autoprefixer');
-require('gulp-watch');
 var browserify = require('browserify');
+var csscomb = require('gulp-csscomb');
+var cssmin = require('gulp-cssmin');
+var diff = require('gulp-diff');
 var es = require('event-stream');
 var foreach = require('gulp-foreach');
-var source = require('vinyl-source-stream');
-var jsPrettify = require('gulp-jsbeautifier');
-var csscomb = require('gulp-csscomb');
-var diff = require('gulp-diff');
 var glob = require('glob');
-var cssmin = require('gulp-cssmin');
+var gulp = require('gulp');
+var jsPrettify = require('gulp-jsbeautifier');
+var less = require('gulp-less');
+var source = require('vinyl-source-stream');
 
 var utils = require(process.cwd() + '/utils/global.js');
 
+
+/**
+ * Main tasks.
+ */
+gulp.task('default', ['dist']);
+gulp.task('beautify', ['beautify:js', 'beautify:less']);
+gulp.task('beautifyCheck', ['beautify:jsCheck', 'beautify:less']);
+gulp.task('dist', ['dist:less', 'dist:js', 'dist:jsPages']);
+gulp.task('watch', ['watch:less', 'watch:js']);
+
+
+/**
+ * Config.
+ */
 var paths = {
   js: ['./*.js', './routes/**/*.js', './utils/**/*.js', './models/**/*.js'],
   public: {
@@ -35,9 +48,10 @@ var paths = {
   }
 };
 
-gulp.task('default', ['dist']);
 
-// Build tasks
+/**
+ * Build tasks.
+ */
 gulp.task('dist:less', function() {
   gulp.src(paths.public.less.compile.main)
     .pipe(less({}))
@@ -53,44 +67,42 @@ gulp.task('dist:less', function() {
 
 gulp.task('dist:js', function() {
   var bundleStream = browserify(paths.public.js.compile.main).bundle();
-  bundleStream
+  return bundleStream
     .pipe(source('main.js'))
     .pipe(gulp.dest(`${paths.public.dist}js/`));
-
-  jsPageBundle();
 });
 
-gulp.task('dist', ['dist:less', 'dist:js']);
+gulp.task('dist:jsPages', function() {
+  return jsPageBundle();
+});
 
 
-// Watch tasks
+/**
+ * Watch tasks.
+ */
 gulp.task('watch:less', function() {
-  gulp.watch(paths.public.less.watch, ['dist:less']);
+  return gulp.watch(paths.public.less.watch, ['dist:less']);
 });
 
 gulp.task('watch:js', function() {
-  gulp.watch(paths.public.js.watch, ['dist:js']);
+  return gulp.watch(paths.public.js.watch, ['dist:js']);
 });
 
-gulp.task('watch', ['watch:less', 'watch:js']);
 
-
-// Beautifiers
+/**
+ * Beautifiers.
+ */
 gulp.task('beautify:js', function() {
-  beautifyJs();
+  return beautifyJs();
 });
 
 gulp.task('beautify:jsCheck', function() {
-  beautifyJs(true);
+  return beautifyJs(true);
 });
 
 gulp.task('beautify:less', function() {
-  beautifyLess();
+  return beautifyLess();
 });
-
-gulp.task('beautify', ['beautify:js', 'beautify:less']);
-gulp.task('beautifyCheck', ['beautify:jsCheck', 'beautify:less']);
-
 
 function beautifyLess() {
   es.merge(
