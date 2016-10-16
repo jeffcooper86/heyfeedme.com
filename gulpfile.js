@@ -1,5 +1,7 @@
 const autoprefixer = require('gulp-autoprefixer');
+const babel = require('gulp-babel');
 const browserify = require('browserify');
+const buffer = require('vinyl-buffer');
 const csscomb = require('gulp-csscomb');
 const cssmin = require('gulp-cssmin');
 const diff = require('gulp-diff');
@@ -10,6 +12,7 @@ const gulp = require('gulp');
 const jsPrettify = require('gulp-jsbeautifier');
 const less = require('gulp-less');
 const source = require('vinyl-source-stream');
+const uglify = require('gulp-uglify');
 
 const utils = require(process.cwd() + '/utils/global.js');
 
@@ -69,6 +72,9 @@ gulp.task('dist:js', function() {
   var bundleStream = browserify(paths.public.js.compile.main).bundle();
   return bundleStream
     .pipe(source('main.js'))
+    .pipe(buffer())
+    .pipe(babel())
+    .pipe(uglify())
     .pipe(gulp.dest(`${paths.public.dist}js/`));
 });
 
@@ -162,6 +168,9 @@ function jsPageBundle() {
       var bundleStream = browserify(file).bundle();
       bundleStream
         .pipe(source(`js/pages${file.slice(file.indexOf('pages') + 5)}`))
+        .pipe(buffer())
+        .pipe(babel())
+        .pipe(uglify())
         .pipe(gulp.dest(paths.public.dist));
     });
   });
