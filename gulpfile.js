@@ -1,17 +1,17 @@
-var autoprefixer = require('gulp-autoprefixer');
-var browserify = require('browserify');
-var csscomb = require('gulp-csscomb');
-var cssmin = require('gulp-cssmin');
-var diff = require('gulp-diff');
-var es = require('event-stream');
-var foreach = require('gulp-foreach');
-var glob = require('glob');
-var gulp = require('gulp');
-var jsPrettify = require('gulp-jsbeautifier');
-var less = require('gulp-less');
-var source = require('vinyl-source-stream');
+const autoprefixer = require('gulp-autoprefixer');
+const browserify = require('browserify');
+const csscomb = require('gulp-csscomb');
+const cssmin = require('gulp-cssmin');
+const diff = require('gulp-diff');
+const es = require('event-stream');
+const foreach = require('gulp-foreach');
+const glob = require('glob');
+const gulp = require('gulp');
+const jsPrettify = require('gulp-jsbeautifier');
+const less = require('gulp-less');
+const source = require('vinyl-source-stream');
 
-var utils = require(process.cwd() + '/utils/global.js');
+const utils = require(process.cwd() + '/utils/global.js');
 
 
 /**
@@ -27,7 +27,7 @@ gulp.task('watch', ['watch:less', 'watch:js']);
 /**
  * Config.
  */
-var paths = {
+const paths = {
   js: ['./*.js', './routes/**/*.js', './utils/**/*.js', './models/**/*.js'],
   public: {
     dist: './public/dist/',

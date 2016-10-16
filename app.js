@@ -1,18 +1,18 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var flash = require('flash');
-var mongoose = require('mongoose');
-var requireDir = require('require-dir');
-var session = require('express-session');
-var slash = require('express-slash');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const flash = require('flash');
+const mongoose = require('mongoose');
+const requireDir = require('require-dir');
+const session = require('express-session');
+const slash = require('express-slash');
 
-var MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo')(session);
 
 // App.
-var middleware = require(process.cwd() + '/middleware');
+const middleware = require(process.cwd() + '/middleware');
 
 /*
  * Settings.
