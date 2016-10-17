@@ -1,6 +1,8 @@
+var pug = require('pug');
+
 var recipesUtils = require(process.cwd() + '/utils/recipes');
 var Recipes = require(process.cwd() + '/models/Recipe');
-var pug = require('pug');
+var utils = require(process.cwd() + '/utils/global');
 
 exports = module.exports = function(req, res) {
   var l = res.locals,
@@ -12,7 +14,8 @@ exports = module.exports = function(req, res) {
       activeSections: activeSections,
       activeClasses: activeClasses
     },
-    sort = req.cookies.recipesListingsSort;
+    sort = req.cookies.recipesListingsSort,
+    tag = utils.i.unslugify(req.params.tag);
 
   recipesUtils.getRecipes(Recipes, filters, sort, searchRecipes);
 
@@ -28,9 +31,16 @@ exports = module.exports = function(req, res) {
     else if (req.params.html) {
       l.recipes = recipes;
       l.activeSections = activeSections;
+      l.data.tag = tag;
       l.compileRecipes = true;
       l.data.sort = sort;
       l.data.sortOptions = recipesUtils.getSortOptions();
+      if (tag) {
+        l.crumbs = [
+          ['tags', '/recipes/tags'],
+          [tag]
+        ];
+      }
       data.recipesHtml = pug.renderFile(t, l);
       data.recipesCount = recipes.length;
       res.send(JSON.stringify(data));

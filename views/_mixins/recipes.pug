@@ -1,3 +1,5 @@
+include crumbs
+
 mixin recipes(recipes)
   .m-recipe-listings
     .rlm-wrap
@@ -16,6 +18,9 @@ mixin recipes(recipes)
                   value=k
                   selected = data.sort === k
                 )= v
+        if data.tag && crumbs
+          .m-crumbs
+            +crumbs(crumbs)
       .rlm-recipes-wrap
         each r in recipes
           a(href=filters.i.slugify(`/recipe/${r.name}/${r.id}`)).rlm-recipe

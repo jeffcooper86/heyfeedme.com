@@ -1,7 +1,14 @@
 h3.heading.h2(id='crumbs') Crumbs
 .crumbs
-  span.crumb
-    a(href='/') Home
-  span.crumb Here
+  +crumbs([
+    ['Home', '/'],
+    ['Style']
+  ])
+
+.crumbs
+  +crumbs([
+    ['Home', '/'],
+    ['Style with link', '/style#crumbs']
+  ])
 
 .break.l1

@@ -4,7 +4,17 @@
 }
 
 .crumb {
+  text-transform: capitalize;
+
   color: @color-gray-d2;
+
+  &:last-child {
+    a {
+      &:after {
+        display: none;
+      }
+    }
+  }
 
   a {
     &:after {

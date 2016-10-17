@@ -7,11 +7,14 @@ module.exports.sortOrder = sortOrder;
 module.exports.updateRecipes = updateRecipes;
 
 function updateRecipes($recipes) {
-  var $recipesWrap = $recipes.find('.rlm-wrap');
+  var $recipesWrap = $recipes.find('.rlm-wrap'),
+    loc = window.location.pathname;
+
+  if (loc.indexOf('/recipes') === -1) loc = '/recipes';
 
   ui.loadingStart($recipesWrap);
   $.ajax({
-    url: '/api/recipes/html' + window.location.search
+    url: `/api${loc}/html${window.location.search}`
   }).done(function(data) {
     data = JSON.parse(data);
     ui.loadingStop($recipesWrap);

@@ -76,6 +76,9 @@ var recipeSchema = new Schema({
     type: String,
     enum: classifications
   }],
+  tags: [{
+    type: String
+  }],
   ingredients: [ingredientSchema],
   steps: [{
     type: String,

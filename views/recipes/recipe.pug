@@ -61,6 +61,19 @@ block bodyContent
             p.rm-notes= r.notes
 
       //
+        Tags.
+        -------------------
+      if r.tags
+        .rm-section
+          h2.heading.h2 Tags
+          ul.rm-list
+            each t in r.tags.sort()
+              li
+                a(href=`/recipes/tag/${filters.i.slugify(t)}`)= t
+
+
+
+      //
         Footer.
         -------------------
       .rm-section.rm-footer

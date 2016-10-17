@@ -53,9 +53,14 @@ var routes = requireDir('routes', {
 /**
  * Public.
  */
+
 // Recipes
 app.get('/', routes.recipes.recipes);
+app.get('/recipes/tags', routes.recipes.tags);
+app.get('/recipes/tag/:tag([a-z-]+)', routes.recipes.recipes);
 app.get('/recipe/[a-z-]+/:recipeId([a-f0-9]{24})', routes.recipes.recipe);
+
+// Static.
 app.get('/about', routes.about.index);
 
 /**
@@ -63,6 +68,7 @@ app.get('/about', routes.about.index);
  */
 // To do: Make api section a router module
 app.all('/api/recipes/:html(html)?', routes._api.recipes.recipes);
+app.all('/api/recipes/tag/:tag([a-z-]+)/:html(html)?', routes._api.recipes.recipes);
 
 /**
  * Auth.

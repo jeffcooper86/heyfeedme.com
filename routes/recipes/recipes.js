@@ -1,6 +1,7 @@
 var async = require('async');
 var Recipes = require(process.cwd() + '/models/Recipe');
 var recipesUtils = require(process.cwd() + '/utils/recipes');
+var utils = require(process.cwd() + '/utils/global');
 
 exports = module.exports = function(req, res) {
   var l = res.locals,
@@ -8,18 +9,27 @@ exports = module.exports = function(req, res) {
     activeSections = res.locals.data.recipes.activeCats,
     activeClasses = res.locals.data.recipes.activeClasses,
     searchQ = req.query.search,
-    sort = req.query.sort || req.cookies.recipesListingsSort;
+    sort = req.query.sort || req.cookies.recipesListingsSort,
+    tag = utils.i.unslugify(req.params.tag);
 
   // Set locals.
   l.data.search = searchQ;
   l.data.sort = sort;
   l.data.sortOptions = recipesUtils.getSortOptions();
   l.activeSections = activeSections;
+  l.data.tag = tag;
 
   // Reset the cookies because the user may have edited them from the url.
   recipesUtils.setActiveCategories(res, activeSections);
   recipesUtils.setActiveClasses(res, activeClasses);
   recipesUtils.setSort(res, sort);
+
+  if (tag) {
+    l.crumbs = [
+      ['tags', '/recipes/tags'],
+      [tag]
+    ];
+  }
 
   async.waterfall([
     getAll,
