@@ -49,16 +49,19 @@ function getClassifications() {
   return 'vegetarian;vegan;gluten free'.split(';').sort();
 }
 
-function getRecipes(Recipes, filters, sort, cb) {
+function getRecipes(Recipes, opts, cb) {
   var q = Recipes.model.find()
     .where('publish').equals(true),
-    cats = filters.activeSections,
-    classes = filters.activeClasses;
+    cats = opts.filters.activeSections,
+    classes = opts.filters.activeClasses,
+    sort = opts.sort,
+    tag = opts.tag;
 
   if (cats && cats.indexOf('all') < 0) q.where('categories').in(cats);
   if (classes && classes.indexOf('all') < 0) {
     q.where('classifications').in(classes);
   }
+  if (tag.length) q.where('tags').in([tag]);
 
   switch (sort) {
     case 'new':

@@ -42,10 +42,15 @@ exports = module.exports = function(req, res) {
 
   function getAll(cb) {
     var filters = {
-      activeSections: activeSections,
-      activeClasses: activeClasses
-    };
-    recipesUtils.getRecipes(Recipes, filters, sort, cb);
+        activeSections: activeSections,
+        activeClasses: activeClasses
+      },
+      opts = {
+        filters: filters,
+        sort: sort,
+        tag: tag
+      };
+    recipesUtils.getRecipes(Recipes, opts, cb);
   }
 
   function search(recipes, cb) {

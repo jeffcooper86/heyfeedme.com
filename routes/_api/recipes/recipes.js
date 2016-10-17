@@ -15,9 +15,14 @@ exports = module.exports = function(req, res) {
       activeClasses: activeClasses
     },
     sort = req.cookies.recipesListingsSort,
-    tag = utils.i.unslugify(req.params.tag);
+    tag = utils.i.unslugify(req.params.tag),
+    opts = {
+      filters: filters,
+      sort: sort,
+      tag: tag
+    };
 
-  recipesUtils.getRecipes(Recipes, filters, sort, searchRecipes);
+  recipesUtils.getRecipes(Recipes, opts, searchRecipes);
 
   function searchRecipes(err, recipes) {
     if (err) return sendRecipes(err);
