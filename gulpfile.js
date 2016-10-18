@@ -20,10 +20,14 @@ const utils = require(process.cwd() + '/utils/global.js');
 /**
  * Main tasks.
  */
-gulp.task('default', ['dist']);
+var defaultTask = process.env.NODE_ENV === 'development' ?
+  ['distDev'] : ['dist'];
+
+gulp.task('default', defaultTask);
 gulp.task('beautify', ['beautify:js', 'beautify:less']);
 gulp.task('beautifyCheck', ['beautify:jsCheck', 'beautify:less']);
 gulp.task('dist', ['dist:less', 'dist:js', 'dist:jsPages']);
+gulp.task('distDev', ['dist:less', 'dist:jsDev', 'dist:jsPagesDev']);
 gulp.task('watch', ['watch:less', 'watch:js']);
 
 
@@ -78,8 +82,20 @@ gulp.task('dist:js', function() {
     .pipe(gulp.dest(`${paths.public.dist}js/`));
 });
 
+gulp.task('dist:jsDev', function() {
+  var bundleStream = browserify(paths.public.js.compile.main).bundle();
+  return bundleStream
+    .pipe(source('main.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest(`${paths.public.dist}js/`));
+});
+
 gulp.task('dist:jsPages', function() {
   return jsPageBundle();
+});
+
+gulp.task('dist:jsPagesDev', function() {
+  return jsPageBundleDev();
 });
 
 
@@ -91,7 +107,7 @@ gulp.task('watch:less', function() {
 });
 
 gulp.task('watch:js', function() {
-  return gulp.watch(paths.public.js.watch, ['dist:js']);
+  return gulp.watch(paths.public.js.watch, ['dist:jsDev, dist:jsPagesDev']);
 });
 
 
@@ -171,6 +187,18 @@ function jsPageBundle() {
         .pipe(buffer())
         .pipe(babel())
         .pipe(uglify())
+        .pipe(gulp.dest(paths.public.dist));
+    });
+  });
+}
+
+function jsPageBundleDev() {
+  glob(paths.public.js.compile.pages, function(err, files) {
+    files.forEach(function(file) {
+      var bundleStream = browserify(file).bundle();
+      bundleStream
+        .pipe(source(`js/pages${file.slice(file.indexOf('pages') + 5)}`))
+        .pipe(buffer())
         .pipe(gulp.dest(paths.public.dist));
     });
   });
