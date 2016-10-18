@@ -10,6 +10,7 @@ function updateRecipes($recipes) {
   var $recipesWrap = $recipes.find('.rlm-wrap'),
     loc = window.location.pathname;
 
+  // Recipes is currently '/' but '/recipes' in the api.
   if (loc.indexOf('/recipes') === -1) loc = '/recipes';
 
   ui.loadingStart($recipesWrap);
