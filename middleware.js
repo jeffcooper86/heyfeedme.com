@@ -11,6 +11,7 @@ var recipeUtils = require(process.cwd() + '/utils/recipes');
 module.exports.dbConnect = dbConnect;
 module.exports.filesAsPaths = filesAsPaths;
 module.exports.getSetEnv = getSetEnv;
+module.exports.readMultipartData = readMultipartData;
 module.exports.requireAuthentication = requireAuthentication;
 module.exports.setGlobalData = setGlobalData;
 module.exports.setTemplateFilters = setTemplateFilters;
@@ -50,6 +51,10 @@ function filesAsPaths(req, res, next) {
 function getSetEnv(req, res, next) {
   res.locals.NODE_ENV = process.env.NODE_ENV;
   next();
+}
+
+function readMultipartData() {
+  return multer().array();
 }
 
 function requireAuthentication(req, res, next) {

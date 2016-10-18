@@ -98,7 +98,7 @@ app.route('/admin/:model')
   .post(routes.admin.model);
 app.route('/admin/:model/:documentId')
   .get(routes.admin.document)
-  .post(routes.admin.document);
+  .post(middleware.readMultipartData(), routes.admin.document);
 
 /**
  * Styleguide.
