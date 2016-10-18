@@ -20,8 +20,7 @@ const utils = require(process.cwd() + '/utils/global.js');
 /**
  * Main tasks.
  */
-var defaultTask = process.env.NODE_ENV === 'development' ?
-  ['distDev'] : ['dist'];
+var defaultTask = process.env.NODE_ENV === 'development' ? ['distDev'] : ['dist'];
 
 gulp.task('default', defaultTask);
 gulp.task('beautify', ['beautify:js', 'beautify:less']);
@@ -107,7 +106,7 @@ gulp.task('watch:less', function() {
 });
 
 gulp.task('watch:js', function() {
-  return gulp.watch(paths.public.js.watch, ['dist:jsDev, dist:jsPagesDev']);
+  return gulp.watch(paths.public.js.watch, ['dist:jsDev', 'dist:jsPagesDev']);
 });
 
 
