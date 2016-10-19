@@ -12,7 +12,7 @@ exports = module.exports = function(req, res, next) {
 
   // Load the model.
   try {
-    Model = require(dbUtils.buildModelPath(modelName));
+    Model = require(dbUtils.buildModelPath(modelName.slice(0, -1)));
   } catch (err) {
     res.status(500);
     next(err);

@@ -9,7 +9,7 @@ exports = module.exports = function(req, res, next) {
     documentId = req.params.documentId,
     doc,
     query,
-    action = req.body.action || '',
+    action = utils.i.getNested(req, 'body.action') || '',
     Model,
     MongooseModel,
     template = 'admin/document',
@@ -24,7 +24,7 @@ exports = module.exports = function(req, res, next) {
 
   // Load the model.
   try {
-    Model = require(dbUtils.buildModelPath(modelName));
+    Model = require(dbUtils.buildModelPath(modelName.slice(0, -1)));
   } catch (err) {
     res.status(500);
     next(err);
@@ -43,14 +43,6 @@ exports = module.exports = function(req, res, next) {
     return res.render(template);
   });
 
-  function populateSchema(cb) {
-    var data = doc;
-    l.populatedSchema = utils.stripPrivates(
-      dbUtils.schemaPopulated(data, dbUtils.schemaOfModel(Model))
-    );
-    cb();
-  }
-
   function cancelEdit(cb) {
     if (req.method !== 'POST' || action !== 'cancel') return cb();
     res.redirect('/admin/' + modelName);
@@ -66,6 +58,20 @@ exports = module.exports = function(req, res, next) {
       l.doc = doc;
       cb();
     });
+  }
+
+  function populateSchema(cb) {
+    var data = doc;
+    dbUtils.schemaPopulatedWithRefsAsync(
+      data,
+      utils.stripPrivates(dbUtils.schemaOfModel(Model)),
+      callback
+    );
+
+    function callback(err, schema) {
+      l.populatedSchema = schema;
+      cb();
+    }
   }
 
   function removeDocument(cb) {

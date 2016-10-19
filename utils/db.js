@@ -1,4 +1,6 @@
 var _ = require('lodash');
+var async = require('async');
+
 var utils = require(process.cwd() + '/utils/global');
 
 module.exports.buildModelPath = buildModelPath;
@@ -9,6 +11,7 @@ module.exports.schemaDefaults = schemaDefaults;
 module.exports.schemaDefaultsPopulated = schemaDefaultsPopulated;
 module.exports.schemaOfModel = schemaOfModel;
 module.exports.schemaPopulated = schemaPopulated;
+module.exports.schemaPopulatedWithRefsAsync = schemaPopulatedWithRefsAsync;
 
 function formatCurrentDateFromReqData(data) {
   data = _.cloneDeep(data);
@@ -29,8 +32,7 @@ function addPublishedDate(data, schema) {
 }
 
 function buildModelPath(modelName) {
-  return process.cwd() + '/models/' + _.capitalize(modelName.slice(0, -1)) +
-    '.js';
+  return `${process.cwd()}/models/${modelName}.js`;
 }
 
 function formatReqData(data, schema) {
@@ -95,11 +97,15 @@ function formatReqDataBools(data, schema) {
   return data;
 }
 
+/**
+ * Filters a schema to only include fields specified with 'adminModelDefaults'.
+ * Default fields are used when creating a new document.
+ */
 function schemaDefaults(schema, Model) {
   var newSchema = _.cloneDeep(schema);
-  if (Model.adminModelDefaults) return _.pick(
-    newSchema, Model.adminModelDefaults
-  );
+  if (Model.adminModelDefaults) {
+    return _.pick(newSchema, Model.adminModelDefaults);
+  }
   return newSchema;
 }
 
@@ -113,12 +119,75 @@ function schemaOfModel(Model) {
   return Model.model.schema.paths;
 }
 
+/**
+ * Populates each schema path with a 'data' field containing an array of data.
+ *  schema[someField].data = data.someField;
+ * @param {object} data - Data to be populated.
+ * @param {object} schema - A mongoosejs schema.
+ */
 function schemaPopulated(data, schema) {
   var newSchema = _.cloneDeep(schema);
   for (var key in data) {
     if (newSchema[key]) newSchema[key].data = data[key];
   }
   return newSchema;
+}
+
+/**
+ * Populates each schema path with a 'data' field containing an array of data.
+ *  schema[someField].data = data.someField;
+ * Populates each schema path with a ref with a 'dataExisting' field containing
+ * an array of data.
+ *  schema[someField].dataExisting = [{_id: 0, name: 'first'}];
+ * @param {object} data - Data to be populated.
+ * @param {object} schema - A mongoosejs schema.
+ * @param {function} cb
+ */
+function schemaPopulatedWithRefsAsync(data, schema, cb) {
+  var newSchema = _.cloneDeep(schema),
+    refs = [],
+    sPath,
+    ref,
+    Model;
+
+  for (var key in data) {
+    sPath = newSchema[key];
+    if (!sPath) continue;
+
+    // Add data to the schema path.
+    sPath.data = data[key];
+
+    // Add ref data to the schema path.
+    if (utils.i.getNested(schema, [key, 'caster', 'instance']) === 'ObjectID') {
+      ref = sPath.caster.options.ref;
+      refs.push(_refLookUp(ref, sPath));
+    }
+  }
+
+  async.parallel(refs, function(err) {
+    cb(err, newSchema);
+  });
+
+  function _refLookUp(ref, sPath) {
+    return function refLookUp(cb) {
+      try {
+        Model = require(buildModelPath(ref));
+      } catch (err) {
+        cb(err);
+      }
+      Model.model.find().sort('_id').exec(function(err, docs) {
+        if (err) cb(err);
+        var refData = docs.map(function(doc) {
+          return {
+            _id: doc.id,
+            name: doc.defaultName
+          };
+        });
+        sPath.dataExisting = refData;
+        cb(null);
+      });
+    };
+  }
 }
 
 function trimEmptyReqDataArrays(data, schema) {

@@ -2,17 +2,17 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var recipeTagSchema = new Schema({
-  tag: {
+  name: {
     type: String,
     required: true
-  },
-  recipes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Recipe'
-  }]
+  }
+});
+
+recipeTagSchema.virtual('defaultName').get(function() {
+  return this.name;
 });
 
 module.exports.model = mongoose.model('RecipeTag', recipeTagSchema);
 
-module.exports.adminModelDefaults = 'tag'.split(' ');
-module.exports.adminModelTable = 'tag recipes'.split(' ');
+module.exports.adminModelDefaults = 'name'.split(' ');
+module.exports.adminModelTable = 'name'.split(' ');

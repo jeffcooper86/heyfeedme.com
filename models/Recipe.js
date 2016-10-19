@@ -77,7 +77,9 @@ var recipeSchema = new Schema({
     enum: classifications
   }],
   tags: [{
-    type: String
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'RecipeTag',
+    unique: true
   }],
   ingredients: [ingredientSchema],
   steps: [{
