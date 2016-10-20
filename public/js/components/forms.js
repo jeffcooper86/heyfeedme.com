@@ -25,16 +25,21 @@ function addField(opts) {
       $newField.find('input').each(function(i, input) {
         var $input = $(input);
         $input.val('');
-        $input.attr('id', `${scope}${$input.attr('id')}`);
+        $input.attr('id', `${_trimScope($input.attr('id'))}_scope_${scope}`);
       });
       $newField.find('label').each(function(i, label) {
         var $label = $(label);
-        $label.attr('for', `${scope}${$label.attr('for')}`);
+        $label.attr('for', `${_trimScope($label.attr('for'))}_scope_${scope}`);
       });
     }
 
     $fieldsWrap.append($newField);
   });
+
+  function _trimScope(val) {
+    var i = val.indexOf('_scope_');
+    return i > -1 ? val.slice(0, i) : val;
+  }
 }
 
 function eventSubmit(opts) {

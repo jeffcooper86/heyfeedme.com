@@ -74,10 +74,22 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
           )
             each value in field.data
               .input-group
-                +formFieldStringNum(value, field.options, sName, siName)
+                input(
+                  type='hidden'
+                  name=sName
+                  value=value
+                  id=`ref${siName}`
+                )
+                +formFieldStringNum(value, field.options, '', siName)
             if !field.data.length
               .input-group
-                +formFieldStringNum(value, field.options, sName, siName)
+                input(
+                  type='hidden'
+                  name=sName
+                  value=value
+                  id=`ref${siName}`
+                )
+                +formFieldStringNum(value, field.options, '', siName)
           .text-center
             button(data-form-add=key).btn.btn-2.js-form-add Add more
 

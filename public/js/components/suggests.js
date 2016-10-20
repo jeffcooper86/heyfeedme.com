@@ -8,10 +8,12 @@ function autoSuggest(opts) {
 
   $el.on('focusin', function(e) {
     var $this = $(this),
+      $suggestTarget = $(e.target),
       suggestOpts = {
         ref: $this.data('ref'),
-        $suggestTarget: $(e.target)
+        $suggestTarget: $suggestTarget
       };
+    $suggestTarget.attr('autocomplete', 'off');
     _suggest(suggestOpts);
   });
 
@@ -36,6 +38,7 @@ function autoSuggest(opts) {
     data.forEach(function(d) {
       $opts.append($('<li>')
         .addClass('suggest-item js-suggest-item')
+        .attr('data-hidden-val', d._id)
         .html(d.name));
     });
     $suggest.append($opts);
@@ -45,7 +48,6 @@ function autoSuggest(opts) {
       $suggestTarget: $target,
       $suggest: $suggest
     };
-
     $(document).on('click keydown', eventData, _suggesterEvent);
     return $suggest;
   }
@@ -68,8 +70,21 @@ function autoSuggest(opts) {
     if (!$target.hasClass('js-suggest-item')) {
       _removeSuggester($suggest);
     } else {
-      $suggestTarget.val($target.html());
+      _updateSuggestData({
+        $suggestTarget: $suggestTarget,
+        $target: $target
+      });
       if (hideOnSelection) _removeSuggester($suggest);
     }
+  }
+
+  function _updateSuggestData(opts) {
+    var $suggestTarget = opts.$suggestTarget,
+      $target = opts.$target,
+      $hiddenTarget = $suggestTarget.siblings(`#ref${$suggestTarget[0].id}`);
+
+    $suggestTarget.val($target.html());
+    console.log($target.data('hidden-val'));
+    $hiddenTarget.val($target.data('hidden-val'));
   }
 }
