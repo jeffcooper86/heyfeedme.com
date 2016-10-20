@@ -69,13 +69,15 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
 
         else if field.caster.instance === 'ObjectID'
           .form-group(
-            class=`js-form-add-${key} js-form-suggest`
-            data-existing=field.dataExisting
+            class=`js-form-add-${key} js-form-suggest suggest-wrap`
+            data-ref=field.caster.options.ref.toLowerCase()
           )
             each value in field.data
-              +formFieldStringNum(value, field.options, sName, siName)
+              .input-group
+                +formFieldStringNum(value, field.options, sName, siName)
             if !field.data.length
-              +formFieldStringNum(value, field.options, sName, siName)
+              .input-group
+                +formFieldStringNum(value, field.options, sName, siName)
           .text-center
             button(data-form-add=key).btn.btn-2.js-form-add Add more
 

@@ -138,7 +138,7 @@ function schemaPopulated(data, schema) {
  *  schema[someField].data = data.someField;
  * Populates each schema path with a ref with a 'dataExisting' field containing
  * an array of data.
- *  schema[someField].dataExisting = [{_id: 0, name: 'first'}];
+ *  schema[someField].dataExisting = [0(_id), 'first'(defaultName)];
  * @param {object} data - Data to be populated.
  * @param {object} schema - A mongoosejs schema.
  * @param {function} cb
@@ -178,15 +178,20 @@ function schemaPopulatedWithRefsAsync(data, schema, cb) {
       Model.model.find().sort('_id').exec(function(err, docs) {
         if (err) cb(err);
         var refData = docs.map(function(doc) {
-          return {
-            _id: doc.id,
-            name: doc.defaultName
-          };
+          return [doc.id, doc.defaultName || ''];
         });
+        refData = _sortOnDefaultname(refData);
         sPath.dataExisting = refData;
         cb(null);
       });
     };
+  }
+
+  function _sortOnDefaultname(data) {
+    data.sort(function(a, b) {
+      return a[1].localeCompare(b[1]);
+    });
+    return data;
   }
 }
 

@@ -62,16 +62,11 @@ exports = module.exports = function(req, res, next) {
 
   function populateSchema(cb) {
     var data = doc;
-    dbUtils.schemaPopulatedWithRefsAsync(
+    l.populatedSchema = dbUtils.schemaPopulated(
       data,
-      utils.stripPrivates(dbUtils.schemaOfModel(Model)),
-      callback
+      utils.stripPrivates(dbUtils.schemaOfModel(Model))
     );
-
-    function callback(err, schema) {
-      l.populatedSchema = schema;
-      cb();
-    }
+    cb();
   }
 
   function removeDocument(cb) {

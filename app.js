@@ -69,6 +69,7 @@ app.get('/about', routes.about.index);
 // To do: Make api section a router module
 app.all('/api/recipes/:html(html)?', routes._api.recipes.recipes);
 app.all('/api/recipes/tag/:tag([a-z-]+)/:html(html)?', routes._api.recipes.recipes);
+app.get('/api/recipetags', routes._api.recipes.recipeTags);
 
 /**
  * Auth.
