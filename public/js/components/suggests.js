@@ -71,7 +71,7 @@ function autoSuggest(opts) {
 
     // The event was on the visible target input.
     if ($target[0] === $suggestTarget[0]) {
-      if (cancelKeys.indexOf(e.key) > -1) {
+      if (e.type === 'keydown' && cancelKeys.indexOf(e.key) > -1) {
         _removeSuggester($suggest);
         e.preventDefault();
       } else if (e.type === 'keyup' && allowTyping) {
