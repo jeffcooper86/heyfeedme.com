@@ -18,7 +18,8 @@ forms.shortcutSubmit({
  * Suggest data from available options - used for refs.
  */
 suggest.autoSuggest({
-  el: '.js-form-suggest'
+  el: '.js-form-suggest',
+  allowTyping: false
 });
 
 /**

@@ -68,9 +68,12 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
                 ).no-space
 
         else if field.caster.instance === 'ObjectID'
+          - var ref = field.caster.options.ref
+          label
+            a(href=`/admin/${ref}s` target='_blank')=  ref
           .form-group(
             class=`js-form-add-${key} js-form-suggest suggest-wrap`
-            data-ref=field.caster.options.ref.toLowerCase()
+            data-ref=ref.toLowerCase()
           )
             each value in field.data
               .input-group

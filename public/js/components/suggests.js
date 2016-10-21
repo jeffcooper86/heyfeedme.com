@@ -1,11 +1,18 @@
 module.exports.autoSuggest = autoSuggest;
 
 function autoSuggest(opts) {
+  var df = {};
+  df.suggestClass = 'js-suggest';
+  df.cancelKeys = ['Escape', 'Tab', 'Enter'];
+  df.hideOnSelection = true;
+  df.allowTyping = true;
+
+  opts = $.extend(true, df, opts);
   var $el = $(opts.el),
-    suggestClass = opts.suggestClass || 'js-suggest',
-    cancelKeys = opts.cancelKeys || ['Escape', 'Tab', 'Enter'],
-    hideOnSelection = opts.hideOnSelection || true,
-    allowTyping = opts.allowTyping || true;
+    suggestClass = opts.suggestClass,
+    cancelKeys = opts.cancelKeys,
+    hideOnSelection = opts.hideOnSelection,
+    allowTyping = opts.allowTyping;
 
   $el.on('focusin', function(e) {
     var $this = $(this),
