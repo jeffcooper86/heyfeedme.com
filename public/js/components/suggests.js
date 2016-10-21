@@ -3,8 +3,9 @@ module.exports.autoSuggest = autoSuggest;
 function autoSuggest(opts) {
   var $el = $(opts.el),
     suggestClass = opts.suggestClass || 'js-suggest',
-    cancelKeys = opts.cancelKeys || ['Escape', 'Tab'],
-    hideOnSelection = opts.hideOnSelection || true;
+    cancelKeys = opts.cancelKeys || ['Escape', 'Tab', 'Enter'],
+    hideOnSelection = opts.hideOnSelection || true,
+    allowTyping = opts.allowTyping || true;
 
   $el.on('focusin', function(e) {
     var $this = $(this),
@@ -48,32 +49,47 @@ function autoSuggest(opts) {
       $suggestTarget: $target,
       $suggest: $suggest
     };
-    $(document).on('click keydown', eventData, _suggesterEvent);
+    $(document).on('click keydown keyup', eventData, _suggesterEvent);
     return $suggest;
   }
 
   function _removeSuggester($suggest) {
-    $(document).off('click keydown', _suggesterEvent);
+    $(document).off('click keydown keyup', _suggesterEvent);
     $suggest.remove();
   }
 
   function _suggesterEvent(e) {
     var $target = $(e.target),
       $suggestTarget = e.data.$suggestTarget,
-      $suggest = e.data.$suggest;
+      $hiddenTarget = $suggestTarget.siblings(`#ref${$suggestTarget[0].id}`),
+      $suggest = e.data.$suggest,
+      data = {
+        $suggestTarget: $suggestTarget,
+        $target: $target,
+        $hiddenTarget: $hiddenTarget
+      };
 
+    // The event was on the visible target input.
     if ($target[0] === $suggestTarget[0]) {
-      if (cancelKeys.indexOf(e.key) > -1) _removeSuggester($suggest);
-      else return;
+      if (cancelKeys.indexOf(e.key) > -1) {
+        _removeSuggester($suggest);
+        e.preventDefault();
+      } else if (e.type === 'keyup' && allowTyping) {
+        $hiddenTarget.val($suggestTarget.val());
+      } else if (e.type === 'keydown' && !allowTyping) {
+        e.preventDefault();
+      }
+      return;
     }
 
+    // Somewhere outside was clicked.
     if (!$target.hasClass('js-suggest-item')) {
+      e.preventDefault();
       _removeSuggester($suggest);
+
+      // The suggester was clicked.
     } else {
-      _updateSuggestData({
-        $suggestTarget: $suggestTarget,
-        $target: $target
-      });
+      _updateSuggestData(data);
       if (hideOnSelection) _removeSuggester($suggest);
     }
   }
@@ -81,10 +97,9 @@ function autoSuggest(opts) {
   function _updateSuggestData(opts) {
     var $suggestTarget = opts.$suggestTarget,
       $target = opts.$target,
-      $hiddenTarget = $suggestTarget.siblings(`#ref${$suggestTarget[0].id}`);
+      $hiddenTarget = opts.$hiddenTarget;
 
     $suggestTarget.val($target.html());
-    console.log($target.data('hidden-val'));
     $hiddenTarget.val($target.data('hidden-val'));
   }
 }

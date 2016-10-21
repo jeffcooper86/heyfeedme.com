@@ -49,15 +49,17 @@ exports = module.exports = function(req, res, next) {
   }
 
   function getDocument(cb) {
-    query = MongooseModel.findById(documentId, function(err, document) {
-      if (err || !document) {
-        res.status(500);
-        res.render('_error500');
-      }
-      doc = document;
-      l.doc = doc;
-      cb();
-    });
+    query = MongooseModel.findById(documentId)
+      .populate('tags')
+      .exec(function(err, document) {
+        if (err || !document) {
+          res.status(500);
+          res.render('_error500');
+        }
+        doc = document;
+        l.doc = doc;
+        cb();
+      });
   }
 
   function populateSchema(cb) {

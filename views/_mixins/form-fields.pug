@@ -77,19 +77,18 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
                 input(
                   type='hidden'
                   name=sName
-                  value=value
+                  value=value._id
                   id=`ref${siName}`
                 )
-                +formFieldStringNum(value, field.options, '', siName)
+                +formFieldStringNum(value.defaultName, field.options, '', siName)
             if !field.data.length
               .input-group
                 input(
                   type='hidden'
                   name=sName
-                  value=value
                   id=`ref${siName}`
                 )
-                +formFieldStringNum(value, field.options, '', siName)
+                +formFieldStringNum(null, field.options, '', siName)
           .text-center
             button(data-form-add=key).btn.btn-2.js-form-add Add more
 
