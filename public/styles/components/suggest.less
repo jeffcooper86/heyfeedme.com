@@ -15,7 +15,10 @@
 .suggest {
   position: absolute;
 
+  overflow-y: scroll;
+
   width: 100%;
+  max-height: calc(100vh ~'-' @form-input-height);
 
   color: @color-gray-d3;
   border-radius: @border-radius;
