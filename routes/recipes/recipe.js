@@ -6,13 +6,18 @@ exports = module.exports = function(req, res) {
   var l = res.locals,
     template = 'recipes/recipe',
     recipeId = req.params.recipeId,
-    recipeQuery = Recipes.model.findById(recipeId);
+    recipeQuery = Recipes.model.findById(recipeId)
+    .populate('tags');
 
   async.waterfall([
     getRecipe,
+    sortTags,
     recipeFilterMatch
   ], function(err) {
-    if (err) return res.render('_error500');
+    if (err) {
+      console.log(err);
+      return res.render('_error500');
+    }
     return res.render(template);
   });
 
@@ -20,7 +25,7 @@ exports = module.exports = function(req, res) {
     recipeQuery.exec(function(err, data) {
       l.data.recipe = data;
       l.title = data.seoDescription;
-      cb(null);
+      cb(err);
     });
   }
 
@@ -37,6 +42,17 @@ exports = module.exports = function(req, res) {
         utils.i.stringifyArray(noMatch, ', ')
       );
       req.flash('warning', msg);
+    }
+    cb(null);
+  }
+
+  function sortTags(cb) {
+    var r = l.data.recipe;
+    if (r.tags) {
+      r.tags = utils.i.sortOn({
+        arr: r.tags,
+        val: 'name'
+      });
     }
     cb(null);
   }

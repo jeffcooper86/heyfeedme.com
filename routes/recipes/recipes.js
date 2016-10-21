@@ -10,7 +10,8 @@ exports = module.exports = function(req, res) {
     activeClasses = res.locals.data.recipes.activeClasses,
     searchQ = req.query.search,
     sort = req.query.sort || req.cookies.recipesListingsSort,
-    tag = utils.i.unslugify(req.params.tag);
+    tag = utils.i.unslugify(req.params.tag),
+    tagId = req.params.tagId;
 
   // Set locals.
   l.data.search = searchQ;
@@ -35,7 +36,10 @@ exports = module.exports = function(req, res) {
     getAll,
     search
   ], function(err, data) {
-    if (err) return res.render('_error500');
+    if (err) {
+      console.log(err);
+      return res.render('_error500');
+    }
     l.data.recipes.recipes = data;
     return res.render(template);
   });
@@ -48,7 +52,7 @@ exports = module.exports = function(req, res) {
       opts = {
         filters: filters,
         sort: sort,
-        tag: tag
+        tag: tagId
       };
     recipesUtils.getRecipes(Recipes, opts, cb);
   }

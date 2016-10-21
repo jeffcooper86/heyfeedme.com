@@ -67,9 +67,9 @@ block bodyContent
         .rm-section
           h2.heading.h2 Tags
           ul.rm-list
-            each t in r.tags.sort()
+            each t in r.tags
               li
-                a(href=`/recipes/tag/${filters.i.slugify(t)}`)= t
+                a(href=`/recipes/tag/${filters.i.slugify(t.name)}/${t.id}`)= t.name
 
 
 

@@ -1,4 +1,3 @@
-var mongoose = require('mongoose');
 var utils = require(process.cwd() + '/utils/global');
 var _ = require('lodash');
 
@@ -63,7 +62,7 @@ function getRecipes(Recipes, opts, cb) {
   if (classes && classes.indexOf('all') < 0) {
     q.where('classifications').in(classes);
   }
-  if (tag.length) q.where('tags').in([tag]);
+  if (tag && tag.length) q.where('tags').in([tag]);
 
   switch (sort) {
     case 'new':

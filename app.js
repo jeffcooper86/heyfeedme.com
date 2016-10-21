@@ -57,7 +57,7 @@ var routes = requireDir('routes', {
 // Recipes
 app.get('/', routes.recipes.recipes);
 app.get('/recipes/tags', routes.recipes.tags);
-app.get('/recipes/tag/:tag([a-z-]+)', routes.recipes.recipes);
+app.get('/recipes/tag/:tag([a-z-]+)/:tagId([a-f0-9]{24})', routes.recipes.recipes);
 app.get('/recipe/[a-z-]+/:recipeId([a-f0-9]{24})', routes.recipes.recipe);
 
 // Static.

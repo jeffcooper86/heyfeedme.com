@@ -4,6 +4,7 @@ module.exports.arrayChunk = arrayChunk;
 module.exports.getFileExt = getFileExt;
 module.exports.getNested = getNested;
 module.exports.slugify = slugify;
+module.exports.sortOn = sortOn;
 module.exports.sortVerticalFlowColumns = sortVerticalFlowColumns;
 module.exports.stringifyArray = stringifyArray;
 module.exports.stripFileExtension = stripFileExtension;
@@ -53,6 +54,21 @@ function getNested(obj, p) {
 function slugify(route) {
   if (route) return route.replace(/[ ]/g, '-');
   return '';
+}
+
+function sortOn(opts) {
+  return opts.arr.sort(function(a, b) {
+    var compare;
+    a = getNested(a, opts.val);
+    b = getNested(b, opts.val);
+
+    a = a ? String(a) : a;
+    b = b ? String(b) : b;
+
+    compare = a.localeCompare(b);
+    if ('-1 desc'.split(' ').indexOf(opts.order) > -1) compare = compare * -1;
+    return compare;
+  });
 }
 
 function sortVerticalFlowColumns(data, n) {
