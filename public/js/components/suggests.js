@@ -25,6 +25,9 @@ function autoSuggest(dOpts) {
       };
     $suggestTarget.attr('autocomplete', 'off');
     _suggest(suggestOpts);
+    if (!allowTyping) {
+      _setCursorToEnd($suggestTarget[0]);
+    }
   });
 
   function _suggest(opts) {
@@ -94,6 +97,15 @@ function autoSuggest(dOpts) {
     $suggest.remove();
   }
 
+  function _setCursorToEnd(input) {
+    var val = input.value;
+
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=32865
+    window.setTimeout(function() {
+      input.setSelectionRange(val.length, val.length);
+    }, 0);
+  }
+
   function _suggesterEvent(e) {
     var $target = $(e.target),
       $suggestTarget = e.data.$suggestTarget,
@@ -110,10 +122,18 @@ function autoSuggest(dOpts) {
       if (e.type === 'keydown' && cancelKeys.indexOf(e.key) > -1) {
         _removeSuggester($suggest);
         e.preventDefault();
+
       } else if (e.type === 'keyup' && allowTyping) {
         $hiddenTarget.val($suggestTarget.val());
+
       } else if (e.type === 'keydown' && !allowTyping) {
         e.preventDefault();
+        if ('Delete Backspace'.split(' ').indexOf(e.key) > -1) {
+          $hiddenTarget.val($suggestTarget.val('').val());
+        }
+
+      } else if (e.type === 'click' && !allowTyping) {
+        _setCursorToEnd($target[0]);
       }
       return;
     }
