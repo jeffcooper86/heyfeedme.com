@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 var utils = require(process.cwd() + '/utils/global');
 var _ = require('lodash');
 
@@ -92,7 +93,10 @@ function getRecipes(Recipes, opts, cb) {
 }
 
 function getRecipesTags(RecipeTags, opts, cb) {
-  var q = RecipeTags.model.find();
+  var q = RecipeTags.model.find(),
+    skip = opts.skip;
+
+  if (skip) q.nin('_id', opts.skip);
   q.exec(function(err, tags) {
     cb(err, tags);
   });

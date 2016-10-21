@@ -1,18 +1,20 @@
 module.exports.autoSuggest = autoSuggest;
 
-function autoSuggest(opts) {
+function autoSuggest(dOpts) {
   var df = {};
   df.suggestClass = 'js-suggest';
   df.cancelKeys = ['Escape', 'Tab', 'Enter'];
   df.hideOnSelection = true;
   df.allowTyping = true;
+  df.noDuplicates = false;
 
-  opts = $.extend(true, df, opts);
-  var $el = $(opts.el),
-    suggestClass = opts.suggestClass,
-    cancelKeys = opts.cancelKeys,
-    hideOnSelection = opts.hideOnSelection,
-    allowTyping = opts.allowTyping;
+  dOpts = $.extend(true, df, dOpts);
+  var $el = $(dOpts.el),
+    suggestClass = dOpts.suggestClass,
+    cancelKeys = dOpts.cancelKeys,
+    hideOnSelection = dOpts.hideOnSelection,
+    allowTyping = dOpts.allowTyping,
+    noDuplicates = dOpts.noDuplicates;
 
   $el.on('focusin', function(e) {
     var $this = $(this),
@@ -26,11 +28,28 @@ function autoSuggest(opts) {
   });
 
   function _suggest(opts) {
+    var usedVals;
+    if (noDuplicates) usedVals = _getUsedVals(opts);
     $.ajax({
-      url: `/api/${opts.ref}s`
+      url: `/api/${opts.ref}s`,
+      data: {
+        skip: JSON.stringify(usedVals)
+      }
     }).done(function(data) {
       _buildSuggester(JSON.parse(data), opts.$suggestTarget);
     });
+  }
+
+  function _getUsedVals(opts) {
+    var $suggestTarget = opts.$suggestTarget,
+      $suggestWrap = $suggestTarget.closest(dOpts.el),
+      $vals = $suggestWrap.find('input[type=hidden]'),
+      vals = [];
+
+    $vals.each(function(i, val) {
+      vals.push(val.value);
+    });
+    return vals;
   }
 
   function _buildSuggester(data, $target) {
@@ -60,6 +79,10 @@ function autoSuggest(opts) {
     return $suggest;
   }
 
+  function _getHiddenTarget($suggestTarget) {
+    return $suggestTarget.siblings(`#ref${$suggestTarget[0].id}`);
+  }
+
   function _removeSuggester($suggest) {
     $(document).off('click keydown keyup', _suggesterEvent);
     $suggest.remove();
@@ -68,7 +91,7 @@ function autoSuggest(opts) {
   function _suggesterEvent(e) {
     var $target = $(e.target),
       $suggestTarget = e.data.$suggestTarget,
-      $hiddenTarget = $suggestTarget.siblings(`#ref${$suggestTarget[0].id}`),
+      $hiddenTarget = _getHiddenTarget($suggestTarget),
       $suggest = e.data.$suggest,
       data = {
         $suggestTarget: $suggestTarget,

@@ -19,7 +19,8 @@ forms.shortcutSubmit({
  */
 suggest.autoSuggest({
   el: '.js-form-suggest',
-  allowTyping: false
+  allowTyping: false,
+  noDuplicates: true
 });
 
 /**
