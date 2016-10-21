@@ -69,6 +69,12 @@ function autoSuggest(dOpts) {
         .html(d.name));
     });
     $suggest.append($opts);
+
+    if (!data.length) {
+      var $noOpts = $('<div>').addClass('suggest-none').html('No options');
+      $suggest.append($noOpts);
+    }
+
     $target.after($suggest);
 
     eventData = {
