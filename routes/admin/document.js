@@ -49,17 +49,23 @@ exports = module.exports = function(req, res, next) {
   }
 
   function getDocument(cb) {
-    query = MongooseModel.findById(documentId)
-      .populate('tags')
-      .exec(function(err, document) {
-        if (err || !document) {
-          res.status(500);
-          res.render('_error500');
-        }
-        doc = document;
-        l.doc = doc;
-        cb();
-      });
+    var refs = dbUtils.getRefFields(MongooseModel.schema);
+    query = MongooseModel.findById(documentId);
+
+    // Auto populate refs.
+    refs.forEach(function(ref) {
+      query.populate(ref);
+    });
+
+    query.exec(function(err, document) {
+      if (err || !document) {
+        res.status(500);
+        res.render('_error500');
+      }
+      doc = document;
+      l.doc = doc;
+      cb();
+    });
   }
 
   function populateSchema(cb) {

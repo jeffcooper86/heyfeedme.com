@@ -7,6 +7,7 @@ module.exports.buildModelPath = buildModelPath;
 module.exports.formatReqData = formatReqData;
 module.exports.formatReqDataDocArrays = formatReqDataDocArrays;
 module.exports.formatReqDataBools = formatReqDataBools;
+module.exports.getRefFields = getRefFields;
 module.exports.schemaDefaults = schemaDefaults;
 module.exports.schemaDefaultsPopulated = schemaDefaultsPopulated;
 module.exports.schemaOfModel = schemaOfModel;
@@ -95,6 +96,16 @@ function formatReqDataBools(data, schema) {
     if (s.instance === 'Boolean') data[k] = !!data[k];
   });
   return data;
+}
+
+function getRefFields(schema) {
+  var refs = [];
+  schema.eachPath(function(path, schemaType) {
+    if (utils.i.getNested(schemaType, 'caster.options.ref')) {
+      refs.push(path);
+    }
+  });
+  return refs;
 }
 
 /**
