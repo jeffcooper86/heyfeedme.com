@@ -16,10 +16,11 @@ exports = module.exports = function(req, res) {
     },
     sort = req.cookies.recipesListingsSort,
     tag = utils.i.unslugify(req.params.tag),
+    tagId = req.params.tagId,
     opts = {
       filters: filters,
       sort: sort,
-      tag: tag
+      tag: tagId
     };
 
   recipesUtils.getRecipes(Recipes, opts, searchRecipes);
