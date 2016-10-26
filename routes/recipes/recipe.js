@@ -7,7 +7,7 @@ exports = module.exports = function(req, res) {
     template = 'recipes/recipe',
     recipeId = req.params.recipeId,
     recipeQuery = Recipes.model.findById(recipeId)
-    .populate('tags');
+    .populate('tags ingredients.recipe');
 
   async.waterfall([
     getRecipe,

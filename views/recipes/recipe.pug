@@ -38,13 +38,9 @@ block bodyContent
         -------------------
       .rm-section.rm-recipe
         .m-recipe-ingredients
-          -var ingredientsCount = 0;
           h2.heading.h2 Ingredients: #{r.ingredients.length}
-          ul.rm-list
-            each i in r.ingredients
-              li.rm-count-wrap
-                span.rm-count.rim-count= ++ingredientsCount
-                = `${i.text}${i.amount}`
+          .rm-list
+            +recipeIngredients(r.ingredients)
 
         .m-recipe-steps
           -var stepsCount = 0;

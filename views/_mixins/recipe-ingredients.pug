@@ -1,0 +1,13 @@
+mixin recipeIngredients(ingredients)
+  -var ingredientsCount = 0;
+  ul
+    each i in ingredients
+      li.rm-count-wrap
+        span.rm-count.rim-count= ++ingredientsCount
+        if i.recipe
+          a(href='')= i.recipe.defaultName
+          if i.recipe.ingredients
+            ul
+              +recipeIngredients(i.recipe.ingredients)
+        else
+          = `${i.text}${i.amount}`
