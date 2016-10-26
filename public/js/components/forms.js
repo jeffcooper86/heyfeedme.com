@@ -28,8 +28,9 @@ function addField(opts) {
         $input.attr('id', `${_trimScope($input.attr('id'))}_scope_${scope}`);
       });
       $newField.find('label').each(function(i, label) {
-        var $label = $(label);
-        $label.attr('for', `${_trimScope($label.attr('for'))}_scope_${scope}`);
+        var $label = $(label),
+          val = _trimScope($label.attr('for'));
+        if (val) $label.attr('for', `${val}_scope_${scope}`);
       });
     }
 
@@ -37,7 +38,7 @@ function addField(opts) {
   });
 
   function _trimScope(val) {
-    var i = val.indexOf('_scope_');
+    var i = val ? val.indexOf('_scope_') : -1;
     return i > -1 ? val.slice(0, i) : val;
   }
 }
