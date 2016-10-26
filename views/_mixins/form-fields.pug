@@ -143,3 +143,20 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
 
       else if type === 'String' || type === 'Number'
         +formFieldStringNum(field.data, field.options, sName, siName)
+
+      else if type === 'ObjectID'
+        label
+          a(href=`/admin/${field.options.ref}s` target='_blank')=  field.options.ref
+        .input-group(
+          class=`js-form-add-${key} js-form-suggest suggest-wrap`
+          data-ref=field.options.ref.toLowerCase()
+        )
+          p= field.value
+          .input-group
+            input(
+              type='hidden'
+              name=sName
+              value=filters.i.getNested(field, 'data.id')
+              id=`ref${siName}`
+            )
+            +formFieldStringNum(filters.i.getNested(field, 'data.defaultName'), field.options, '', siName)

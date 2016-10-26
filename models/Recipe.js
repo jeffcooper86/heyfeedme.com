@@ -36,6 +36,10 @@ ingredientSchema.virtual('amount').get(function() {
   return a;
 });
 
+ingredientSchema.virtual('defaultName').get(function() {
+  return this.name;
+});
+
 ingredientSchema.virtual('text').get(function() {
   var name = this.name,
     type = this.type,
@@ -107,6 +111,10 @@ var recipeSchema = new Schema({
     fixed: true,
     current: true
   }
+});
+
+recipeSchema.virtual('defaultName').get(function() {
+  return this.name;
 });
 
 module.exports.model = mongoose.model('Recipe', recipeSchema);

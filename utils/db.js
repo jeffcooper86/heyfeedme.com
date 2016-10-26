@@ -98,11 +98,15 @@ function formatReqDataBools(data, schema) {
   return data;
 }
 
-function getRefFields(schema) {
+function getRefFields(schema, scope) {
   var refs = [];
   schema.eachPath(function(path, schemaType) {
-    if (utils.i.getNested(schemaType, 'caster.options.ref')) {
-      refs.push(path);
+    var scopedPath = scope ? `${scope}.${path}` : path;
+    if (utils.i.getNested(schemaType, 'caster.options.ref') ||
+      utils.i.getNested(schemaType, 'options.ref')) {
+      refs.push(scopedPath);
+    } else if (schemaType.$isMongooseDocumentArray) {
+      refs = refs.concat(getRefFields(schemaType.schema, scopedPath));
     }
   });
   return refs;

@@ -30,31 +30,6 @@ function autoSuggest(dOpts) {
     }
   });
 
-  function _suggest(opts) {
-    var usedVals;
-    if (noDuplicates) usedVals = _getUsedVals(opts);
-    $.ajax({
-      url: `/api/${opts.ref}s`,
-      data: {
-        skip: JSON.stringify(usedVals)
-      }
-    }).done(function(data) {
-      _buildSuggester(JSON.parse(data), opts.$suggestTarget);
-    });
-  }
-
-  function _getUsedVals(opts) {
-    var $suggestTarget = opts.$suggestTarget,
-      $suggestWrap = $suggestTarget.closest(dOpts.el),
-      $vals = $suggestWrap.find('input[type=hidden]'),
-      vals = [];
-
-    $vals.each(function(i, val) {
-      vals.push(val.value);
-    });
-    return vals;
-  }
-
   function _buildSuggester(data, $target) {
     var $suggest,
       $opts,
@@ -89,7 +64,28 @@ function autoSuggest(dOpts) {
   }
 
   function _getHiddenTarget($suggestTarget) {
-    return $suggestTarget.siblings(`#ref${$suggestTarget[0].id}`);
+    var id = `ref${$suggestTarget[0].id}`,
+      $siblings = $suggestTarget.siblings(),
+      $hiddenTarget;
+
+    // Id's are dot scoped so normal selector won't work.
+    // Ex: id = ingredients.recipe
+    $siblings.each(function(i, sib) {
+      if (sib.id === id) $hiddenTarget = $(sib);
+    });
+    return $hiddenTarget;
+  }
+
+  function _getUsedVals(opts) {
+    var $suggestTarget = opts.$suggestTarget,
+      $suggestWrap = $suggestTarget.closest(dOpts.el),
+      $vals = $suggestWrap.find('input[type=hidden]'),
+      vals = [];
+
+    $vals.each(function(i, val) {
+      vals.push(val.value);
+    });
+    return vals;
   }
 
   function _removeSuggester($suggest) {
@@ -104,6 +100,19 @@ function autoSuggest(dOpts) {
     window.setTimeout(function() {
       input.setSelectionRange(val.length, val.length);
     }, 0);
+  }
+
+  function _suggest(opts) {
+    var usedVals;
+    if (noDuplicates) usedVals = _getUsedVals(opts);
+    $.ajax({
+      url: `/api/${opts.ref}s`,
+      data: {
+        skip: JSON.stringify(usedVals)
+      }
+    }).done(function(data) {
+      _buildSuggester(JSON.parse(data), opts.$suggestTarget);
+    });
   }
 
   function _suggesterEvent(e) {

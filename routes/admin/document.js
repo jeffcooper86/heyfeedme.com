@@ -86,7 +86,8 @@ exports = module.exports = function(req, res, next) {
 
   function updateDocument(cb) {
     if (req.method !== 'POST' || action !== 'update') return cb();
-    _trimEmptyArrayReuqestData(reqData);
+    // _trimEmptyArrayRequestData(reqData);
+    _trimEmptyRequestData(reqData);
     doc.update(reqData, function(err) {
 
       if (err) {
@@ -100,12 +101,23 @@ exports = module.exports = function(req, res, next) {
     });
   }
 
-  function _trimEmptyArrayReuqestData(data) {
-    _.forEach(data, function(value) {
-      if (_.isArray(value)) {
-        _.remove(value, function(v) {
-          return v.length === 0;
-        });
+  // function _trimEmptyArrayRequestData(data) {
+  //   _.forEach(data, function(value) {
+  //     if (_.isArray(value)) {
+  //       _.remove(value, function(v) {
+  //         return v.length === 0;
+  //       });
+  //     }
+  //   });
+  // }
+
+  function _trimEmptyRequestData(data) {
+    _.forEach(data, function(value, key) {
+      if (value.length === 0) delete data[key];
+      else {
+        if (_.isObject(value) || _.isArray(value)) {
+          _trimEmptyRequestData(value);
+        }
       }
     });
   }
