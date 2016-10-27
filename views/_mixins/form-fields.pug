@@ -158,12 +158,16 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
               value=filters.moment(field.data).format('YYYY-MM-DD')
             ).form-field.ff-wide
 
-        //- Strings or numbers.
-        when 'String' || 'Number'
+        //- Strings.
+        when 'String'
+          +formFieldStringNum(field.data, field.options, sName, siName)
+
+        //- Numbers.
+        when 'Number'
           +formFieldStringNum(field.data, field.options, sName, siName)
 
         //- ObjectIds (refs).
-        when 'ObjectId'
+        when 'ObjectID'
           label: a(href=`/admin/${field.options.ref}s` target='_blank')
             =field.options.ref
           .input-group(
