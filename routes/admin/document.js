@@ -86,8 +86,8 @@ exports = module.exports = function(req, res, next) {
 
   function updateDocument(cb) {
     if (req.method !== 'POST' || action !== 'update') return cb();
-    // _trimEmptyArrayRequestData(reqData);
-    _trimEmptyRequestData(reqData);
+    reqData = _trimEmptyRequestData(reqData);
+    reqData = _trimEmptyArrayReqData(reqData);
     doc.update(reqData, function(err) {
 
       if (err) {
@@ -101,24 +101,19 @@ exports = module.exports = function(req, res, next) {
     });
   }
 
-  // function _trimEmptyArrayRequestData(data) {
-  //   _.forEach(data, function(value) {
-  //     if (_.isArray(value)) {
-  //       _.remove(value, function(v) {
-  //         return v.length === 0;
-  //       });
-  //     }
-  //   });
-  // }
-
   function _trimEmptyRequestData(data) {
-    _.forEach(data, function(value, key) {
-      if (value.length === 0) delete data[key];
-      else {
-        if (_.isObject(value) || _.isArray(value)) {
-          _trimEmptyRequestData(value);
-        }
+    var newD = _.cloneDeep(data);
+    _.forEach(newD, function(value, key) {
+      if (_.isObject(value) || _.isArray(value)) {
+        newD[key] = _trimEmptyRequestData(value);
+      } else if (!_.isArray(data) && value.length === 0) {
+        delete newD[key];
       }
     });
+    return newD;
+  }
+
+  function _trimEmptyArrayReqData(data) {
+    return dbUtils.formatReqDataArrays(data, MongooseModel.schema.paths);
   }
 };

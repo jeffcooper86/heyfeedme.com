@@ -5,8 +5,9 @@ var utils = require(process.cwd() + '/utils/global');
 
 module.exports.buildModelPath = buildModelPath;
 module.exports.formatReqData = formatReqData;
-module.exports.formatReqDataDocArrays = formatReqDataDocArrays;
+module.exports.formatReqDataArrays = formatReqDataArrays;
 module.exports.formatReqDataBools = formatReqDataBools;
+module.exports.formatReqDataDocArrays = formatReqDataDocArrays;
 module.exports.getRefFields = getRefFields;
 module.exports.schemaDefaults = schemaDefaults;
 module.exports.schemaDefaultsPopulated = schemaDefaultsPopulated;
@@ -41,8 +42,21 @@ function formatReqData(data, schema) {
   newD = addPublishedDate(newD, schema);
   newD = formatReqDataDocArrays(newD, schema);
   newD = formatReqDataBools(newD, schema);
-  newD = trimEmptyReqDataArrays(newD, schema);
   return newD;
+}
+
+function formatReqDataArrays(data, schema) {
+  data = _.cloneDeep(data);
+  _.forEach(schema, function(field) {
+    if (field.instance === 'Array' && data[field.path]) {
+      if (!_.isArray(data[field.path])) data[field.path] = [data[field.path]];
+      data[field.path] = data[field.path].filter(function(data) {
+        if (typeof data === 'string') return data.length > 0;
+        return true;
+      });
+    }
+  });
+  return data;
 }
 
 function formatReqDataDocArrays(data, schema) {
@@ -208,14 +222,4 @@ function schemaPopulatedWithRefsAsync(data, schema, cb) {
     });
     return data;
   }
-}
-
-function trimEmptyReqDataArrays(data, schema) {
-  data = _.cloneDeep(data);
-  _.forEach(schema, function(field) {
-    if (field.instance === 'Array') {
-      if (data[field.path] === '') data[field.path] = [];
-    }
-  });
-  return data;
 }
