@@ -44,124 +44,138 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
         if type === 'Array'
           span= ` (${field.data.length})`
 
-      if type === 'Array'
-        if field.$isMongooseDocumentArray
-          div(class=`js-form-add-${key}`)
-            each value, i in field.data
-              +uiDestroy()
-                .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
-                  +subdocField(field, key, value, i)
-            if !field.data.length
-              +uiDestroy()
-                .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
-                  +subdocField(field, key, value)
-          +uiAddMore(key)
+      case type
 
-        else if field.caster.enumValues && field.caster.enumValues.length
-          .form-group.fg-spread
-            each option in field.caster.enumValues
-              .form-group
-                label(for=siName + option).label-2= option
-                input(
-                  type='checkbox'
-                  id=`${siName}${option}`
-                  name=sName
-                  value=option
-                  checked=field.data && field.data.indexOf(option) > -1
-                ).no-space
+        //- Arrays.
+        when 'Array'
 
-        else if field.caster.instance === 'ObjectID'
-          - var ref = field.caster.options.ref
-          label
-            a(href=`/admin/${ref}s` target='_blank')=  ref
-          .form-group(
-            class=`js-form-add-${key} js-form-suggest suggest-wrap`
-            data-ref=ref.toLowerCase()
-          )
-            each value in field.data
-              +uiDestroy()
-                .input-group
+          //- Subdocument array.
+          if field.$isMongooseDocumentArray
+            div(class=`js-form-add-${key}`)
+              each value, i in field.data
+                +uiDestroy()
+                  .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
+                    +subdocField(field, key, value, i)
+              if !field.data.length
+                +uiDestroy()
+                  .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
+                    +subdocField(field, key, value)
+            +uiAddMore(key)
+
+          //- Enumerable array.
+          else if field.caster.enumValues && field.caster.enumValues.length
+            .form-group.fg-spread
+              each option in field.caster.enumValues
+                .form-group
+                  label(for=siName + option).label-2= option
                   input(
-                    type='hidden'
+                    type='checkbox'
+                    id=`${siName}${option}`
                     name=sName
-                    value=value._id
-                    id=`ref${siName}`
-                  )
-                  +formFieldStringNum(value.defaultName, field.options, '', siName)
-            if !field.data.length
-              +uiDestroy()
-                .input-group
-                  input(
-                    type='hidden'
-                    name=sName
-                    id=`ref${siName}`
-                  )
-                  +formFieldStringNum(null, field.options, '', siName)
-          +uiAddMore(key)
+                    value=option
+                    checked=field.data && field.data.indexOf(option) > -1
+                  ).no-space
 
-        else
-          .form-group(class=`js-form-add-${key}`)
-            each value in field.data
-              +uiDestroy()
-                +formFieldStringNum(value, field.options, sName, siName)
-            if !field.data.length
-              +uiDestroy()
-                +formFieldStringNum(value, field.options, sName, siName)
-          +uiAddMore(key)
-
-      else if type === 'Boolean'
-        .form-field.ff-wide
-          input(
-            id=siName
-            name=sName
-            type='checkbox'
-            checked=field.data
-          )
-
-      else if type === 'Date'
-        if field.options.fixed
-          input(
-            id=siName
-            type='text'
-            value=field.data ? filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss') : null
-            readonly
-          ).form-field.ff-wide
-          if field.options.current
-            input(
-              type='hidden'
-              name=siName
-              value='dateCurrent'
+          //- ObjectIds (refs).
+          else if field.caster.instance === 'ObjectID'
+            - var ref = field.caster.options.ref
+            label
+              a(href=`/admin/${ref}s` target='_blank')=  ref
+            .form-group(
+              class=`js-form-add-${key} js-form-suggest suggest-wrap`
+              data-ref=ref.toLowerCase()
             )
-          else if field.options.dependent
-            input(
-              type='hidden'
-              name=siName
-              value=field.data ? filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss') : null
-            )
-        else
-          input(
-            id=siName
-            name=sName
-            type='date'
-            value=filters.moment(field.data).format('YYYY-MM-DD')
-          ).form-field.ff-wide
+              each value in field.data
+                +uiDestroy()
+                  .input-group
+                    input(
+                      type='hidden'
+                      name=sName
+                      value=value._id
+                      id=`ref${siName}`
+                    )
+                    +formFieldStringNum(value.defaultName, field.options, '', siName)
+              if !field.data.length
+                +uiDestroy()
+                  .input-group
+                    input(
+                      type='hidden'
+                      name=sName
+                      id=`ref${siName}`
+                    )
+                    +formFieldStringNum(null, field.options, '', siName)
+            +uiAddMore(key)
 
-      else if type === 'String' || type === 'Number'
-        +formFieldStringNum(field.data, field.options, sName, siName)
+          //- Catchall
+            TODO: Make this work for all remaining types - not just str/num.
+              Should be able to use +formFieldsFromSchema(args).
+          else
+            .form-group(class=`js-form-add-${key}`)
+              each value in field.data
+                +uiDestroy()
+                  +formFieldStringNum(value, field.options, sName, siName)
+              if !field.data.length
+                +uiDestroy()
+                  +formFieldStringNum(value, field.options, sName, siName)
+            +uiAddMore(key)
 
-      else if type === 'ObjectID'
-        label: a(href=`/admin/${field.options.ref}s` target='_blank')
-          =field.options.ref
-        .input-group(
-          class=`js-form-add-${key} js-form-suggest suggest-wrap`
-          data-ref=field.options.ref.toLowerCase()
-        )
-          p= field.value
-          .input-group
+        //- Bools.
+        when 'Boolean'
+          .form-field.ff-wide
             input(
-              type='hidden'
+              id=siName
               name=sName
-              value=filters.i.getNested(field, 'data.id')
-              id=`ref${siName}`
+              type='checkbox'
+              checked=field.data
             )
-            +formFieldStringNum(filters.i.getNested(field, 'data.defaultName'), field.options, '', siName)
+
+        //- Dates.
+        when 'Date'
+          if field.options.fixed
+            input(
+              id=siName
+              type='text'
+              value=field.data ? filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss') : null
+              readonly
+            ).form-field.ff-wide
+            if field.options.current
+              input(
+                type='hidden'
+                name=siName
+                value='dateCurrent'
+              )
+            else if field.options.dependent
+              input(
+                type='hidden'
+                name=siName
+                value=field.data ? filters.moment(field.data).format('MMMM DD YYYY HH:mm:ss') : null
+              )
+          else
+            input(
+              id=siName
+              name=sName
+              type='date'
+              value=filters.moment(field.data).format('YYYY-MM-DD')
+            ).form-field.ff-wide
+
+        //- Strings or numbers.
+        when 'String' || 'Number'
+          +formFieldStringNum(field.data, field.options, sName, siName)
+
+        //- ObjectIds (refs).
+        when 'ObjectId'
+          label: a(href=`/admin/${field.options.ref}s` target='_blank')
+            =field.options.ref
+          .input-group(
+            class=`js-form-add-${key} js-form-suggest suggest-wrap`
+            data-ref=field.options.ref.toLowerCase()
+          )
+            p= field.value
+            .input-group
+              input(
+                type='hidden'
+                name=sName
+                value=filters.i.getNested(field, 'data.id')
+                id=`ref${siName}`
+              )
+              +formFieldStringNum(filters.i.getNested(field, 'data.defaultName'), field.options, '', siName)
