@@ -13,7 +13,7 @@ block bodyContent
     +flashMessages(flash)
     .m-recipe(data-recipe=filters.stripPrivates(data.recipe._doc))
 
-      //
+      //-
         Header.
         -------------------
       .rm-section.rm-header
@@ -23,7 +23,7 @@ block bodyContent
             style= r.photo ? `background-image:url(/${r.photo});` : null
           )
 
-      //
+      //-
         Intro.
         -------------------
       .rm-section.rm-intro
@@ -33,7 +33,7 @@ block bodyContent
               +recipeClasses(r.classifications)
             p.rm-summary= r.summary
 
-      //
+      //-
         Recipe.
         -------------------
       .rm-section.rm-recipe
@@ -56,7 +56,7 @@ block bodyContent
           .note
             p.rm-notes= r.notes
 
-      //
+      //-
         Tags.
         -------------------
       if r.tags
@@ -69,7 +69,7 @@ block bodyContent
 
 
 
-      //
+      //-
         Footer.
         -------------------
       .rm-section.rm-footer

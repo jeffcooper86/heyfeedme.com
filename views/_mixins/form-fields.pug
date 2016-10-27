@@ -12,15 +12,16 @@ mixin subdocField(field, fieldScope, data, i)
 mixin formFieldStringNum(val, options, sName, siName)
   if Array.isArray(options.type)
     - options = options.type[0]
+
   if options.longText
     textarea(
       id=siName
       name=sName
       maxlength=options.maxlength
     ).form-field.ff-wide= val
+
   else if options.file
-    .form-field.ff-wide
-      input(
+    .form-field.ff-wide: input(
         type='file'
         name=sName
       )
@@ -28,6 +29,7 @@ mixin formFieldStringNum(val, options, sName, siName)
       img(src=`/${val}`).form-field.ff-wide
     else
       p= val
+
   else
     input(id=siName name=sName type='text' value=val).form-field.ff-wide
 
@@ -46,13 +48,14 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
         if field.$isMongooseDocumentArray
           div(class=`js-form-add-${key}`)
             each value, i in field.data
-              .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
-                +subdocField(field, key, value, i)
+              +uiDestroy()
+                .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
+                  +subdocField(field, key, value, i)
             if !field.data.length
-              .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
-                +subdocField(field, key, value)
-          .text-center
-            button(data-form-add=key).btn.btn-2.js-form-add Add more
+              +uiDestroy()
+                .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
+                  +subdocField(field, key, value)
+          +uiAddMore(key)
 
         else if field.caster.enumValues && field.caster.enumValues.length
           .form-group.fg-spread
@@ -76,33 +79,35 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
             data-ref=ref.toLowerCase()
           )
             each value in field.data
-              .input-group
-                input(
-                  type='hidden'
-                  name=sName
-                  value=value._id
-                  id=`ref${siName}`
-                )
-                +formFieldStringNum(value.defaultName, field.options, '', siName)
+              +uiDestroy()
+                .input-group
+                  input(
+                    type='hidden'
+                    name=sName
+                    value=value._id
+                    id=`ref${siName}`
+                  )
+                  +formFieldStringNum(value.defaultName, field.options, '', siName)
             if !field.data.length
-              .input-group
-                input(
-                  type='hidden'
-                  name=sName
-                  id=`ref${siName}`
-                )
-                +formFieldStringNum(null, field.options, '', siName)
-          .text-center
-            button(data-form-add=key).btn.btn-2.js-form-add Add more
+              +uiDestroy()
+                .input-group
+                  input(
+                    type='hidden'
+                    name=sName
+                    id=`ref${siName}`
+                  )
+                  +formFieldStringNum(null, field.options, '', siName)
+          +uiAddMore(key)
 
         else
           .form-group(class=`js-form-add-${key}`)
             each value in field.data
-              +formFieldStringNum(value, field.options, sName, siName)
+              +uiDestroy()
+                +formFieldStringNum(value, field.options, sName, siName)
             if !field.data.length
-              +formFieldStringNum(value, field.options, sName, siName)
-          .text-center
-            button(data-form-add=key).btn.btn-2.js-form-add Add more
+              +uiDestroy()
+                +formFieldStringNum(value, field.options, sName, siName)
+          +uiAddMore(key)
 
       else if type === 'Boolean'
         .form-field.ff-wide
@@ -145,8 +150,8 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
         +formFieldStringNum(field.data, field.options, sName, siName)
 
       else if type === 'ObjectID'
-        label
-          a(href=`/admin/${field.options.ref}s` target='_blank')=  field.options.ref
+        label: a(href=`/admin/${field.options.ref}s` target='_blank')
+          =field.options.ref
         .input-group(
           class=`js-form-add-${key} js-form-suggest suggest-wrap`
           data-ref=field.options.ref.toLowerCase()
