@@ -45,21 +45,16 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
           span= ` (${field.data.length})`
 
       case type
-
         //- Arrays.
         when 'Array'
 
           //- Subdocument array.
           if field.$isMongooseDocumentArray
             div(class=`js-form-add-${key}`)
-              each value, i in field.data
+              each value, i in field.data.length ? field.data : [undefined]
                 +uiDestroy()
                   .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
                     +subdocField(field, key, value, i)
-              if !field.data.length
-                +uiDestroy()
-                  .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
-                    +subdocField(field, key, value)
             +uiAddMore(key)
 
           //- Enumerable array.
@@ -79,31 +74,21 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
           //- ObjectIds (refs).
           else if field.caster.instance === 'ObjectID'
             - var ref = field.caster.options.ref
-            label
-              a(href=`/admin/${ref}s` target='_blank')=  ref
+            label: a(href=`/admin/${ref}s` target='_blank')=  ref
             .form-group(
               class=`js-form-add-${key} js-form-suggest suggest-wrap`
               data-ref=ref.toLowerCase()
             )
-              each value in field.data
+              each value in field.data.length ? field.data : [undefined]
                 +uiDestroy()
                   .input-group
                     input(
                       type='hidden'
                       name=sName
-                      value=value._id
+                      value=filters.i.getNested(value, '_id')
                       id=`ref${siName}`
                     )
-                    +formFieldStringNum(value.defaultName, field.options, '', siName)
-              if !field.data.length
-                +uiDestroy()
-                  .input-group
-                    input(
-                      type='hidden'
-                      name=sName
-                      id=`ref${siName}`
-                    )
-                    +formFieldStringNum(null, field.options, '', siName)
+                    +formFieldStringNum(filters.i.getNested(value, 'defaultName'), field.options, '', siName)
             +uiAddMore(key)
 
           //- Catchall
@@ -111,18 +96,14 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
               Should be able to use +formFieldsFromSchema(args).
           else
             .form-group(class=`js-form-add-${key}`)
-              each value in field.data
-                +uiDestroy()
-                  +formFieldStringNum(value, field.options, sName, siName)
-              if !field.data.length
+              each value in field.data.length ? field.data : [undefined]
                 +uiDestroy()
                   +formFieldStringNum(value, field.options, sName, siName)
             +uiAddMore(key)
 
         //- Bools.
         when 'Boolean'
-          .form-field.ff-wide
-            input(
+          .form-field.ff-wide: input(
               id=siName
               name=sName
               type='checkbox'
