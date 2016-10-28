@@ -14,7 +14,7 @@ function addField(opts) {
       $newField;
 
     if (!fieldsLength) return;
-    $newField = $fields.last().clone();
+    $newField = $fields.last().clone(true, true);
 
     // Reset the field values.
     if ($newField.is('input, textarea')) $newField.val('');

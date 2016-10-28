@@ -1,6 +1,18 @@
-var forms = require('../../components/forms');
-var modalOverlay = require('../../components/groups/modal-with-overlay');
-var suggest = require('../../components/suggests');
+const forms = require('../../components/forms');
+const modalOverlay = require('../../components/groups/modal-with-overlay');
+const suggest = require('../../components/suggests');
+const ui = require('../../ui');
+
+/**
+ * UI.
+ */
+ui.destroyEl({
+  el: _getDestroyEl
+});
+
+function _getDestroyEl($trigger) {
+  return $trigger.closest('.js-destroy-wrap');
+}
 
 /**
  * Forms.

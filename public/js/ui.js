@@ -1,9 +1,29 @@
+module.exports.destroyEl = destroyEl;
 module.exports.eventChange = eventChange;
 module.exports.flash = flash;
 module.exports.flashRemove = flashRemove;
 module.exports.loadingStart = loadingStart;
 module.exports.loadingStop = loadingStop;
 module.exports.updateBroserHistory = updateBroserHistory;
+
+function destroyEl(dOpts) {
+  var df = {};
+  df.triggerEl = '.js-destroy';
+  df.el = '.js-destroy-wrap';
+  dOpts = $.extend(true, df, dOpts);
+
+  $(dOpts.triggerEl).on('click', function(e) {
+    e.preventDefault();
+    var $this = $(e.target);
+    _onTrigger($this);
+  });
+
+  function _onTrigger($triggerEl) {
+    var $el = typeof dOpts.el === 'function' ?
+      dOpts.el($triggerEl) : $(dOpts.el);
+    $el.remove();
+  }
+}
 
 function eventChange(opts) {
   var $el = $(opts.el),
