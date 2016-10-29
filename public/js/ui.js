@@ -20,8 +20,12 @@ function destroyEl(dOpts) {
 
   function _onTrigger($triggerEl) {
     var $el = typeof dOpts.el === 'function' ?
-      dOpts.el($triggerEl) : $(dOpts.el);
-    $el.remove();
+      dOpts.el($triggerEl) : $(dOpts.el),
+      save = false;
+
+    if (dOpts.destroyBefore) save = dOpts.destroyBefore($el);
+    if (!save) $el = $el.remove();
+    if (dOpts.destroyAfter) dOpts.destroyAfter($el);
   }
 }
 

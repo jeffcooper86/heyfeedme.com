@@ -22,7 +22,7 @@ function addField(opts) {
 
       // Scope the fields so labels still focus fields correctly.
       var scope = String(Math.random()).slice(2);
-      $newField.find('input').each(function(i, input) {
+      $newField.find('input, textarea').each(function(i, input) {
         var $input = $(input);
         $input.val('');
         $input.attr('id', `${_trimScope($input.attr('id'))}_scope_${scope}`);

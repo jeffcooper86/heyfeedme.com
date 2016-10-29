@@ -7,8 +7,22 @@ const ui = require('../../ui');
  * UI.
  */
 ui.destroyEl({
-  el: _getDestroyEl
+  el: _getDestroyEl,
+  destroyBefore: _destroyBefore
 });
+
+function _clearFormVals($el) {
+  $el.find('input, textarea').val('');
+}
+
+function _destroyBefore($el) {
+
+  // If only one, clear the input vals instead of destroying.
+  if (!$el.siblings('.js-destroy-wrap').length) {
+    _clearFormVals($el);
+    return true;
+  }
+}
 
 function _getDestroyEl($trigger) {
   return $trigger.closest('.js-destroy-wrap');
