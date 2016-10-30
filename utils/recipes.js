@@ -7,6 +7,7 @@ module.exports.getActiveFilters = getActiveFilters;
 module.exports.getCategories = getCategories;
 module.exports.getClassifications = getClassifications;
 module.exports.getRecipes = getRecipes;
+module.exports.getRecipesTag = getRecipesTag;
 module.exports.getRecipesTags = getRecipesTags;
 module.exports.getSortOptions = getSortOptions;
 module.exports.searchRecipes = searchRecipes;
@@ -88,6 +89,13 @@ function getRecipes(Recipes, opts, cb) {
   }
   q.exec(function(err, recipes) {
     cb(err, recipes);
+  });
+}
+
+function getRecipesTag(RecipeTags, id, cb) {
+  var q = RecipeTags.model.findById(id);
+  q.exec(function(err, tag) {
+    cb(err, tag);
   });
 }
 

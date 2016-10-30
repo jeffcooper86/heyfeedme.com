@@ -1,7 +1,9 @@
-var async = require('async');
-var Recipes = require(process.cwd() + '/models/Recipe');
-var recipesUtils = require(process.cwd() + '/utils/recipes');
-var utils = require(process.cwd() + '/utils/global');
+const async = require('async');
+
+const Recipes = require(process.cwd() + '/models/Recipe');
+const RecipeTags = require(process.cwd() + '/models/RecipeTag');
+const recipesUtils = require(process.cwd() + '/utils/recipes');
+const utils = require(process.cwd() + '/utils/global');
 
 exports = module.exports = function(req, res) {
   var l = res.locals,
@@ -33,6 +35,7 @@ exports = module.exports = function(req, res) {
   }
 
   async.waterfall([
+    getTag,
     getAll,
     search
   ], function(err, data) {
@@ -44,7 +47,8 @@ exports = module.exports = function(req, res) {
     return res.render(template);
   });
 
-  function getAll(cb) {
+  function getAll(tag, cb) {
+    if (tagId && !tag) return res.redirect('/recipes/tags');
     var filters = {
         activeSections: activeSections,
         activeClasses: activeClasses
@@ -55,6 +59,11 @@ exports = module.exports = function(req, res) {
         tag: tagId
       };
     recipesUtils.getRecipes(Recipes, opts, cb);
+  }
+
+  function getTag(cb) {
+    if (tagId) recipesUtils.getRecipesTag(RecipeTags, tagId, cb);
+    else cb(null, null);
   }
 
   function search(recipes, cb) {
