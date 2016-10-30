@@ -1,5 +1,6 @@
-module.exports.eventSubmit = eventSubmit;
 module.exports.addField = addField;
+module.exports.clearFieldVals = clearFieldVals;
+module.exports.eventSubmit = eventSubmit;
 module.exports.shortcutSubmit = shortcutSubmit;
 
 function addField(opts) {
@@ -41,6 +42,10 @@ function addField(opts) {
     var i = val ? val.indexOf('_scope_') : -1;
     return i > -1 ? val.slice(0, i) : val;
   }
+}
+
+function clearFieldVals($field) {
+  $field.find('input, textarea').val('');
 }
 
 function eventSubmit(opts) {
