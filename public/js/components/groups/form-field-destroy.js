@@ -1,4 +1,4 @@
-const clearFormVals = require('../forms.clearFieldVals');
+const clearFormVals = require('../forms').clearFieldVals;
 const ui = require('../../ui');
 
 module.exports.destroy = destroy;
