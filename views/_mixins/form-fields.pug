@@ -44,6 +44,10 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
         if type === 'Array'
           span= ` (${field.data.length})`
 
+      if field.options.note
+        .note
+          p= field.options.note
+
       case type
         //- Arrays.
         when 'Array'

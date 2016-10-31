@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var recipeTagSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    note: 'This is a note.'
   }
 });
 
