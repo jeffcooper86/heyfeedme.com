@@ -10,6 +10,8 @@ forms.addField({
   el: '.js-form-add'
 });
 
+forms.characterLimit();
+
 forms.shortcutSubmit({
   el: 'input, textarea',
   submitEl: '.js-form-update'

@@ -1,4 +1,5 @@
 module.exports.addField = addField;
+module.exports.characterLimit = characterLimit;
 module.exports.clearFieldVals = clearFieldVals;
 module.exports.eventSubmit = eventSubmit;
 module.exports.shortcutSubmit = shortcutSubmit;
@@ -42,6 +43,17 @@ function addField(opts) {
     var i = val ? val.indexOf('_scope_') : -1;
     return i > -1 ? val.slice(0, i) : val;
   }
+}
+
+function characterLimit(opts) {
+  var $el = $('input[maxlenth], textarea[maxlength]');
+  $el.on('keyup', function() {
+    var $this = $(this),
+      max = $this.attr('maxlength'),
+      len = $this.val().length,
+      $remain = $this.siblings('.js-remain');
+    $remain.find('.js-remaining').html(max - len);
+  });
 }
 
 function clearFieldVals($field) {

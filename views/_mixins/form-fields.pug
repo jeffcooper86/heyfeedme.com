@@ -48,6 +48,10 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
         .note
           p= field.options.note
 
+      if field.options.maxlength
+        .form-maxlength.js-remain
+          p.js-remaining
+
       case type
         //- Arrays.
         when 'Array'
