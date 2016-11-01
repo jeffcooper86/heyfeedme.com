@@ -30,12 +30,13 @@ function autoSuggest(dOpts) {
     }
   });
 
-  function _buildSuggester(data, $target) {
+  function _updateSuggester(data, $target) {
     var $suggest,
-      $opts,
-      eventData;
+      $opts;
 
-    $suggest = $('<div>').addClass(`suggest active ${suggestClass}`);
+    $suggest = $target.siblings(`.${dOpts.suggestClass}`);
+    if (!$suggest.length) return;
+
     $opts = $('<ul>');
     data.sort(function(a, b) {
       return a.name.localeCompare(b.name);
@@ -53,6 +54,15 @@ function autoSuggest(dOpts) {
       $suggest.append($noOpts);
     }
 
+    $target.after($suggest);
+    return $suggest;
+  }
+
+  function _buildSuggester($target) {
+    var $suggest,
+      eventData;
+
+    $suggest = $('<div>').addClass(`suggest active ${suggestClass}`);
     $target.after($suggest);
 
     eventData = {
@@ -111,7 +121,8 @@ function autoSuggest(dOpts) {
         skip: JSON.stringify(usedVals)
       }
     }).done(function(data) {
-      _buildSuggester(JSON.parse(data), opts.$suggestTarget);
+      _buildSuggester(opts.$suggestTarget);
+      _updateSuggester(JSON.parse(data), opts.$suggestTarget);
     });
   }
 
