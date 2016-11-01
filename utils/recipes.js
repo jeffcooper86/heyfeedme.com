@@ -6,6 +6,7 @@ module.exports.getActiveClassifications = getActiveClassifications;
 module.exports.getActiveFilters = getActiveFilters;
 module.exports.getCategories = getCategories;
 module.exports.getClassifications = getClassifications;
+module.exports.getRecipeLink = getRecipeLink;
 module.exports.getRecipes = getRecipes;
 module.exports.getRecipesTag = getRecipesTag;
 module.exports.getRecipesTags = getRecipesTags;
@@ -49,6 +50,11 @@ function getCategories() {
 
 function getClassifications() {
   return 'vegetarian;vegan;gluten free'.split(';').sort();
+}
+
+function getRecipeLink(r) {
+  if (!r) return;
+  return utils.i.slugify(`/recipe/${r.name}/${r.id}`);
 }
 
 function getRecipes(Recipes, opts, cb) {

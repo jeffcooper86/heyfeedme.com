@@ -23,7 +23,7 @@ mixin recipes(recipes)
             +crumbs(crumbs)
       .rlm-recipes-wrap
         each r in recipes
-          a(href=filters.i.slugify(`/recipe/${r.name}/${r.id}`)).rlm-recipe
+          a(href=r.link).rlm-recipe
             p.rlm-title= filters.capitalizeTitles(r.name)
             .rlm-photo(
               style= r.photo ? `background-image:url(/${r.photo});` : null

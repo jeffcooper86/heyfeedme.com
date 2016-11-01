@@ -5,7 +5,7 @@ mixin recipeIngredients(ingredients)
       li.rm-count-wrap
         span.rm-count.rim-count= ++ingredientsCount
         if i.recipe
-          a(href='')= i.recipe.defaultName
+          a(href=i.recipe.link)= i.recipe.defaultName
           if i.recipe.ingredients
             ul
               +recipeIngredients(i.recipe.ingredients)

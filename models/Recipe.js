@@ -117,6 +117,10 @@ recipeSchema.virtual('defaultName').get(function() {
   return this.name;
 });
 
+recipeSchema.virtual('link').get(function() {
+  return recipeUtils.getRecipeLink(this);
+});
+
 module.exports.model = mongoose.model('Recipe', recipeSchema);
 
 // For admin model/collection views.
