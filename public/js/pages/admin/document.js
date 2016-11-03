@@ -2,6 +2,7 @@ const forms = require('../../components/forms');
 const modalOverlay = require('../../components/groups/modal-with-overlay');
 const suggest = require('../../components/suggests');
 const formFieldDestroy = require('../../components/groups/form-field-destroy');
+const ui = require('../../ui');
 
 /**
  * Forms.
@@ -25,7 +26,9 @@ formFieldDestroy.destroy();
 suggest.autoSuggest({
   el: '.js-form-suggest',
   allowTyping: false,
-  noDuplicates: true
+  noDuplicates: true,
+  loadingStart: ui.loadingStart,
+  loadingStop: ui.loadingStop
 });
 
 /**

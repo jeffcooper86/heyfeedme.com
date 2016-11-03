@@ -14,7 +14,10 @@ function autoSuggest(dOpts) {
     cancelKeys = dOpts.cancelKeys,
     hideOnSelection = dOpts.hideOnSelection,
     allowTyping = dOpts.allowTyping,
-    noDuplicates = dOpts.noDuplicates;
+    noDuplicates = dOpts.noDuplicates,
+    loadingStart = dOpts.loadingStart,
+    loadingStop = dOpts.loadingStop,
+    eventScope = 0;
 
   $el.on('focusin', function(e) {
     var $this = $(this),
@@ -30,46 +33,20 @@ function autoSuggest(dOpts) {
     }
   });
 
-  function _updateSuggester(data, $target) {
-    var $suggest,
-      $opts;
-
-    $suggest = $target.siblings(`.${dOpts.suggestClass}`);
-    if (!$suggest.length) return;
-
-    $opts = $('<ul>');
-    data.sort(function(a, b) {
-      return a.name.localeCompare(b.name);
-    });
-    data.forEach(function(d) {
-      $opts.append($('<li>')
-        .addClass('suggest-item js-suggest-item')
-        .attr('data-hidden-val', d._id)
-        .html(d.name));
-    });
-    $suggest.append($opts);
-
-    if (!data.length) {
-      var $noOpts = $('<div>').addClass('suggest-none').html('No options');
-      $suggest.append($noOpts);
-    }
-
-    $target.after($suggest);
-    return $suggest;
-  }
-
   function _buildSuggester($target) {
     var $suggest,
       eventData;
-
     $suggest = $('<div>').addClass(`suggest active ${suggestClass}`);
+    if (loadingStart) loadingStart($suggest);
     $target.after($suggest);
 
     eventData = {
       $suggestTarget: $target,
       $suggest: $suggest
     };
-    $(document).on('click keydown keyup', eventData, _suggesterEvent);
+
+    _setSuggesterListener(eventData);
+    // $(document).one('click keydown keyup', eventData, _suggesterEvent);
     return $suggest;
   }
 
@@ -98,8 +75,8 @@ function autoSuggest(dOpts) {
     return vals;
   }
 
-  function _removeSuggester($suggest) {
-    $(document).off('click keydown keyup', _suggesterEvent);
+  function _removeSuggester($suggest, s) {
+    $(document).off(`click.${s} keydown.${s} keyup.${s}`, _suggesterEvent);
     $suggest.remove();
   }
 
@@ -112,8 +89,16 @@ function autoSuggest(dOpts) {
     }, 0);
   }
 
+  function _setSuggesterListener(data) {
+    var s = eventScope;
+    data.eventScope = s;
+    $(document).on(`click.${s} keydown.${s} keyup.${s}`, data, _suggesterEvent);
+    eventScope++;
+  }
+
   function _suggest(opts) {
     var usedVals;
+    _buildSuggester(opts.$suggestTarget);
     if (noDuplicates) usedVals = _getUsedVals(opts);
     $.ajax({
       url: `/api/${opts.ref}s`,
@@ -121,7 +106,6 @@ function autoSuggest(dOpts) {
         skip: JSON.stringify(usedVals)
       }
     }).done(function(data) {
-      _buildSuggester(opts.$suggestTarget);
       _updateSuggester(JSON.parse(data), opts.$suggestTarget);
     });
   }
@@ -140,7 +124,7 @@ function autoSuggest(dOpts) {
     // The event was on the visible target input.
     if ($target[0] === $suggestTarget[0]) {
       if (e.type === 'keydown' && cancelKeys.indexOf(e.key) > -1) {
-        _removeSuggester($suggest);
+        _removeSuggester($suggest, e.data.eventScope);
         e.preventDefault();
 
       } else if (e.type === 'keyup' && allowTyping) {
@@ -161,12 +145,12 @@ function autoSuggest(dOpts) {
     // Somewhere outside was clicked.
     if (!$target.hasClass('js-suggest-item')) {
       e.preventDefault();
-      _removeSuggester($suggest);
+      _removeSuggester($suggest, e.data.eventScope);
 
       // The suggester was clicked.
     } else {
       _updateSuggestData(data);
-      if (hideOnSelection) _removeSuggester($suggest);
+      if (hideOnSelection) _removeSuggester($suggest, e.data.eventScope);
     }
   }
 
@@ -177,5 +161,34 @@ function autoSuggest(dOpts) {
 
     $suggestTarget.val($target.html());
     $hiddenTarget.val($target.data('hidden-val'));
+  }
+
+  function _updateSuggester(data, $target) {
+    var $suggest,
+      $opts;
+
+    $suggest = $target.siblings(`.${dOpts.suggestClass}`);
+    if (!$suggest.length) return;
+
+    $opts = $('<ul>');
+    data.sort(function(a, b) {
+      return a.name.localeCompare(b.name);
+    });
+    data.forEach(function(d) {
+      $opts.append($('<li>')
+        .addClass('suggest-item js-suggest-item')
+        .attr('data-hidden-val', d._id)
+        .html(d.name));
+    });
+    if (loadingStop) loadingStop($suggest);
+    $suggest.append($opts);
+
+    if (!data.length) {
+      var $noOpts = $('<div>').addClass('suggest-none').html('No options');
+      $suggest.append($noOpts);
+    }
+
+    $target.after($suggest);
+    return $suggest;
   }
 }
