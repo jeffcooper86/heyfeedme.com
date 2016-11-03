@@ -13,6 +13,11 @@ mixin formFieldStringNum(val, options, sName, siName)
   if Array.isArray(options.type)
     - options = options.type[0]
 
+  if options.maxlength
+    .form-maxlength.js-remain
+      p.js-remaining
+        =val ? options.maxlength - val.length : options.maxlength
+
   if options.longText
     textarea(
       id=siName
@@ -48,66 +53,68 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
         .note
           p= field.options.note
 
-      if field.options.maxlength
-        .form-maxlength.js-remain
-          p.js-remaining
+      //- if field.options.maxlength
+      //-   .form-maxlength.js-remain
+      //-     p.js-remaining
 
       case type
         //- Arrays.
         when 'Array'
+          .form-group-array
 
-          //- Subdocument array.
-          if field.$isMongooseDocumentArray
-            div(class=`js-form-add-${key}`)
-              each value, i in field.data.length ? field.data : [undefined]
-                +uiDestroy()
-                  .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
-                    +subdocField(field, key, value, i)
-            +uiAddMore(key)
+            //- Subdocument array.
+            if field.$isMongooseDocumentArray
+              div(class=`js-form-add-${key}`)
+                each value, i in field.data.length ? field.data : [undefined]
+                  +uiDestroy()
+                    .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
+                      +subdocField(field, key, value, i)
+              +uiAddMore(key)
 
-          //- Enumerable array.
-          else if field.caster.enumValues && field.caster.enumValues.length
-            .form-group.fg-spread
-              each option in field.caster.enumValues
-                .form-group
-                  label(for=siName + option).label-2= option
-                  input(
-                    type='checkbox'
-                    id=`${siName}${option}`
-                    name=sName
-                    value=option
-                    checked=field.data && field.data.indexOf(option) > -1
-                  ).no-space
-
-          //- ObjectIds (refs).
-          else if field.caster.instance === 'ObjectID'
-            - var ref = field.caster.options.ref
-            label: a(href=`/admin/${ref}s` target='_blank')=  ref
-            .form-group(
-              class=`js-form-add-${key} js-form-suggest suggest-wrap`
-              data-ref=ref.toLowerCase()
-            )
-              each value in field.data.length ? field.data : [undefined]
-                +uiDestroy()
-                  .input-group
+            //- Enumerable array.
+            else if field.caster.enumValues && field.caster.enumValues.length
+              .form-group.fg-spread
+                each option in field.caster.enumValues
+                  .form-group
+                    label(for=siName + option).label-2= option
                     input(
-                      type='hidden'
+                      type='checkbox'
+                      id=`${siName}${option}`
                       name=sName
-                      value=filters.i.getNested(value, '_id')
-                      id=`ref${siName}`
-                    )
-                    +formFieldStringNum(filters.i.getNested(value, 'defaultName'), field.options, '', siName)
-            +uiAddMore(key)
+                      value=option
+                      checked=field.data && field.data.indexOf(option) > -1
+                    ).no-space
 
-          //- Catchall
-            TODO: Make this work for all remaining types - not just str/num.
-              Should be able to use +formFieldsFromSchema(args).
-          else
-            .form-group(class=`js-form-add-${key}`)
-              each value in field.data.length ? field.data : [undefined]
-                +uiDestroy()
-                  +formFieldStringNum(value, field.options, sName, siName)
-            +uiAddMore(key)
+            //- ObjectIds (refs).
+            else if field.caster.instance === 'ObjectID'
+              - var ref = field.caster.options.ref
+              label.label-ref: a(href=`/admin/${ref}s` target='_blank')=  ref
+              .form-group(
+                class=`js-form-add-${key} js-form-suggest suggest-wrap`
+                data-ref=ref.toLowerCase()
+              )
+                each value in field.data.length ? field.data : [undefined]
+                  +uiDestroy()
+                    .input-group
+                      input(
+                        type='hidden'
+                        name=sName
+                        value=filters.i.getNested(value, '_id')
+                        id=`ref${siName}`
+                      )
+                      +formFieldStringNum(filters.i.getNested(value, 'defaultName'), field.options, '', siName)
+              +uiAddMore(key)
+
+            //- Catchall
+              TODO: Make this work for all remaining types - not just str/num.
+                Should be able to use +formFieldsFromSchema(args).
+            else
+              .form-group(class=`js-form-add-${key}`)
+                each value in field.data.length ? field.data : [undefined]
+                  -var maxlength = field.options.type[0].maxlength
+                  +uiDestroy(maxlength ? 'maxlength' : null)
+                    +formFieldStringNum(value, field.options, sName, siName)
+              +uiAddMore(key)
 
         //- Bools.
         when 'Boolean'
@@ -157,7 +164,7 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
 
         //- ObjectIds (refs).
         when 'ObjectID'
-          label: a(href=`/admin/${field.options.ref}s` target='_blank')
+          label.label-ref: a(href=`/admin/${field.options.ref}s` target='_blank')
             =field.options.ref
           .input-group(
             class=`js-form-add-${key} js-form-suggest suggest-wrap`

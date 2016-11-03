@@ -234,6 +234,20 @@ textarea {
   }
 }
 
+.form-group-array {
+  .form-group > .maxlength:first-child {
+    margin-top: -@font-size-s1;
+  }
+
+  .form-maxlength {
+    margin-top: @spacing-s1;
+
+    &:first-of-type {
+      margin-top: -@font-size-s1;
+    }
+  }
+}
+
 .form-maxlength {
   font-size: @font-size-s1;
 
@@ -277,6 +291,13 @@ textarea {
 
 .label-2 {
   font-size: @font-size-s1;
+}
+
+.label-ref {
+  display: block;
+
+  margin-top: @spacing-s2;
+  margin-bottom: @spacing-s2;
 }
 
 .select {

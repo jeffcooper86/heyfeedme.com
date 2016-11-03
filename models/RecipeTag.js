@@ -9,13 +9,13 @@ var recipeTagSchema = new Schema({
   seoTitle: {
     type: String,
     longText: true,
-    maxLength: 60,
+    maxlength: 60,
     note: 'The browser tab title.'
   },
   seoDescription: {
     type: String,
     longText: true,
-    maxLength: 140,
+    maxlength: 140,
     note: 'The description meta tag.'
   }
 });
