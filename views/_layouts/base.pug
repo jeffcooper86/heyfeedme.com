@@ -27,5 +27,6 @@ html
       .overlay.overlay-1.js-overlay
 
     script(src='/bower_components/jquery/dist/jquery.min.js')
+    if NODE_ENV === 'production'
+      script(src='/js/_analytics.js' async)
     block js
-      //- if NODE_ENV === "production"
