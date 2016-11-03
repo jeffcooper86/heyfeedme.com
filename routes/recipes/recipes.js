@@ -12,7 +12,7 @@ exports = module.exports = function(req, res) {
     activeClasses = res.locals.data.recipes.activeClasses,
     searchQ = req.query.search,
     sort = req.query.sort || req.cookies.recipesListingsSort,
-    tag = utils.i.unslugify(req.params.tag),
+    tagName = utils.i.unslugify(req.params.tag),
     tagId = req.params.tagId;
 
   // Set locals.
@@ -20,19 +20,11 @@ exports = module.exports = function(req, res) {
   l.data.sort = sort;
   l.data.sortOptions = recipesUtils.getSortOptions();
   l.activeSections = activeSections;
-  l.data.tag = tag;
 
   // Reset the cookies because the user may have edited them from the url.
   recipesUtils.setActiveCategories(res, activeSections);
   recipesUtils.setActiveClasses(res, activeClasses);
   recipesUtils.setSort(res, sort);
-
-  if (tag) {
-    l.crumbs = [
-      ['tags', '/recipes/tags'],
-      [tag]
-    ];
-  }
 
   async.waterfall([
     getTag,
@@ -48,7 +40,29 @@ exports = module.exports = function(req, res) {
   });
 
   function getAll(tag, cb) {
+
+    // Tag does not exist.
     if (tagId && !tag) return res.redirect('/recipes/tags');
+
+    // Tag name is incorrect.
+    else if (tag && tag.defaultName !== tagName) {
+      return res.redirect(
+        req.url.replace(
+          utils.i.slugify(tagName), utils.i.slugify(tag.defaultName)
+        )
+      );
+    }
+
+    // Tag settings.
+    if (tag) {
+      l.data.tag = tag.defaultName;
+      l.crumbs = [
+        ['tags', '/recipes/tags'],
+        [tag.defaultName]
+      ];
+      l.title = tag.seoTitle || `${utils.capitalizeFirst(tag.defaultName)} - heyfeedme.`;
+    }
+
     var filters = {
         activeSections: activeSections,
         activeClasses: activeClasses

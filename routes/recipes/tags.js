@@ -13,6 +13,7 @@ exports = module.exports = function(req, res) {
 
   l.data.search = searchQ;
   l.activeSections = activeSections;
+  l.title = 'Recipe tags - heyfeedme.';
 
   recipesUtils.setActiveCategories(res, activeSections);
   recipesUtils.setActiveClasses(res, activeClasses);
