@@ -7,7 +7,10 @@ block adminBody
     form(method='post').form.container.container-3
       +formFieldsFromSchema(populatedSchema)
       .text-center
-        input(type='submit', value='create').btn.btn-1
+        input(
+          type='submit'
+          value=`Create ${modelName.slice(0, modelName.length - 1)}`
+        ).btn.btn-1
     .table-wrap
       table.tbl.tbl-full.tbl-small.tbl-spaced-l2.tbl-color.tbl-h-1col
         -var newCount = 0
