@@ -10,14 +10,15 @@ mixin recipes(recipes)
             |  #{filters.capitalizeTitles(filters.i.stringifyArray(activeSections, ', ', 5, ['and ', ' more...']), ['more...', 'and'])}
         .rlm-settings
           if recipes.length > 1
-            select(
-              name=displaySettings
-              data-sort='recipesListingsSort').rlm-sort.js-rlm-sort
-              each v, k in data.sortOptions
-                option(
-                  value=k
-                  selected = data.sort === k
-                )= v
+            .select-wrap.rlm-sort
+              select(
+                name=displaySettings
+                data-sort='recipesListingsSort').select.js-rlm-sort
+                each v, k in data.sortOptions
+                  option(
+                    value=k
+                    selected = data.sort === k
+                  )= v
         if data.tag && crumbs
           .m-crumbs
             +crumbs(crumbs)

@@ -87,6 +87,12 @@ label {
   }
 }
 
+select {
+  padding-right: @spacing-l1;
+
+  -webkit-appearance: none;
+}
+
 textarea {
   line-height: @line-height;
 
@@ -298,6 +304,27 @@ textarea {
 
   margin-top: @spacing-s2;
   margin-bottom: @spacing-s2;
+}
+
+
+.select-wrap {
+  position: relative;
+
+  &:after {
+    font-family: @font-icons;
+    font-size: @font-size-s3;
+
+    position: absolute;
+    top: calc(50% ~'-' @font-size-s3 / 2);
+    right: (@spacing-l1 - @font-size-s3) / 2;
+
+    width: @font-size-s3;
+
+    content: @fa-var-chevron-down;
+    pointer-events: none;
+
+    color: @color-gray-d3;
+  }
 }
 
 .select {
