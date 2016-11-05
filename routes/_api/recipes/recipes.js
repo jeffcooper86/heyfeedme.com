@@ -44,7 +44,7 @@ exports = module.exports = function(req, res) {
       if (tag) {
         l.crumbs = [
           ['tags', '/recipes/tags'],
-          [tag]
+          [`#${tag}`]
         ];
       }
       data.recipesHtml = pug.renderFile(t, l);

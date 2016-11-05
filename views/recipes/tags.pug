@@ -3,8 +3,8 @@ extends ../_layouts/content-spaced-top
 block bodyContent
   .container.container-3
     h1.heading.h1 Recipe Tags
-    each tag in data.tags
-      ul
-        li
+    ul.list-spaced.m-tag-list
+      each tag in data.tags
+        li.tlm-i
           a(href=`/recipes/tag/${filters.i.slugify(tag.name)}/${tag.id}`)
            | #{filters.capitalizeTitles(tag.name)}

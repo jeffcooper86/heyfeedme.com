@@ -39,13 +39,13 @@ block bodyContent
       .rm-section.rm-recipe
         .m-recipe-ingredients
           h2.heading.h2 Ingredients: #{r.ingredients.length}
-          .rm-list
+          .rm-list.list-spaced-s1
             +recipeIngredients(r.ingredients)
 
         .m-recipe-steps
           -var stepsCount = 0;
           h2.heading.h2 Steps: #{r.steps.length}
-          ul.rm-list
+          ul.rm-list.list-spaced-s1
             each step in r.steps
               li.rm-count-wrap
                 p
@@ -62,9 +62,9 @@ block bodyContent
       if r.tags
         .rm-section
           h2.heading.h2 Tags
-          ul.rm-list
+          ul.rm-list.list-spaced-s1.m-tag-list
             each t in r.tags
-              li
+              li.tlm-i
                 a(href=`/recipes/tag/${filters.i.slugify(t.name)}/${t.id}`)= t.name
 
 

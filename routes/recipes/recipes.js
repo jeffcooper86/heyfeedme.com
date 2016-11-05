@@ -58,7 +58,7 @@ exports = module.exports = function(req, res) {
       l.data.tag = tag.defaultName;
       l.crumbs = [
         ['tags', '/recipes/tags'],
-        [tag.defaultName]
+        [`#${tag.defaultName}`]
       ];
       l.title = tag.seoTitle || `${utils.capitalizeFirst(tag.defaultName)} - heyfeedme.`;
     }
