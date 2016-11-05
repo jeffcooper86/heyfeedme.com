@@ -1,6 +1,5 @@
 var RecipeTags = require(process.cwd() + '/models/RecipeTag');
 var recipesUtils = require(process.cwd() + '/utils/recipes');
-
 var utils = require(process.cwd() + '/utils/global');
 
 exports = module.exports = function(req, res) {
@@ -18,9 +17,18 @@ exports = module.exports = function(req, res) {
     skip: skip
   };
 
-  recipesUtils.getRecipesTags(RecipeTags, opts, sendRecipeTags);
+  recipesUtils.getRecipesTags(RecipeTags, opts, addDefaultName);
 
-  function sendRecipeTags(err, tags) {
+  function addDefaultName(err, tags) {
+    var newTags = tags.map(function(t) {
+      var newT = t.toObject();
+      newT.defaultName = t.defaultName;
+      return newT;
+    });
+    sendRecipeTags(newTags);
+  }
+
+  function sendRecipeTags(tags) {
     res.send(JSON.stringify(tags));
   }
 };

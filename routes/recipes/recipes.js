@@ -12,7 +12,7 @@ exports = module.exports = function(req, res) {
     activeClasses = res.locals.data.recipes.activeClasses,
     searchQ = req.query.search,
     sort = req.query.sort || req.cookies.recipesListingsSort,
-    tagName = utils.i.unslugify(req.params.tag),
+    tagName = req.params.tag,
     tagId = req.params.tagId;
 
   // Set locals.
@@ -46,11 +46,7 @@ exports = module.exports = function(req, res) {
 
     // Tag name is incorrect.
     else if (tag && tag.defaultName !== tagName) {
-      return res.redirect(
-        req.url.replace(
-          utils.i.slugify(tagName), utils.i.slugify(tag.defaultName)
-        )
-      );
+      return res.redirect(req.url.replace(tagName, tag.defaultName));
     }
 
     // Tag settings.

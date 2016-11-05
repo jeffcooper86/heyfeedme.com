@@ -6,5 +6,5 @@ block bodyContent
     ul.list-spaced.m-tag-list
       each tag in data.tags
         li.tlm-i
-          a(href=`/recipes/tag/${filters.i.slugify(tag.name)}/${tag.id}`)
-           | #{filters.capitalizeTitles(tag.name)}
+          a(href=`/recipes/tag/${tag.defaultName}/${tag.id}`)
+           | #{tag.defaultName}

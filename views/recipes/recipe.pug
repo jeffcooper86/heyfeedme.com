@@ -65,7 +65,7 @@ block bodyContent
           ul.rm-list.list-spaced-s1.m-tag-list
             each t in r.tags
               li.tlm-i
-                a(href=`/recipes/tag/${filters.i.slugify(t.name)}/${t.id}`)= t.name
+                a(href=`/recipes/tag/${t.defaultName}/${t.id}`)= t.defaultName
 
 
 

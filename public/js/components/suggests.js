@@ -46,7 +46,6 @@ function autoSuggest(dOpts) {
     };
 
     _setSuggesterListener(eventData);
-    // $(document).one('click keydown keyup', eventData, _suggesterEvent);
     return $suggest;
   }
 
@@ -178,7 +177,7 @@ function autoSuggest(dOpts) {
       $opts.append($('<li>')
         .addClass('suggest-item js-suggest-item')
         .attr('data-hidden-val', d._id)
-        .html(d.name));
+        .html(d.defaultName || d.name));
     });
     if (loadingStop) loadingStop($suggest);
     $suggest.append($opts);

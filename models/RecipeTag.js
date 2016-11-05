@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var utils = require(process.cwd() + '/utils/global');
 
 var recipeTagSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    note: 'Tag names are capitalized and joined when displayed.'
   },
   seoTitle: {
     type: String,
@@ -21,7 +23,7 @@ var recipeTagSchema = new Schema({
 });
 
 recipeTagSchema.virtual('defaultName').get(function() {
-  return this.name;
+  return utils.capitalizeTitles(this.name).replace(' ', '');
 });
 
 module.exports.model = mongoose.model('RecipeTag', recipeTagSchema);
