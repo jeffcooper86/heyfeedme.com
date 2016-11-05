@@ -1,5 +1,7 @@
 module.exports.addField = addField;
 module.exports.characterLimit = characterLimit;
+module.exports.characterLimitFields = characterLimitFields;
+module.exports.characterLimitUpdate = characterLimitUpdate;
 module.exports.clearFieldVals = clearFieldVals;
 module.exports.eventSubmit = eventSubmit;
 module.exports.shortcutSubmit = shortcutSubmit;
@@ -19,15 +21,18 @@ function addField(opts) {
     $newField = $fields.last().clone(true, true);
 
     // Reset the field values.
-    if ($newField.is('input, textarea')) $newField.val('');
-    else {
+    if ($newField.is('input, textarea')) {
+      $newField.val('');
+      characterLimitUpdate($newField);
+    } else {
 
       // Scope the fields so labels still focus fields correctly.
       var scope = String(Math.random()).slice(2);
-      $newField.find('input, textarea').each(function(i, input) {
-        var $input = $(input);
-        $input.val('');
-        $input.attr('id', `${_trimScope($input.attr('id'))}_scope_${scope}`);
+      $newField.find('input, textarea').each(function(i, field) {
+        var $field = $(field);
+        $field.val('');
+        $field.attr('id', `${_trimScope($field.attr('id'))}_scope_${scope}`);
+        characterLimitUpdate($field);
       });
       $newField.find('label').each(function(i, label) {
         var $label = $(label),
@@ -45,15 +50,22 @@ function addField(opts) {
   }
 }
 
-function characterLimit(opts) {
-  var $el = $('input[maxlenth], textarea[maxlength]');
+function characterLimit() {
+  var $el = $(characterLimitFields());
   $el.on('keyup', function() {
-    var $this = $(this),
-      max = $this.attr('maxlength'),
-      len = $this.val().length,
-      $remain = $this.siblings('.js-remain');
-    $remain.find('.js-remaining').html(max - len);
+    characterLimitUpdate($(this));
   });
+}
+
+function characterLimitFields() {
+  return 'input[maxlength], textarea[maxlength]';
+}
+
+function characterLimitUpdate($el) {
+  var max = $el.attr('maxlength'),
+    len = $el.val().length,
+    $remain = $el.siblings('.js-remain');
+  $remain.find('.js-remaining').html(max - len);
 }
 
 function clearFieldVals($field) {
