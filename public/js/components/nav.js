@@ -7,22 +7,33 @@ function toggleCtrl(opts) {
 
   $navControl.on('click', function(e) {
     e.preventDefault();
+    var $this = $(this);
     toggle({
-      el: $(this).data('nav'),
+      $el: $($this.data('nav')),
+      $ctrlEl: $this,
       beforeShow: opts.beforeShow,
+      afterShow: opts.afterShow,
       afterHide: opts.afterHide
     });
   });
 }
 
 function toggle(opts) {
-  var $nav = $(opts.el),
+  var $nav = opts.$el,
     beforeShow = opts.beforeShow,
-    afterHide = opts.afterHide;
+    afterShow = opts.afterShow,
+    afterHide = opts.afterHide,
+    show = !$nav.hasClass('active');
 
-  if (!($nav.hasClass('active')) && beforeShow) beforeShow();
+  if (show) {
+    if (beforeShow) beforeShow(opts);
+  }
 
   $nav.toggleClass('active');
 
-  if (!$nav.hasClass('active') && afterHide) afterHide();
+  if (!show) {
+    if (afterHide) afterHide(opts);
+  } else {
+    if (afterShow) afterShow(opts);
+  }
 }

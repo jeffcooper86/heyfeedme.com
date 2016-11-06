@@ -1,10 +1,10 @@
-var cookies = require('../utils/cookies');
-var filters = require('../components/filters');
-var nav = require('../components/nav');
-var overlays = require('../components/overlays');
-var recipeListings = require('./recipe-listings');
-var ui = require('../ui');
-var utils = require('../utils/iUtils');
+const cookies = require('../utils/cookies');
+const filters = require('../components/filters');
+const nav = require('../components/nav');
+const overlays = require('../components/overlays');
+const recipeListings = require('./recipe-listings');
+const ui = require('../ui');
+const utils = require('../utils/iUtils');
 
 module.exports.init = init;
 module.exports.toggle = toggle;
@@ -20,13 +20,14 @@ function init() {
     el: '.js-filters > span'
   });
 
-  toggle({});
+  toggle({
+    el: '.js-rnav-ctrl'
+  });
 }
 
 function toggle(opts) {
-  var el = opts.el;
   nav.toggleCtrl({
-    el: el || '.js-nav-ctrl',
+    el: opts.el,
     beforeShow: _beforeShowNav,
     afterHide: _afterHideNav
   });
@@ -59,7 +60,7 @@ function _beforeShowNav() {
   function _afterHideOverlay() {
     _whenHideNav();
     nav.toggle({
-      el: '.js-right-nav'
+      $el: $('.js-right-nav')
     });
   }
 }

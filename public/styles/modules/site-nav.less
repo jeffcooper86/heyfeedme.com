@@ -1,0 +1,34 @@
+.m-site-nav {
+  font-size: @font-size-s1;
+
+  position: fixed;
+  z-index: @z-index-supernav;
+  top: 0;
+  right: @spacing-s2;
+
+  display: none;
+
+  text-align: left;
+
+  background: @color-white;
+
+  .mi-border();
+
+  &.active {
+    display: block;
+  }
+}
+
+.snm-i {
+  white-space: nowrap;
+
+  a {
+    display: block;
+
+    padding: @spacing-s1;
+
+    &:hover {
+      background: @color-1-l2;
+    }
+  }
+}

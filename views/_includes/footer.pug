@@ -4,11 +4,7 @@ footer.m-footer
       .container.container-1
         nav.fm-links
           span.fm-social-links
-            a(href='//www.facebook.com/heyfeedme' target='_blank')
-              i.icon.fa.fa-facebook-official
-            a(href='//www.pinterest.com/heyfeedme' target='_blank')
-              i.icon.fa.fa-pinterest
-          span
-            a(href='/') Home
-            a(href='/about') About
+            include social-links.pug
+          //- span
+          //-   a(href='/about') About
           span.fm-copyright &copy; Heyfeedme #{filters.moment().format('YYYY')}

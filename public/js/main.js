@@ -1,4 +1,5 @@
-var rightNav = require('./modules/right-nav');
+const rightNav = require('./modules/right-nav');
+const siteNav = require('./modules/site-nav');
 
 /**
  * Components.
@@ -11,3 +12,4 @@ var rightNav = require('./modules/right-nav');
  * ----------------------------
  */
 rightNav.init();
+siteNav.init();

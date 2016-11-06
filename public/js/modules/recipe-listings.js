@@ -23,7 +23,7 @@ function updateRecipes($recipes) {
 
     // Attach new listeners.
     rightNav.toggle({
-      el: '.rlm-none .js-nav-ctrl, .rlm-tally .js-nav-ctrl'
+      el: '.rlm-none .js-rnav-ctrl, .rlm-tally .js-rnav-ctrl'
     });
     sortOrder();
   });

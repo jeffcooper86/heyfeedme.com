@@ -6,7 +6,7 @@ mixin recipes(recipes)
       .rlm-header
         p.js-recipes-tally.rlm-tally
           | #{filters.i.tally(recipes, ['recipe', 'recipes'])} -
-          a(href='#' data-nav='.js-right-nav').js-nav-ctrl
+          a(href='#' data-nav='.js-right-nav').js-rnav-ctrl
             |  #{filters.capitalizeTitles(filters.i.stringifyArray(activeSections, ', ', 5, ['and ', ' more...']), ['more...', 'and'])}
         .rlm-settings
           if recipes.length > 1
@@ -36,7 +36,7 @@ mixin recipes(recipes)
 
       if !recipes.length
         p.rlm-none.text-center
-         button(data-nav='.js-right-nav').js-nav-ctrl.btn.btn-1 Adjust Filters
+         button(data-nav='.js-right-nav').js-rnav-ctrl.btn.btn-1 Adjust Filters
 
 if compileRecipes
   +recipes(recipes)
