@@ -40,17 +40,22 @@
 
   &:last-of-type {
     .icon {
-      padding-right: 0;
+      margin-right: -@spacing-s2;
     }
   }
 
   .icon {
     font-size: @font-size-l1;
 
+    display: flex;
+
+    height: 100%;
     padding-right: @spacing-s2;
     padding-left: @spacing-s2;
 
     color: @color-2-d2;
+
+    align-items: center;
 
     &:hover {
       color: @color-1-d1;

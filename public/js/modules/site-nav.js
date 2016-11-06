@@ -47,6 +47,7 @@ function setNavPosition(opts) {
 
   $nav.css({
     'right': $(document).width() - offset.left,
-    'top': offset.top
+    'top': offset.top +
+      (($ctrlEl.height() - parseInt($ctrlEl.css('font-size'))) / 2)
   });
 }
