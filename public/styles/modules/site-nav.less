@@ -38,10 +38,23 @@
 
   color: @color-white;
 
+  &:last-of-type {
+    .icon {
+      padding-right: 0;
+    }
+  }
+
   .icon {
     font-size: @font-size-l1;
 
+    padding-right: @spacing-s2;
+    padding-left: @spacing-s2;
+
     color: @color-2-d2;
+
+    &:hover {
+      color: @color-1-d1;
+    }
   }
 
   a {
