@@ -4,6 +4,8 @@ a {
   color: @color-1-d1;
 
   &:hover {
-    color: @color-1-d2;
+    .no-touchevents & {
+      color: @color-1-d2;
+    }
   }
 }

@@ -58,7 +58,9 @@
     align-items: center;
 
     &:hover {
-      color: @color-1-d1;
+      .no-touchevents & {
+        color: @color-1-d1;
+      }
     }
   }
 

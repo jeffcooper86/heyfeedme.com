@@ -7,6 +7,7 @@
     "body-parser": "^1.15.0",
     "bower": "^1.7.9",
     "browserify": "^13.0.0",
+    "browsernizr": "^2.1.0",
     "connect-mongo": "^1.1.0",
     "cookie-parser": "^1.4.3",
     "cookies-js": "^1.2.2",

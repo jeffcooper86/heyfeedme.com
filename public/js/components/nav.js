@@ -5,7 +5,7 @@ function toggleCtrl(opts) {
   var el = opts.el || '.js-nav-ctrl',
     $navControl = $(el);
 
-  $navControl.on('click', function(e) {
+  $navControl.on('click touchstart', function(e) {
     e.preventDefault();
     var $this = $(this);
     toggle({

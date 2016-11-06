@@ -32,7 +32,9 @@
 
   a {
     &:hover {
-      color: @color-1-l1;
+      .no-touchevents & {
+        color: @color-1-l1;
+      }
     }
   }
 }

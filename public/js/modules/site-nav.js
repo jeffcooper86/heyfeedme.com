@@ -19,13 +19,14 @@ function toggle(opts) {
 
 function _afterHide(opts) {
   $(window).off('resize.siteNav');
+  $(document).off('click.siteNav');
 }
 
 function _afterShow(opts) {
 
   // Move outside the current click event loop.
   window.setTimeout(function() {
-    $(document).one('click', function(e) {
+    $(document).on('click.siteNav', function(e) {
       if (e.target !== opts.$ctrlEl[0]) nav.toggle(opts);
     });
   }, 0);
