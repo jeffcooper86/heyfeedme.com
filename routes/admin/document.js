@@ -89,11 +89,10 @@ exports = module.exports = function(req, res, next) {
     reqData = _trimEmptyRequestData(reqData);
     reqData = _trimEmptyArrayReqData(reqData);
     doc.update(reqData, function(err) {
-
       if (err) {
         console.log(err);
         req.flash('error', 'Error updating the document.');
-      } else req.flash('success', 'Document saved.');
+      } else req.flash('success', `${modelName.slice(0, -1)} saved.`);
 
       // Need to get document again - findByIdAndUpdate is limiting
       // http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
