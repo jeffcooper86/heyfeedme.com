@@ -5,9 +5,10 @@ mixin recipes(recipes)
     .rlm-wrap
       .rlm-header
         p.js-recipes-tally.rlm-tally
-          | #{filters.i.tally(recipes, ['recipe', 'recipes'])} -
-          a(href='#' data-nav='.js-right-nav').js-rnav-ctrl
-            |  #{filters.capitalizeTitles(filters.i.stringifyArray(activeSections, ', ', 5, ['and ', ' more...']), ['more...', 'and'])}
+          span
+            | #{filters.i.tally(recipes, ['recipe', 'recipes'])} -
+            a(href='#' data-nav='.js-right-nav').js-rnav-ctrl
+              |  #{filters.capitalizeTitles(filters.i.stringifyArray(activeSections, ', ', 5, ['and ', ' more...']), ['more...', 'and'])}
         .rlm-settings
           if recipes.length > 1
             .select-wrap.rlm-sort

@@ -3,6 +3,7 @@
 module.exports.arrayChunk = arrayChunk;
 module.exports.getFileExt = getFileExt;
 module.exports.getNested = getNested;
+module.exports.rotateRandom = rotateRandom;
 module.exports.slugify = slugify;
 module.exports.sortOn = sortOn;
 module.exports.sortVerticalFlowColumns = sortVerticalFlowColumns;
@@ -49,6 +50,10 @@ function getNested(obj, p) {
   p = !Array.isArray(p) ? p.split('.') : p;
   if (p.length === 1) return obj[p[0]];
   return obj[p[0]] ? getNested(obj[p[0]], p.slice(1)) : undefined;
+}
+
+function rotateRandom() {
+  return `transform:rotate(${Math.ceil(Math.random() * 360)}deg);`;
 }
 
 function slugify(route) {
