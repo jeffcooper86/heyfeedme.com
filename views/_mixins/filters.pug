@@ -13,6 +13,7 @@ mixin filters(filterItems, activeFilters, matchFilters, opts)
           -var matchFilter = matchFilters.indexOf(filter) > -1
           span(
             data-filter=filters.i.slugify(filter)
-            class={active: activeFilter,
-                  match: matchFilter}
+            class={active: activeFilter}
           )= filter
+            if matchFilter
+              i.filters-match(style=filters.i.rotateRandom())

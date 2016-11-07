@@ -33,27 +33,29 @@
     &:last-child {
       margin-bottom: 0;
     }
-
-    &.match {
-      &:after {
-        font-family: @font-icons;
-
-        margin-left: @spacing-s2;
-
-        content: @fa-var-star;
-
-        color: @color-gray-d1;
-      }
-
-      &.active {
-        &:after {
-          color: @color-white;
-        }
-      }
-    }
   }
 
   > span {
     width: 100%;
+  }
+}
+
+.filters-match {
+  display: inline-block;
+
+  margin-left: @spacing-s2;
+
+  &:after {
+    font-family: @font-icons;
+
+    content: @fa-var-star;
+
+    color: @color-gray-d1;
+  }
+
+  .active > & {
+    &:after {
+      color: @color-white;
+    }
   }
 }
