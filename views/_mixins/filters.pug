@@ -14,6 +14,7 @@ mixin filters(filterItems, activeFilters, matchFilters, opts)
           span(
             data-filter=filters.i.slugify(filter)
             class={active: activeFilter}
-          )= filter
+          )
             if matchFilter
               i.filters-match(style=filters.i.rotateRandom())
+            = filter
