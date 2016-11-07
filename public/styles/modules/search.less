@@ -11,10 +11,8 @@
 }
 
 .sm-search {
-  @media(max-width: @bp-m3-max) {
-    width: 100%;
-
-    input {
+  input {
+    @media(max-width: @bp-m3-max) {
       width: 100%;
       margin-right: 0;
       margin-left: 0;
@@ -25,11 +23,20 @@
       border-right: 0;
       border-left: 0;
       border-radius: 0;
+    }
 
-      &::placeholder {
-        color: @color-gray-d3;
+    &::placeholder {
+      text-transform: lowercase;
+
+      color: @color-gray-d1;
+
+      @media(max-width: @bp-m3-max) {
+        font-weight: @font-weight-bold;
       }
     }
+  }
+  @media(max-width: @bp-m3-max) {
+    width: 100%;
 
     .icon {
       left: @spacing-s2;

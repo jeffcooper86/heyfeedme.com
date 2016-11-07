@@ -3,8 +3,8 @@ footer.m-footer
     .module-content
       .container.container-1
         nav.fm-links
+          a(href='/').fm-logo
+            img(src='/images/logos/hfm-logo.png')
           span.fm-social-links
             include social-links.pug
-          //- span
-          //-   a(href='/about') About
           span.fm-copyright &copy; Heyfeedme #{filters.moment().format('YYYY')}
