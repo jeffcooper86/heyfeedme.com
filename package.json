@@ -4,6 +4,7 @@
   "main": "app.js",
   "dependencies": {
     "async": "^1.5.2",
+    "babel-preset-latest": "^6.16.0",
     "body-parser": "^1.15.0",
     "bower": "^1.7.9",
     "browserify": "^13.0.0",
@@ -42,7 +43,6 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
-    "babel-preset-latest": "^6.16.0",
     "eslint": "^3.7.1",
     "eslint-config-standard": "^6.2.0",
     "eslint-plugin-promise": "^3.0.0",
