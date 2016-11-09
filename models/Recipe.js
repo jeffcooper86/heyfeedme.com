@@ -63,6 +63,13 @@ var servingsSchema = new Schema({
   }
 });
 
+servingsSchema.virtual('servingSize').get(function() {
+  var qty = this.qty,
+    m = this.measurement;
+
+  return `${qty} ${m}`;
+});
+
 var recipeSchema = new Schema({
   publish: {
     type: Boolean
