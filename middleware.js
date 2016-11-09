@@ -23,7 +23,7 @@ function dbConnect(req, res, next) {
     mongoose.connections[0]._readyState === 1) return next();
 
   if (process.env.NODE_ENV === 'development') {
-    mongoose.connect('mongodb://localhost/test');
+    mongoose.connect(`mongodb://localhost/${process.env.APP}`);
   } else {
     var config = JSON.parse(process.env.APP_CONFIG);
     mongoose.connect('mongodb://' + config.mongo.user + ':' + process.env.MONGO_PW + '@' + config.mongo.hostString);
