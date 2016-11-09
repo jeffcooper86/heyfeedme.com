@@ -82,6 +82,10 @@ label {
     margin-top: @spacing-s2;
   }
 
+  + .note {
+    margin-top: @spacing-s1;
+  }
+
   &.heading {
     display: inline;
   }
@@ -242,23 +246,23 @@ textarea {
 
 .form-group-array {
   .form-group > .maxlength:first-child {
-    margin-top: -@font-size-s1;
+    margin-top: -(@font-size-s2 + @spacing);
   }
 
   .form-maxlength {
-    margin-top: @spacing-s1;
+    margin-top: @spacing-s2;
 
     &:first-of-type {
-      margin-top: -@font-size-s1;
+      margin-top: -@font-size-s2;
     }
   }
 }
 
 .form-maxlength {
-  font-size: @font-size-s1;
+  font-size: @font-size-s2;
 
-  height: @font-size-s1;
-  margin-top: -@font-size-s1;
+  height: @font-size-s2;
+  margin-top: -@font-size-s2;
 
   text-align: right;
 }

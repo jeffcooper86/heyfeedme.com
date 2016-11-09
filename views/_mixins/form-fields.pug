@@ -36,7 +36,13 @@ mixin formFieldStringNum(val, options, sName, siName)
       p= val
 
   else
-    input(id=siName name=sName type='text' value=val).form-field.ff-wide
+    input(
+      id=siName
+      name=sName
+      type='text'
+      value=val
+      maxlength=options.maxlength
+    ).form-field.ff-wide
 
 mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
   each field, key in fields
@@ -50,12 +56,8 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
           span= ` (${field.data.length})`
 
       if field.options.note
-        .note
+        .note.note-s1
           p= field.options.note
-
-      //- if field.options.maxlength
-      //-   .form-maxlength.js-remain
-      //-     p.js-remaining
 
       case type
         //- Arrays.
@@ -179,3 +181,8 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
                 id=`ref${siName}`
               )
               +formFieldStringNum(filters.i.getNested(field, 'data.defaultName'), field.options, '', siName)
+
+        //- Subdocument.
+        when 'Embedded'
+          .form-group-embedded.form-group.fg-spread
+            +subdocField(field, key, field.data)

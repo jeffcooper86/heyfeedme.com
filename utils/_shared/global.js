@@ -11,6 +11,7 @@ module.exports.stringifyArray = stringifyArray;
 module.exports.stripFileExtension = stripFileExtension;
 module.exports.tally = tally;
 module.exports.trimDirectories = trimDirectories;
+module.exports.trimOn = trimOn;
 module.exports.truncate = truncate;
 module.exports.unslugify = unslugify;
 
@@ -116,7 +117,11 @@ function tally(data, labels) {
 
 function trimDirectories(path, trimAmount) {
   if (path[-1] === '/') path = path.slice(0, -1);
-  return path.split('/').slice(0, -trimAmount).join('/');
+  return trimOn(path, '/', trimAmount);
+}
+
+function trimOn(str, trim, amount) {
+  return str.split(trim).slice(0, -amount).join(trim);
 }
 
 function truncate(s, n) {

@@ -49,6 +49,20 @@ ingredientSchema.virtual('text').get(function() {
   return t;
 });
 
+var servingsSchema = new Schema({
+  qty: {
+    type: Number
+  },
+  measurement: {
+    type: String,
+    maxlength: 40
+  },
+  servings: {
+    type: Number,
+    note: 'Number of servings.'
+  }
+});
+
 var recipeSchema = new Schema({
   publish: {
     type: Boolean
@@ -66,6 +80,9 @@ var recipeSchema = new Schema({
     type: String,
     longText: true,
     maxlength: 140
+  },
+  servings: {
+    type: servingsSchema
   },
   seoDescription: {
     type: String,
