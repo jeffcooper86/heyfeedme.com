@@ -27,7 +27,7 @@ function dbConnect(req, res, next) {
 
   switch (process.env.NODE_ENV) {
     case 'production-local':
-      dbstr = `mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}${mongoc.db}`;
+      dbstr = `mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}/${mongoc.db}`;
       break;
     case 'production':
       dbstr = `mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}`;
