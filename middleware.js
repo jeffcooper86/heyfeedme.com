@@ -31,7 +31,7 @@ function dbConnect(req, res, next) {
     } catch (err) {
       console.error(err);
     }
-    mongoose.connect(`mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}/${mongoc.db}`);
+    mongoose.connect(`mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}`);
   }
 
   var db = mongoose.connection;
