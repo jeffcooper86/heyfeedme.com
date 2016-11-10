@@ -25,8 +25,8 @@ function dbConnect(req, res, next) {
   if (process.env.NODE_ENV === 'development' || !process.env.APP_CONFIG) {
     mongoose.connect(`mongodb://localhost/${process.env.APP}`);
   } else {
-    var config = JSON.parse(process.env.APP_CONFIG);
-    mongoose.connect('mongodb://' + config.mongo.user + ':' + process.env.MONGO_PW + '@' + config.mongo.hostString);
+    var mongoc = JSON.parse(process.env.APP_CONFIG.mongo);
+    mongoose.connect(`mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}`);
   }
 
   var db = mongoose.connection;
