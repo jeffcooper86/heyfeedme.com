@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var multer = require('multer');
 
 // App.
-var globalUtils = require(process.cwd() + '/utils/global');
+var utils = require(process.cwd() + '/utils/global');
 var recipeUtils = require(process.cwd() + '/utils/recipes');
 
 module.exports.dbConnect = dbConnect;
@@ -19,21 +19,25 @@ module.exports.uploadRecipe = uploadRecipe;
 
 
 function dbConnect(req, res, next) {
+  var dbstr,
+    mongoc = utils.i.getNested(JSON.parse(process.env.APP_CONFIG), 'mongo');
+
   if (mongoose.connections &&
     mongoose.connections[0]._readyState === 1) return next();
 
-  if (process.env.NODE_ENV === 'development' || !process.env.APP_CONFIG) {
-    mongoose.connect(`mongodb://localhost/${process.env.APP}`);
-  } else {
-    var mongoc;
-    try {
-      mongoc = JSON.parse(process.env.APP_CONFIG).mongo;
-    } catch (err) {
-      console.error(err);
-    }
-    mongoose.connect(`mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}`);
+  switch (process.env.NODE_ENV) {
+    case 'production-local':
+      dbstr = `mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}${mongoc.db}`;
+      break;
+    case 'production':
+      dbstr = `mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}`;
+      break;
+    default:
+      dbstr = `mongodb://localhost/${process.env.APP}`;
+      break;
   }
 
+  mongoose.connect(dbstr);
   var db = mongoose.connection;
   db.on('error', function(err) {
     console.error(err);
@@ -79,7 +83,7 @@ function setGlobalData(req, res, next) {
 }
 
 function setTemplateFilters(req, res, next) {
-  res.locals.filters = globalUtils;
+  res.locals.filters = utils;
   next();
 }
 
@@ -111,8 +115,8 @@ function uploadRecipe(opts) {
 
   function makeFileName(req, file) {
     var n = req.body.name ?
-      globalUtils.i.slugify(req.body.name) : file.originalname;
-    n = `${n}.${globalUtils.i.getFileExt(file.originalname)}`;
+      utils.i.slugify(req.body.name) : file.originalname;
+    n = `${n}.${utils.i.getFileExt(file.originalname)}`;
     return n.toLowerCase();
   }
   return multer({
