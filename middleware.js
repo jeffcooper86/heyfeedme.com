@@ -25,13 +25,18 @@ function dbConnect(req, res, next) {
   if (process.env.NODE_ENV === 'development' || !process.env.APP_CONFIG) {
     mongoose.connect(`mongodb://localhost/${process.env.APP}`);
   } else {
-    var mongoc = JSON.parse(process.env.APP_CONFIG.mongo);
-    mongoose.connect(`mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}`);
+    var mongoc;
+    try {
+      mongoc = JSON.parse(process.env.APP_CONFIG).mongo;
+    } catch (err) {
+      console.error(err);
+    }
+    mongoose.connect(`mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}/${mongoc.db}`);
   }
 
   var db = mongoose.connection;
-  db.on('error', function() {
-    console.log('Error connecting to db - is mongodb installed and running?');
+  db.on('error', function(err) {
+    console.error(err);
     next();
   });
   db.once('open', function() {
