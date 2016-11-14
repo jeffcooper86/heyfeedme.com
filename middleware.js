@@ -7,6 +7,7 @@ var multer = require('multer');
 // App.
 var utils = require(process.cwd() + '/utils/global');
 var recipeUtils = require(process.cwd() + '/utils/recipes');
+var env = process.env;
 
 module.exports.dbConnect = dbConnect;
 module.exports.filesAsPaths = filesAsPaths;
@@ -16,24 +17,24 @@ module.exports.requireAuthentication = requireAuthentication;
 module.exports.setGlobalData = setGlobalData;
 module.exports.setTemplateFilters = setTemplateFilters;
 module.exports.uploadRecipe = uploadRecipe;
-
+module.exports.wwwRedirect = wwwRedirect;
 
 function dbConnect(req, res, next) {
   var dbstr,
-    mongoc = utils.i.getNested(JSON.parse(process.env.APP_CONFIG), 'mongo');
+    mongoc = utils.i.getNested(JSON.parse(env.APP_CONFIG), 'mongo');
 
   if (mongoose.connections &&
     mongoose.connections[0]._readyState === 1) return next();
 
-  switch (process.env.NODE_ENV) {
+  switch (env.NODE_ENV) {
     case 'production-local':
-      dbstr = `mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}/${mongoc.db}`;
+      dbstr = `mongodb://${mongoc.user}:${env.MONGO_PW}@${mongoc.hostString}/${mongoc.db}`;
       break;
     case 'production':
-      dbstr = `mongodb://${mongoc.user}:${process.env.MONGO_PW}@${mongoc.hostString}`;
+      dbstr = `mongodb://${mongoc.user}:${env.MONGO_PW}@${mongoc.hostString}`;
       break;
     default:
-      dbstr = `mongodb://localhost/${process.env.APP}`;
+      dbstr = `mongodb://localhost/${env.APP}`;
       break;
   }
 
@@ -58,7 +59,7 @@ function filesAsPaths(req, res, next) {
 }
 
 function getSetEnv(req, res, next) {
-  res.locals.NODE_ENV = process.env.NODE_ENV;
+  res.locals.NODE_ENV = env.NODE_ENV;
   next();
 }
 
@@ -122,4 +123,11 @@ function uploadRecipe(opts) {
   return multer({
     storage: storage
   }).fields(opts);
+}
+
+function wwwRedirect(req, res, next) {
+  if (env === 'production' && req.headers.host.slice(0, 4) !== 'www.') {
+    return res.redirect(301, `${req.protocol}://www.${req.headers.host}${req.originalUrl}`);
+  }
+  next();
 }

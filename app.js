@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({
 require('dotenv').config({
   silent: true
 });
+app.use(middleware.wwwRedirect);
 app.use(middleware.dbConnect);
 app.use(session({
   store: new MongoStore({
