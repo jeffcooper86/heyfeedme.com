@@ -24,7 +24,6 @@ const routes = requireDir('routes', {
 app.enable('strict routing');
 app.use(express.static('public'));
 app.set('view engine', 'pug');
-app.use('/robots.txt', routes._robots);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -33,6 +32,7 @@ require('dotenv').config({
   silent: true
 });
 app.use(middleware.wwwRedirect);
+app.use('/robots.txt', routes._robots);
 app.use(middleware.dbConnect);
 app.use(session({
   store: new MongoStore({
