@@ -13,6 +13,9 @@ const MongoStore = require('connect-mongo')(session);
 
 // App.
 const middleware = require(process.cwd() + '/middleware');
+const routes = requireDir('routes', {
+  recurse: true
+});
 
 /*
  * Settings.
@@ -21,6 +24,7 @@ const middleware = require(process.cwd() + '/middleware');
 app.enable('strict routing');
 app.use(express.static('public'));
 app.set('view engine', 'pug');
+app.use('/robots.txt', routes._robots);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -47,9 +51,6 @@ app.use(middleware.setTemplateFilters);
  * Routes.
  * ----------------------------
  */
-var routes = requireDir('routes', {
-  recurse: true
-});
 
 /**
  * Public.
