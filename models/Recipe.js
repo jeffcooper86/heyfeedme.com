@@ -14,7 +14,7 @@ var ingredientSchema = new Schema({
     type: String
   },
   qty: {
-    type: Number
+    type: String
   },
   measurement: {
     type: String
