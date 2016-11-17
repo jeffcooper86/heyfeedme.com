@@ -51,7 +51,7 @@ ingredientSchema.virtual('text').get(function() {
 
 var servingsSchema = new Schema({
   qty: {
-    type: Number
+    type: String
   },
   measurement: {
     type: String,
