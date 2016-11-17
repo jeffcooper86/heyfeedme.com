@@ -1,8 +1,12 @@
 .m-flash-messages {
-  margin: @spacing-l2 0;
+  margin: @spacing 0;
   padding: @spacing;
 
   color: @color-1-d3;
   border-radius: @border-radius;
   background: @color-1-l2;
+
+  @media(min-width: @bp-d1-min) {
+    margin: @spacing-l2 0;
+  }
 }
