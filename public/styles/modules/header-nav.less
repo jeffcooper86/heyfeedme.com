@@ -14,12 +14,10 @@
 }
 
 .hnm-logo {
-  margin-right: @spacing-l1;
-
-  flex-grow: 1;
+  margin-right: @spacing-l2;
 
   a {
-    font-size: @font-size;
+    font-size: @font-size-s1;
     font-weight: @font-weight-regular;
 
     display: flex;
@@ -85,4 +83,36 @@
 
 .hnm-site-nav {
   position: relative;
+}
+
+.m-header-nav .m-search {
+  flex-grow: 1;
+
+  .icon {
+    display: none;
+  }
+
+  .sm-submit, .sm-text {
+    height: @header-height-d - 12;
+
+    border-radius: 0;
+  }
+
+  .sm-submit {
+    // color: @color-gray-d2;
+    margin-left: 0;
+
+    border: none;
+    background: @color-gray;
+  }
+
+  .sm-text {
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: @spacing;
+
+    border-color: @color-border-l2;
+    border-left: none;
+    background: @color-white-d1;
+  }
 }
