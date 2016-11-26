@@ -1,4 +1,6 @@
 .btn {
+  display: inline-flex;
+
   padding-right: @spacing-l1;
   padding-left: @spacing-l1;
 
@@ -6,19 +8,33 @@
 
   border: none;
 
+  align-items: center;
+
   &.btn-1 {
     color: @color-white;
     background: @color-1-d1;
+
+    &:hover {
+      color: @color-white;
+    }
   }
 
   &.btn-2 {
     color: @color-white;
     background: @color-2-d1;
+
+    &:hover {
+      color: @color-white;
+    }
   }
 
   &.btn-3 {
-    color: white;
+    color: @color-white;
     border-color: @color-3;
     background: @color-3-d1;
+
+    &:hover {
+      color: @color-white;
+    }
   }
 }
