@@ -14,7 +14,15 @@
 }
 
 .hnm-logo {
-  margin-right: @spacing-l2;
+  flex-shrink: 0;
+
+  @media(min-width: @bp-m4-min) {
+    margin-right: @spacing;
+  }
+
+  @media(min-width: @bp-d2-min) {
+    margin-right: @spacing-l2;
+  }
 
   a {
     font-size: @font-size;
@@ -38,6 +46,13 @@
     margin-right: @spacing-s4;
 
     vertical-align: middle;
+  }
+}
+
+.hnm-logo-text {
+  display: none;
+  @media(min-width: @bp-m4-min) {
+    display: inline;
   }
 }
 
@@ -93,17 +108,24 @@
   }
 
   .sm-submit, .sm-text {
-    height: @header-height-d;
+    height: @header-height;
 
     border-radius: 0;
+
+    @media(min-width: @bp-m4-min) {
+      height: @header-height-d;
+    }
   }
 
   .sm-submit {
-    // color: @color-gray-d2;
     margin-left: 0;
 
     border: none;
     background: @color-gray;
+
+    @media(max-width: @bp-m5-max) {
+      display: none;
+    }
   }
 
   .sm-text {
