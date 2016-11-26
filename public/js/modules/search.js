@@ -4,23 +4,32 @@ var recipeListings = require('./recipe-listings');
 
 module.exports.init = init;
 
-function init() {
+function init(dOpts) {
+  var df = {};
+  df.onSearch = _onSearch;
+  df.updateSearch = _updateSearch;
+
+  dOpts = $.extend(true, df, dOpts);
+
   forms.eventSubmit({
     el: '.js-search',
-    cb: _onSearch
+    cb: dOpts.onSearch
   });
 
   function _onSearch($form) {
     var s = $form.find('input[name=search]').val(),
       oldS = urlQuery.getQueryParamValsFromQuery(
         window.location.search, 'search'
-      ),
-      $recipes = $('.m-recipe-listings');
-
+      );
     if (!s.length && !oldS.length) return;
+    dOpts.updateSearch(s);
+  }
+
+  function _updateSearch(s) {
+    var $recipes = $('.m-recipe-listings');
     urlQuery.updateUrlQuery(
       urlQuery.updateQueryParam(window.location.search, 'search', [s])
     );
-    recipeListings.updateRecipes($recipes);
+    if ($recipes.length) recipeListings.updateRecipes($recipes);
   }
 }

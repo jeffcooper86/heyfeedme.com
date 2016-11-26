@@ -83,3 +83,6 @@ block bodyContent
 
         if r.updated && filters.moment(r.updated).diff(filters.moment(r.published), 'days') < 0
           p.rm-date Updated #{filters.moment(r.updated).format('MMMM DD, YYYY')}
+
+block contentJs
+  script(src='/dist/js/pages/recipes/recipe.js')
