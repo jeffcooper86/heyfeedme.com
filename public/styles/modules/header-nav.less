@@ -16,14 +16,6 @@
 .hnm-logo {
   flex-shrink: 0;
 
-  @media(min-width: @bp-m4-min) {
-    margin-right: @spacing;
-  }
-
-  @media(min-width: @bp-d2-min) {
-    margin-right: @spacing-l2;
-  }
-
   a {
     font-size: @font-size;
     font-weight: @font-weight-regular;
@@ -43,15 +35,18 @@
 
   img {
     height: 80%;
-    margin-right: @spacing-s4;
 
     vertical-align: middle;
+
+    @media(min-width: @bp-m4-min) {
+      margin-right: @spacing-s3;
+    }
   }
 }
 
 .hnm-logo-text {
   display: none;
-  @media(min-width: @bp-m4-min) {
+  @media(min-width: @bp-m5-min) {
     display: inline;
   }
 }
@@ -101,10 +96,19 @@
 }
 
 .m-header-nav .m-search {
+  margin-right: @spacing-s2;
+  margin-left: @spacing-s2;
+
   flex-grow: 1;
 
   .icon {
-    display: none;
+    font-size: @font-size-s1;
+
+    left: @spacing-s1;
+  }
+
+  .input-icon-wrap {
+    width: 100%;
   }
 
   .sm-submit, .sm-text {
@@ -118,20 +122,19 @@
   }
 
   .sm-submit {
+    display: none;
+
     margin-left: 0;
 
     border: none;
     background: @color-gray;
-
-    @media(max-width: @bp-m5-max) {
-      display: none;
-    }
   }
 
   .sm-text {
+    width: 100%;
     margin-right: 0;
     margin-left: 0;
-    padding-left: @spacing;
+    // padding-left: @spacing;
 
     border-color: @color-border-l2;
     background: @color-white-d1;
