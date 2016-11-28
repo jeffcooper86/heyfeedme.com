@@ -17,6 +17,10 @@ block bodyContent
         Header.
         -------------------
       .rm-section.rm-header
+        if r.servings
+          .rm-servings
+            span.heading.h5.no-space= `Servings: ${r.servings.servings}`
+            span.heading.h5= `Serving Size: ${r.servings.servingSize}`
         h1.heading.h1.rlm-h= filters.capitalizeTitles(r.name)
         .rm-main-photo
           .rm-photo(
@@ -37,11 +41,6 @@ block bodyContent
         Recipe.
         -------------------
       .rm-section.rm-recipe
-        if r.servings
-          .rm-servings
-            span.heading.h2.no-space-top= `Servings: ${r.servings.servings}`
-            span.heading.h2= `Serving Size: ${r.servings.servingSize}`
-
         .m-recipe-ingredients
           h2.heading.h2 Ingredients: #{r.ingredients.length}
           .rm-list.list-spaced-s1
