@@ -19,8 +19,8 @@ block bodyContent
       .rm-section.rm-header
         if r.servings
           .rm-servings
-            span.heading.h5.no-space= `Servings: ${r.servings.servings}`
-            span.heading.h5= `Serving Size: ${r.servings.servingSize}`
+            span.heading.h5.no-space= `Servings - ${r.servings.servings}`
+            span.heading.h5= `Serving Size - ${r.servings.servingSize}`
         h1.heading.h1.rlm-h= filters.capitalizeTitles(r.name)
         .rm-main-photo
           .rm-photo(
