@@ -1,7 +1,11 @@
 .m-recipe-listings {
-  margin-top: @header-height + @spacing;
+  margin-top: @header-height + @spacing-s1;
 
   @media(min-width: @bp-m4-min) {
+    margin-top: @header-height-d + @spacing;
+  }
+
+  @media(min-width: @bp-m5-min) {
     margin-top: @header-height-d + @spacing-l1;
   }
 }
