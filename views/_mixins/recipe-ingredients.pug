@@ -1,13 +1,16 @@
-mixin recipeIngredients(ingredients)
+mixin recipeIngredients(ingredients, subIngredient)
   -var ingredientsCount = 0;
   ul
     each i in ingredients
-      li.rm-count-wrap
-        span.rm-count.rim-count= ++ingredientsCount
+      li.rim-ingredient
+        i(
+          style=filters.i.rotateRandom()
+          class=subIngredient ? 'fa-star-o' : 'fa-star'
+        ).icon.fa.no-click
         if i.recipe
           a(href=i.recipe.link)= i.recipe.defaultName
           if i.recipe.ingredients
-            ul
-              +recipeIngredients(i.recipe.ingredients)
+            ul.rim-sub-ingredients
+              +recipeIngredients(i.recipe.ingredients, true)
         else
           = `${i.text}${i.amount}`
