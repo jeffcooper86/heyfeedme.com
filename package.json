@@ -39,6 +39,7 @@
     "multer": "^1.1.0",
     "pug": "^2.0.0-beta6",
     "require-dir": "^0.3.0",
+    "sortablejs": "^1.5.0-rc1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },

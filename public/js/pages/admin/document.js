@@ -1,5 +1,6 @@
 const forms = require('../../components/forms');
 const modalOverlay = require('../../components/groups/modal-with-overlay');
+const sortable = require('../../components/sortable');
 const suggest = require('../../components/suggests');
 const formFieldDestroy = require('../../components/groups/form-field-destroy');
 const ui = require('../../ui');
@@ -29,6 +30,17 @@ suggest.autoSuggest({
   noDuplicates: true,
   loadingStart: ui.loadingStart,
   loadingStop: ui.loadingStop
+});
+
+/**
+ * Sortable lists
+ */
+var $sortables = $('.js-sortable');
+$sortables.each(function(i, el) {
+  sortable.init({
+    el: el,
+    handle: '.js-sort'
+  });
 });
 
 /**

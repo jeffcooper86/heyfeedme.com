@@ -1,9 +1,12 @@
 mixin uiAddMore(key)
   .text-center: button(data-form-add=key).btn.btn-2.js-form-add Add more
 
-mixin uiDestroy(classes)
-  .ui-destroy-wrap.js-destroy-wrap(class=classes)
-    .ui-destroy
-      .ui-destroy-icon
-        i.icon.fa.fa-times.js-destroy
+mixin uiList(classes, destroy, sort)
+  .ui-list-wrap.js-destroy-wrap(class=classes)
+    .ui-list
+      .ui-list-icons
+        if destroy
+          i.icon.fa.fa-times.js-destroy
+        if sort
+          i.icon.fa.fa-sort.js-sort
     block

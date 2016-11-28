@@ -66,9 +66,9 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
 
             //- Subdocument array.
             if field.$isMongooseDocumentArray
-              div(class=`js-form-add-${key}`)
+              div(class=`js-form-add-${key}`).js-sortable
                 each value, i in field.data.length ? field.data : [undefined]
-                  +uiDestroy()
+                  +uiList(null, true, true)
                     .form-group.fg-spread.fg-subfg-wrap(class=`fg-${key}`)
                       +subdocField(field, key, value, i)
               +uiAddMore(key)
@@ -96,7 +96,7 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
                 data-ref=ref.toLowerCase()
               )
                 each value in field.data.length ? field.data : [undefined]
-                  +uiDestroy()
+                  +uiList(null, true, false)
                     .input-group
                       input(
                         type='hidden'
@@ -111,10 +111,10 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
               TODO: Make this work for all remaining types - not just str/num.
                 Should be able to use +formFieldsFromSchema(args).
             else
-              .form-group(class=`js-form-add-${key}`)
+              .form-group(class=`js-form-add-${key}`).js-sortable
                 each value in field.data.length ? field.data : [undefined]
                   -var maxlength = field.options.type[0].maxlength
-                  +uiDestroy(maxlength ? 'maxlength' : null)
+                  +uiList(maxlength ? 'maxlength' : null, true, true)
                     +formFieldStringNum(value, field.options, sName, siName)
               +uiAddMore(key)
 
