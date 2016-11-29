@@ -18,6 +18,16 @@
   .mi-border(@color-border-l1);
 }
 
+.mi-pad-text {
+  padding-right: @container-padding;
+  padding-left: @container-padding;
+
+  @media(min-width: @bp-m5-min) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
 .mi-text-clip {
   overflow-x: hidden;
 
