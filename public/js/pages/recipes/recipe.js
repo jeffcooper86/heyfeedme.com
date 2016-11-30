@@ -18,10 +18,11 @@ function doToggle() {
   });
 
   function onToggle($triggerEl, $target) {
+    var icon = $triggerEl.hasClass('icon') ? $triggerEl : $triggerEl.siblings('.icon');
     if ($target.hasClass('active')) {
-      $triggerEl.removeClass('fa-plus').addClass('fa-minus');
+      icon.removeClass('fa-plus').addClass('fa-minus');
     } else {
-      $triggerEl.removeClass('fa-minus').addClass('fa-plus');
+      icon.removeClass('fa-minus').addClass('fa-plus');
     }
   }
 }
