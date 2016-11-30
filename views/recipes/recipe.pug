@@ -40,21 +40,23 @@ block bodyContent
       //-
         Recipe.
         -------------------
-      .rm-section.rm-recipe
+      .m-recipe-main-content.rm-section.rm-recipe
         .m-recipe-ingredients
-          h2.heading.h2 Ingredients: #{r.ingredients.length}
+          h2.heading.h2.rim-heading Ingredients: #{r.ingredients.length}
+            i(data-target='.m-recipe-ingredients').icon.fa.fa-plus.rmcm-zoom.js-zoom
           .rm-list.list-spaced-s1
             +recipeIngredients(r.ingredients)
 
         .m-recipe-steps
           -var stepsCount = 0;
           h2.heading.h2 Steps: #{r.steps.length}
+            i(data-target='.m-recipe-steps').icon.fa.fa-plus.rmcm-zoom.js-zoom
           ul.rm-list.list-spaced-s1
             each step in r.steps
               li.rm-count-wrap
                 p
                   span.rm-count.rsm-count= ++stepsCount
-                  =step
+                  span.rsm-text=step
 
         if r.notes
           .note
