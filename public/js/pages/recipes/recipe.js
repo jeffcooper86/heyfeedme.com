@@ -5,6 +5,5 @@ search.init({
 });
 
 function updateSearch(s) {
-  console.log('update search');
   window.location = `/?search=${s}`;
 }

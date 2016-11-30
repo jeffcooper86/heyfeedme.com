@@ -7,10 +7,11 @@ mixin recipeIngredients(ingredients, subIngredient)
           style=filters.i.rotateRandom()
           class=subIngredient ? 'fa-star-o' : 'fa-star'
         ).icon.fa.no-click
-        if i.recipe
-          a(href=i.recipe.link)= i.recipe.defaultName
-          if i.recipe.ingredients
-            ul.rim-sub-ingredients
-              +recipeIngredients(i.recipe.ingredients, true)
-        else
-          = `${i.text}${i.amount}`
+        span
+          if i.recipe
+            a(href=i.recipe.link)= i.recipe.defaultName
+            if i.recipe.ingredients
+              ul.rim-sub-ingredients
+                +recipeIngredients(i.recipe.ingredients, true)
+          else
+            = `${i.text}${i.amount}`
