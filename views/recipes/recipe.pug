@@ -58,7 +58,9 @@ block bodyContent
               li.rm-count-wrap
                 p
                   span.rm-count.rsm-count= ++stepsCount
-                  span.rsm-text=step
+                  span.rsm-text= step.text
+                  if step.photo
+                    .rsm-photo(style=`background-image:url(/${step.photo})`)
 
         if r.notes
           .note

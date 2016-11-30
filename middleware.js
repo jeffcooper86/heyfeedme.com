@@ -94,7 +94,6 @@ function uploadRecipe(opts) {
     destination: function(req, file, cb) {
       var path = `./public/images/photos/recipes/u/${req.params.documentId}/${file.fieldname}/`,
         fileName = makeFileName(req, file);
-
       try {
         fs.accessSync(path);
       } catch (err) {
@@ -105,7 +104,6 @@ function uploadRecipe(opts) {
       try {
         fs.unlinkSync(path + fileName);
       } catch (err) {}
-
       cb(null, path);
     },
 
@@ -120,6 +118,7 @@ function uploadRecipe(opts) {
     n = `${n}.${utils.i.getFileExt(file.originalname)}`;
     return n.toLowerCase();
   }
+
   return multer({
     storage: storage
   }).fields(opts);

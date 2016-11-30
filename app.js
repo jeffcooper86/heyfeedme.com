@@ -89,6 +89,8 @@ app.route('/admin/:model(recipes)/:documentId')
     middleware.uploadRecipe([{
       name: 'photo',
       maxCount: 1
+    }, {
+      name: 'steps.photo'
     }]),
     middleware.filesAsPaths,
     routes.admin.document);

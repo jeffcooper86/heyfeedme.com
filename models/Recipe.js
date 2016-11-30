@@ -70,6 +70,18 @@ servingsSchema.virtual('servingSize').get(function() {
   return `${qty} ${m}`;
 });
 
+var stepsSchema = new Schema({
+  text: {
+    type: String,
+    longText: true,
+    maxlength: 140
+  },
+  photo: {
+    type: String,
+    file: 'image'
+  }
+});
+
 var recipeSchema = new Schema({
   publish: {
     type: Boolean
@@ -110,11 +122,7 @@ var recipeSchema = new Schema({
     unique: true
   }],
   ingredients: [ingredientSchema],
-  steps: [{
-    type: String,
-    longText: true,
-    maxlength: 140
-  }],
+  steps: [stepsSchema],
   notes: {
     type: String,
     longText: true,
