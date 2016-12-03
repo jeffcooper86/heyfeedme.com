@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var mongoose = require('mongoose');
@@ -83,7 +82,7 @@ function uploadRecipePhotos(opts) {
   var storage = multer.diskStorage({
 
     destination: function(req, file, cb) {
-      var path = `./public/images/photos/recipes/u/${req.params.documentId}/${file.fieldname}/`,
+      var path = `./public/images/photos/recipes/u/${req.params.documentId}/${file.fieldname.slice(0, file.fieldname.length - 5)}/`,
         fileName = makeFileName(req, file);
 
       try {
@@ -105,7 +104,7 @@ function uploadRecipePhotos(opts) {
   });
 
   function makeFileName(req, file) {
-    if (file.fieldname === 'steps.photo') return file.originalname;
+    if (file.fieldname === 'steps.photo-file') return file.originalname;
     var n = req.body.name ?
       utils.i.slugify(req.body.name) : file.originalname;
     n = `${n}.${utils.i.getFileExt(file.originalname)}`;

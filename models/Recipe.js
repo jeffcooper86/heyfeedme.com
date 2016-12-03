@@ -78,7 +78,8 @@ var stepsSchema = new Schema({
   },
   photo: {
     type: String,
-    file: 'image'
+    file: 'image',
+    note: 'Ratio should be 3:1'
   }
 });
 

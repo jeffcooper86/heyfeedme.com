@@ -92,18 +92,25 @@ function eventSubmit(opts) {
 function fileUpload(paths) {
   $('.js-form-file').on('change', function() {
     var $this = $(this),
+      $field = $this.closest('.js-file-field'),
+      $x = $field.find('.js-form-file-x'),
       $hidden = $this.siblings('input[type=\'hidden\']'),
       fileName = _fileNameFromVal($this.val()),
       filePath = `${paths[$hidden.attr('name')]}/${fileName}`;
     $hidden.val(filePath);
+    $x.addClass('active');
   });
-  $('.js-form-file-x').on('click', function() {
+  $('.js-form-file-x i').on('click', function() {
     var $this = $(this),
+      $x = $this.closest('.js-form-file-x'),
       $field = $this.closest('.js-file-field'),
+      $file = $field.find('.js-form-file'),
       $hidden = $field.find('input[type=\'hidden\']'),
       $img = $field.find('img');
     $hidden.val('');
+    $file.val('');
     $img.remove();
+    $x.removeClass('active');
   });
 }
 

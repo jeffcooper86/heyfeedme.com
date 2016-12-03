@@ -28,17 +28,17 @@ mixin formFieldStringNum(val, options, sName, siName)
   else if options.file
     .form-field.ff-wide.js-file-field
       input(
-        type='file'
+        type='file',
+        name=`${sName}-file`
       ).js-form-file
       input(
         type='hidden'
         name=sName,
         value=val
       )
-      if val
-        div.form-file-remove
-          span Remove #{options.file}
-          i.icon.fa.fa-times.js-form-file-x
+      div(class=val ? 'active' : null).form-file-remove.js-form-file-x
+        span Remove #{options.file}
+        i.icon.fa.fa-times.
       if options.file === 'image' && val
         img(src=`/${val}`).form-field.ff-wide
       else

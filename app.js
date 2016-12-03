@@ -90,7 +90,7 @@ app.route('/admin/:model(recipes)/:documentId')
       name: 'photo',
       maxCount: 1
     }, {
-      name: 'steps.photo'
+      name: 'steps.photo-file'
     }]),
     routes.admin.document);
 
