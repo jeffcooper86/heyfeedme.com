@@ -26,14 +26,23 @@ mixin formFieldStringNum(val, options, sName, siName)
     ).form-field.ff-wide= val
 
   else if options.file
-    .form-field.ff-wide: input(
+    .form-field.ff-wide
+      input(
         type='file'
-        name=sName
+      ).js-form-file
+      input(
+        type='hidden'
+        name=sName,
+        value=val
       )
-    if options.file === 'image' && val
-      img(src=`/${val}`).form-field.ff-wide
-    else
-      p= val
+      if val
+        div.form-file-remove
+          span Remove #{options.file}
+          i.icon.fa.fa-times.js-form-file-x
+      if options.file === 'image' && val
+        img(src=`/${val}`).form-field.ff-wide
+      else
+        p= val
 
   else
     input(

@@ -14,6 +14,16 @@ forms.addField({
 
 forms.characterLimit();
 
+function fileUpload() {
+  var basePath = 'images/photos/recipes/u/',
+    docId = $('.js-document').data('id');
+  forms.fileUpload({
+    'photo': `${basePath}${docId}/photo`,
+    'steps.photo': `${basePath}${docId}/steps.photo`
+  });
+}
+fileUpload();
+
 forms.shortcutSubmit({
   el: 'input, textarea',
   submitEl: '.js-form-update'

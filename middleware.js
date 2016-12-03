@@ -10,13 +10,12 @@ var recipeUtils = require(process.cwd() + '/utils/recipes');
 var env = process.env;
 
 module.exports.dbConnect = dbConnect;
-module.exports.filesAsPaths = filesAsPaths;
 module.exports.getSetEnv = getSetEnv;
 module.exports.readMultipartData = readMultipartData;
 module.exports.requireAuthentication = requireAuthentication;
 module.exports.setGlobalData = setGlobalData;
 module.exports.setTemplateFilters = setTemplateFilters;
-module.exports.uploadRecipe = uploadRecipe;
+module.exports.uploadRecipePhotos = uploadRecipePhotos;
 module.exports.wwwRedirect = wwwRedirect;
 
 function dbConnect(req, res, next) {
@@ -50,14 +49,6 @@ function dbConnect(req, res, next) {
   });
 }
 
-function filesAsPaths(req, res, next) {
-  _.forEach(req.files, function(file) {
-    var f = file[0];
-    req.body[f.fieldname] = f.path.slice(7);
-  });
-  next();
-}
-
 function getSetEnv(req, res, next) {
   res.locals.NODE_ENV = env.NODE_ENV;
   next();
@@ -88,12 +79,13 @@ function setTemplateFilters(req, res, next) {
   next();
 }
 
-function uploadRecipe(opts) {
+function uploadRecipePhotos(opts) {
   var storage = multer.diskStorage({
 
     destination: function(req, file, cb) {
       var path = `./public/images/photos/recipes/u/${req.params.documentId}/${file.fieldname}/`,
         fileName = makeFileName(req, file);
+
       try {
         fs.accessSync(path);
       } catch (err) {
@@ -113,6 +105,7 @@ function uploadRecipe(opts) {
   });
 
   function makeFileName(req, file) {
+    if (file.fieldname === 'steps.photo') return file.originalname;
     var n = req.body.name ?
       utils.i.slugify(req.body.name) : file.originalname;
     n = `${n}.${utils.i.getFileExt(file.originalname)}`;

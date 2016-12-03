@@ -12,11 +12,13 @@ block adminBody
             method='post'
             enctype='multipart/form-data'
             id='formDocument'
-          ).form.form-small.form-admin
+            data-id=doc.id
+          ).form.form-small.form-admin.js-document
             .form-actions
               include ./includes/update-delete
             .form-actions.admin-preview
-              a.btn.btn-1.form-action(href=doc.link, target='_blank') Preview
+              a.btn.btn-1.form-action(href=doc.link, target='_blank')
+                =doc.published ? 'View' : 'Preview'
             +formFieldsFromSchema(populatedSchema, 'fg-l1')
             .form-actions
               include ./includes/update-delete

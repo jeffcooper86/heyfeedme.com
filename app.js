@@ -86,13 +86,12 @@ app.use(middleware.requireAuthentication);
 app.route('/admin/:model(recipes)/:documentId')
   .get(routes.admin.document)
   .post(
-    middleware.uploadRecipe([{
+    middleware.uploadRecipePhotos([{
       name: 'photo',
       maxCount: 1
     }, {
       name: 'steps.photo'
     }]),
-    middleware.filesAsPaths,
     routes.admin.document);
 
 // To do: Make admin section a router module http://expressjs.com/en/guide/routing.html#express-router

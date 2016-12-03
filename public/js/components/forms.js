@@ -4,6 +4,7 @@ module.exports.characterLimitFields = characterLimitFields;
 module.exports.characterLimitUpdate = characterLimitUpdate;
 module.exports.clearFieldVals = clearFieldVals;
 module.exports.eventSubmit = eventSubmit;
+module.exports.fileUpload = fileUpload;
 module.exports.shortcutSubmit = shortcutSubmit;
 
 function addField(opts) {
@@ -88,6 +89,19 @@ function eventSubmit(opts) {
   });
 }
 
+function fileUpload(paths) {
+  $('.js-form-file').on('change', function() {
+    var $this = $(this),
+      $hidden = $this.siblings('input[type=\'hidden\']'),
+      fileName = _fileNameFromVal($this.val()),
+      filePath = `${paths[$hidden.attr('name')]}/${fileName}`;
+    $hidden.val(filePath);
+  });
+  $('.js-form-file-x').on('click', function() {
+
+  });
+}
+
 function shortcutSubmit(opts) {
   var $el = $(opts.el),
     $submitEl = $(opts.submitEl);
@@ -99,4 +113,9 @@ function shortcutSubmit(opts) {
 
 function _eventCommandEnter(e) {
   return (e.metaKey || e.ctrlKey) && e.keyCode === 13;
+}
+
+function _fileNameFromVal(val) {
+  val = val.replace((/\\/g), '/').split('/');
+  return val[val.length - 1];
 }
