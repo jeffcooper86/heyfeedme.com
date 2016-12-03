@@ -19,6 +19,7 @@ exports = module.exports = function(req, res, next) {
     [modelName, utils.i.trimDirectories(req.path, 1)],
     [documentId]
   ];
+  l.modelName = modelName;
   l.docId = documentId;
   l.filters.db = dbUtils;
 

@@ -98,7 +98,12 @@ function fileUpload(paths) {
     $hidden.val(filePath);
   });
   $('.js-form-file-x').on('click', function() {
-
+    var $this = $(this),
+      $field = $this.closest('.js-file-field'),
+      $hidden = $field.find('input[type=\'hidden\']'),
+      $img = $field.find('img');
+    $hidden.val('');
+    $img.remove();
   });
 }
 

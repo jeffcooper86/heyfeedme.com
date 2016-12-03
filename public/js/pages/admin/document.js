@@ -15,11 +15,11 @@ forms.addField({
 forms.characterLimit();
 
 function fileUpload() {
-  var basePath = 'images/photos/recipes/u/',
-    docId = $('.js-document').data('id');
+  var docId = $('.js-document').data('id'),
+    basePath = `images/photos/recipes/u/${docId}`;
   forms.fileUpload({
-    'photo': `${basePath}${docId}/photo`,
-    'steps.photo': `${basePath}${docId}/steps.photo`
+    'photo': `${basePath}/photo`,
+    'steps.photo': `${basePath}/steps.photo`
   });
 }
 fileUpload();

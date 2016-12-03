@@ -26,7 +26,7 @@ mixin formFieldStringNum(val, options, sName, siName)
     ).form-field.ff-wide= val
 
   else if options.file
-    .form-field.ff-wide
+    .form-field.ff-wide.js-file-field
       input(
         type='file'
       ).js-form-file
