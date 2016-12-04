@@ -5,8 +5,8 @@
 .admin-content {
   > .container {
     @media(max-width: @bp-m4-max) {
-      padding-right: @spacing-s3;
-      padding-left: @spacing-s3;
+      padding-right: 0;
+      padding-left: 0;
     }
   }
 }
@@ -18,7 +18,14 @@
   }
 }
 
-.form-admin {
-  margin-top: @spacing;
-  margin-bottom: @spacing;
+.form-color {
+  padding-right: @spacing-l1;
+  padding-bottom: @spacing;
+  padding-left: @spacing-l1;
+}
+
+.site-content {
+  @media(max-width: @bp-m4-max) {
+    padding-bottom: 0;
+  }
 }

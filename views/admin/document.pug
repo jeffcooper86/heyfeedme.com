@@ -7,21 +7,20 @@ block adminBody
   .admin-content
     .container.container-2
       .form-color
-        .container.container-3
-          form(
-            method='post'
-            enctype='multipart/form-data'
-            id='formDocument'
-            data-id=doc.id
-          ).form.form-small.form-admin.js-document
-            .form-actions
-              include ./includes/update-delete
-            .form-actions.admin-preview
-              a.btn.btn-1.form-action(href=doc.link, target='_blank')
-                =`View ${modelName.slice(0, -1)}`
-            +formFieldsFromSchema(populatedSchema, 'fg-l1')
-            .form-actions
-              include ./includes/update-delete
+        form(
+          method='post'
+          enctype='multipart/form-data'
+          id='formDocument'
+          data-id=doc.id
+        ).form.form-small.form-admin.js-document
+          .form-actions
+            include ./includes/update-delete
+          .form-actions.admin-preview
+            a.btn.btn-1.form-action(href=doc.link, target='_blank')
+              =`View ${modelName.slice(0, -1)}`
+          +formFieldsFromSchema(populatedSchema, 'fg-l1')
+          .form-actions
+            include ./includes/update-delete
 
 block modals
   .modal.js-modal

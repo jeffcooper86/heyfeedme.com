@@ -1,6 +1,15 @@
 .crumbs {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  font-size: @font-size-s1;
+
+  margin-top: @spacing-s2;
+  margin-bottom: @spacing-s2;
+
+  @media(min-width: @bp-m5-min) {
+    font-size: @font-size;
+
+    margin-top: @spacing;
+    margin-bottom: @spacing;
+  }
 }
 
 .crumb {
@@ -18,8 +27,8 @@
   }
 
   &:after {
-    margin-right: 6px;
-    margin-left: 6px;
+    margin-right: @spacing-s3;
+    margin-left: @spacing-s3;
 
     content: '•';
 

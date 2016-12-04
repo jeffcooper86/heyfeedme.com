@@ -136,15 +136,19 @@ textarea {
 
 .form-actions {
   .form-action {
-    width: 100%;
-    margin-top: @spacing-s3;
-    margin-right: 0;
-    margin-bottom: @spacing-s3;
-    margin-left: 0;
+    margin: 4px 0;
+
+    @media(max-width: @bp-m2-max) {
+      font-size: @font-size-s2;
+
+      width: 100%;
+      height: @form-input-height-s2;
+    }
 
     @media(min-width: @bp-m3-min) {
-      width: auto;
+      margin-top: @spacing-s3;
       margin-right: @spacing-s3;
+      margin-bottom: @spacing-s3;
       margin-left: @spacing-s3;
     }
   }
