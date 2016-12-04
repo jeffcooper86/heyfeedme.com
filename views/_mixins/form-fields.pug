@@ -37,7 +37,7 @@ mixin formFieldStringNum(val, options, sName, siName)
         value=val
       )
       div(class=val ? 'active' : null).form-file-remove.js-form-file-x
-        span Remove #{options.file}
+        span Remove
         i.icon.fa.fa-times.
       if options.file === 'image' && val
         img(src=`/${val}`).form-field.ff-wide

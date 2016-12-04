@@ -62,10 +62,10 @@ input[readonly], textarea[readonly] {
 }
 
 input[type=file] {
-  width: 100%;
+  max-width: 100%;
   height: auto;
   padding: 0;
-  padding: @spacing-s3;
+  padding: 0;
 
   border: none;
   background: transparent;
@@ -185,6 +185,8 @@ textarea {
   margin-bottom: @spacing-s2;
 
   span {
+    font-size: @font-size-s1;
+
     margin-right: @spacing-s2;
   }
 
