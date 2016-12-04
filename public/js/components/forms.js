@@ -16,7 +16,8 @@ function addField(opts) {
       $fieldsWrap = $('.js-form-add-' + $this.data('form-add')),
       $fields = $fieldsWrap.children(),
       fieldsLength = $fields.length,
-      $newField;
+      $newField,
+      $fileFields;
 
     if (!fieldsLength) return;
     $newField = $fields.last().clone(true, true);
@@ -39,6 +40,11 @@ function addField(opts) {
         var $label = $(label),
           val = _trimScope($label.attr('for'));
         if (val) $label.attr('for', `${val}_scope_${scope}`);
+      });
+
+      $fileFields = $newField.find('.js-file-field');
+      $fileFields.each(function(i, field) {
+        _removeImageFile($(field));
       });
     }
 
@@ -100,17 +106,9 @@ function fileUpload(paths) {
     $hidden.val(filePath);
     $x.addClass('active');
   });
+
   $('.js-form-file-x i').on('click', function() {
-    var $this = $(this),
-      $x = $this.closest('.js-form-file-x'),
-      $field = $this.closest('.js-file-field'),
-      $file = $field.find('.js-form-file'),
-      $hidden = $field.find('input[type=\'hidden\']'),
-      $img = $field.find('img');
-    $hidden.val('');
-    $file.val('');
-    $img.remove();
-    $x.removeClass('active');
+    _removeImageFile($(this).closest('.js-file-field'));
   });
 }
 
@@ -130,4 +128,15 @@ function _eventCommandEnter(e) {
 function _fileNameFromVal(val) {
   val = val.replace((/\\/g), '/').split('/');
   return val[val.length - 1];
+}
+
+function _removeImageFile($field) {
+  var $x = $field.find('.js-form-file-x'),
+    $file = $field.find('.js-form-file'),
+    $hidden = $field.find('input[type=\'hidden\']'),
+    $img = $field.find('img');
+  $hidden.val('');
+  $file.val('');
+  $img.remove();
+  $x.removeClass('active');
 }
