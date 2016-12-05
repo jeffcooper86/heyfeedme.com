@@ -35,10 +35,18 @@ block bodyContent
             span.heading.h5= `Serving Size - ${r.servings.servingSize}`
         h1.heading.h1.rlm-h(itemprop='name')= filters.capitalizeTitles(r.name)
         .rm-main-photo
-          .rm-photo(
-            itemprop='image'
-            style= r.photo ? `background-image:url(/${r.photo});` : null
-          )
+          a(
+            data-pin-do='buttonPin'
+            data-pin-custom='true'
+            href=`https://www.pinterest.com/pin/create/button/?url=${data.recipe.link}&media=${data.recipe.photo}`
+          ).social-pinit-link
+            .rm-photo(
+              itemprop='image'
+              style= r.photo ? `background-image:url(/${r.photo});` : null
+            )
+            span.social-pinit
+              i.icon.fa.fa-pinterest
+              | Pin Recipe
 
       //-
         Intro.
@@ -104,3 +112,6 @@ block bodyContent
 
 block contentJs
   script(src='/dist/js/pages/recipes/recipe.js')
+  script(
+      async defer
+      src='//assets.pinterest.com/js/pinit.js')
