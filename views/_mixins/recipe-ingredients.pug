@@ -1,8 +1,10 @@
 mixin recipeIngredients(ingredients, subIngredient)
   -var ingredientsCount = 0;
-  ul
+  ul()
     each i in ingredients
-      li.rim-ingredient
+      li(
+        itemprop= subIngredient ? '' : 'recipeIngredient'
+      ).rim-ingredient
         i(
           style=filters.i.rotateRandom()
           class=subIngredient ? 'fa-star-o' : 'fa-star'

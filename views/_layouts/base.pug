@@ -1,6 +1,6 @@
 include ../_mixins/_mixins
 
-html
+html(prefix='og: http://ogp.me/ns#')
   head
     block title
       title #{title || 'Recipes so you don\'t get hangry - heyfeedme.'}

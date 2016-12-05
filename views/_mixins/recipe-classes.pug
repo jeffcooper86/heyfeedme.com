@@ -4,4 +4,11 @@ mixin recipeClasses(classes)
       each recipeClass in classes
         li.rcm-class
           i(style=filters.i.rotateRandom()).icon.no-click.rcm-icon
+          case recipeClass
+            when 'gluten free'
+              link(itemprop='suitableForDiet' href='https://schema.org/GlutenFreeDiet')
+            when 'vegan'
+              link(itemprop='suitableForDiet' href='https://schema.org/VeganDiet')
+            when 'vegetarian'
+              link(itemprop='suitableForDiet' href='https://schema.org/VegetarianDiet')
           | #{recipeClass}
