@@ -69,7 +69,7 @@ block bodyContent
       //-
         Tags.
         -------------------
-      if r.tags
+      if r.tags && r.tags.length
         .rm-section
           h2.heading.h2 Tags
           ul.rm-list.list-spaced-s1.m-tag-list

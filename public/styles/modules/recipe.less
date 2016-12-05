@@ -1,7 +1,3 @@
-.rm-footer {
-  margin-top: @spacing-l1;
-}
-
 .rm-classes {
   margin-top: @spacing-s2;
   margin-bottom: @spacing-s2;
@@ -51,6 +47,10 @@
 .rm-section {
   + .rm-section {
     margin-top: @spacing;
+
+    &.rm-footer {
+      margin-top: @spacing-l1;
+    }
   }
 }
 
