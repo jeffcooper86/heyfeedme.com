@@ -5,6 +5,7 @@ var isomorphicUtils = require(process.cwd() + '/utils/_shared/global');
 module.exports.i = isomorphicUtils;
 module.exports.capitalizeFirst = capitalizeFirst;
 module.exports.capitalizeTitles = capitalizeTitles;
+module.exports.makeRandomFileName = makeRandomFileName;
 module.exports.moment = moment;
 module.exports.stripPrivates = stripPrivates;
 module.exports.trimEmptyObjectsFromArray = trimEmptyObjectsFromArray;
@@ -27,6 +28,10 @@ function capitalizeTitles(title, skip) {
   });
 
   return words.join(' ');
+}
+
+function makeRandomFileName(ext) {
+  return `${String(Math.random()).slice(2)}.${ext}`;
 }
 
 function moment(date) {

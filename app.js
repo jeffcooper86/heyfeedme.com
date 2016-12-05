@@ -92,6 +92,8 @@ app.route('/admin/:model(recipes)/:documentId')
     }, {
       name: 'steps.photo-file'
     }]),
+    middleware.filenames,
+    middleware.clearUnusedFiles,
     routes.admin.document);
 
 // To do: Make admin section a router module http://expressjs.com/en/guide/routing.html#express-router

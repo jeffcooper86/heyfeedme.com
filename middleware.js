@@ -4,11 +4,14 @@ var mongoose = require('mongoose');
 var multer = require('multer');
 
 // App.
+var dbUtils = require(process.cwd() + '/utils/db');
 var utils = require(process.cwd() + '/utils/global');
 var recipeUtils = require(process.cwd() + '/utils/recipes');
 var env = process.env;
 
+module.exports.clearUnusedFiles = clearUnusedFiles;
 module.exports.dbConnect = dbConnect;
+module.exports.filenames = filenames;
 module.exports.getSetEnv = getSetEnv;
 module.exports.readMultipartData = readMultipartData;
 module.exports.requireAuthentication = requireAuthentication;
@@ -48,6 +51,35 @@ function dbConnect(req, res, next) {
   });
 }
 
+function clearUnusedFiles(req, res, next) {
+  var stepsPhotos = req.body['steps.photo'],
+    photosPath = dbUtils.getPhotosPath(req, 'recipes') + 'steps.photo/',
+    photosSaved = fs.readdirSync(photosPath);
+  stepsPhotos = stepsPhotos.map(function(p) {
+    p = p.split('/');
+    return p[p.length - 1];
+  });
+  photosSaved.forEach(function(p) {
+    if (stepsPhotos.indexOf(p) === -1) {
+      fs.unlinkSync(photosPath + p);
+    }
+  });
+  next();
+}
+
+function filenames(req, res, next) {
+  var photos = req.body['steps.photo'],
+    photoFiles = req.files['steps.photo-file'];
+
+  if (photoFiles) {
+    photoFiles.forEach(function(f) {
+      var originalPath = f.destination.replace('./public/', '') + f.originalname;
+      photos[photos.indexOf(originalPath)] = f.path.replace('public/', '');
+    });
+  }
+  next();
+}
+
 function getSetEnv(req, res, next) {
   res.locals.NODE_ENV = env.NODE_ENV;
   next();
@@ -82,7 +114,7 @@ function uploadRecipePhotos(opts) {
   var storage = multer.diskStorage({
 
     destination: function(req, file, cb) {
-      var path = `./public/images/photos/recipes/u/${req.params.documentId}/${file.fieldname.slice(0, file.fieldname.length - 5)}/`,
+      var path = makePath(req, file),
         fileName = makeFileName(req, file);
 
       try {
@@ -104,11 +136,25 @@ function uploadRecipePhotos(opts) {
   });
 
   function makeFileName(req, file) {
-    if (file.fieldname === 'steps.photo-file') return file.originalname;
-    var n = req.body.name ?
-      utils.i.slugify(req.body.name) : file.originalname;
-    n = `${n}.${utils.i.getFileExt(file.originalname)}`;
+    var ext = utils.i.getFileExt(file.originalname),
+      n = req.body.name ?
+      utils.i.slugify(req.body.name) : file.originalname,
+      files = fs.readdirSync(makePath(req, file)),
+      rn = utils.makeRandomFileName(ext);
+
+    if (file.fieldname === 'steps.photo-file') {
+      while (files.indexOf(rn) > -1) {
+        rn = utils.makeRandomFileName(ext);
+      }
+      return rn;
+    }
+
+    n = `${n}.${ext}`;
     return n.toLowerCase();
+  }
+
+  function makePath(req, file) {
+    return `${dbUtils.getPhotosPath(req, 'recipes')}${file.fieldname.slice(0, file.fieldname.length - 5)}/`;
   }
 
   return multer({

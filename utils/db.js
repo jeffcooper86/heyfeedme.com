@@ -8,6 +8,7 @@ module.exports.formatReqData = formatReqData;
 module.exports.formatReqDataArrays = formatReqDataArrays;
 module.exports.formatReqDataBools = formatReqDataBools;
 module.exports.formatReqDataDocArrays = formatReqDataDocArrays;
+module.exports.getPhotosPath = getPhotosPath;
 module.exports.getRefFields = getRefFields;
 module.exports.schemaDefaults = schemaDefaults;
 module.exports.schemaDefaultsPopulated = schemaDefaultsPopulated;
@@ -124,6 +125,10 @@ function getRefFields(schema, scope) {
     }
   });
   return refs;
+}
+
+function getPhotosPath(req, name) {
+  return `./public/images/photos/${name}/u/${req.params.documentId}/`;
 }
 
 /**
