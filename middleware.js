@@ -54,7 +54,13 @@ function dbConnect(req, res, next) {
 function clearUnusedFiles(req, res, next) {
   var stepsPhotos = req.body['steps.photo'],
     photosPath = dbUtils.getPhotosPath(req, 'recipes') + 'steps.photo/',
+    photosSaved;
+
+  try {
     photosSaved = fs.readdirSync(photosPath);
+  } catch (err) {}
+
+  if (!photosSaved) return next();
   stepsPhotos = stepsPhotos.map(function(p) {
     p = p.split('/');
     return p[p.length - 1];
