@@ -28,12 +28,12 @@ mixin formFieldStringNum(val, options, sName, siName)
   else if options.file
     .form-field.ff-wide.js-file-field
       input(
-        type='file',
+        type='file'
         name=`${sName}-file`
       ).js-form-file
       input(
         type='hidden'
-        name=sName,
+        name=sName
         value=val
       )
       div(class=val ? 'active' : null).form-file-remove.js-form-file-x

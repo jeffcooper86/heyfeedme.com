@@ -74,15 +74,22 @@ function clearUnusedFiles(req, res, next) {
 }
 
 function filenames(req, res, next) {
-  var photos = req.body['steps.photo'],
-    photoFiles = req.files['steps.photo-file'];
+  var stepsPhotos = req.body['steps.photo'],
+    photoFile = req.files['photo-file'],
+    stepsPhotoFiles = req.files['steps.photo-file'];
 
-  if (photoFiles) {
-    photoFiles.forEach(function(f) {
+  if (photoFile) {
+    photoFile = photoFile[0];
+    req.body['photo'] = photoFile.destination.replace('./public/', '') + photoFile.filename;
+  }
+
+  if (stepsPhotoFiles) {
+    stepsPhotoFiles.forEach(function(f) {
       var originalPath = f.destination.replace('./public/', '') + f.originalname;
-      photos[photos.indexOf(originalPath)] = f.path.replace('public/', '');
+      stepsPhotos[stepsPhotos.indexOf(originalPath)] = f.path.replace('public/', '');
     });
   }
+
   next();
 }
 
@@ -145,8 +152,14 @@ function uploadRecipePhotos(opts) {
     var ext = utils.i.getFileExt(file.originalname),
       n = req.body.name ?
       utils.i.slugify(req.body.name) : file.originalname,
-      files = fs.readdirSync(makePath(req, file)),
+      files,
       rn = utils.makeRandomFileName(ext);
+
+    try {
+      files = fs.readdirSync(makePath(req, file));
+    } catch (err) {
+      files = [];
+    }
 
     if (file.fieldname === 'steps.photo-file') {
       while (files.indexOf(rn) > -1) {

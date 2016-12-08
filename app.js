@@ -89,7 +89,7 @@ app.route('/admin/:model(recipes)/:documentId')
   .get(routes.admin.document)
   .post(
     middleware.uploadRecipePhotos([{
-      name: 'photo',
+      name: 'photo-file',
       maxCount: 1
     }, {
       name: 'steps.photo-file'
