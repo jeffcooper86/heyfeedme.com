@@ -39,7 +39,7 @@ block bodyContent
             data-pin-do='buttonPin'
             data-pin-custom='true'
             data-pin-description=r.seoDescription || r.title
-            href=`https://www.pinterest.com/pin/create/button/?url=${data.recipe.link}&media=${data.recipe.photo}`
+            href=`https://www.pinterest.com/pin/create/button/?url=${r.link}&media=/${r.photo}`
           ).social-pinit-link
             .rm-photo(
               itemprop='image'
