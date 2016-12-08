@@ -1,4 +1,6 @@
 var async = require('async');
+
+var cache = require(process.cwd() + '/utils/cache');
 var utils = require(process.cwd() + '/utils/global');
 var Recipes = require(process.cwd() + '/models/Recipe');
 
@@ -22,11 +24,16 @@ exports = module.exports = function(req, res) {
   });
 
   function getRecipe(cb) {
-    recipeQuery.exec(function(err, data) {
+    var cached = cache.get(`recipe-${recipeId}`);
+    if (cached) _recipeInfo(null, cached);
+    recipeQuery.exec(_recipeInfo);
+
+    function _recipeInfo(err, data) {
+      if (!cached) cache.set(`recipe-${recipeId}`, data);
       l.data.recipe = data;
       l.title = data.seoDescription;
       cb(err);
-    });
+    }
   }
 
   function recipeFilterMatch(cb) {

@@ -32,6 +32,7 @@
     "gulp-uglify": "^2.0.0",
     "gulp-watch": "^4.3.5",
     "lodash": "^4.6.1",
+    "lru-cache": "^4.0.2",
     "mkdirp": "^0.5.1",
     "moment": "^2.14.1",
     "mongodb": "^2.1.11",
@@ -39,6 +40,9 @@
     "multer": "^1.1.0",
     "pug": "^2.0.0-beta6",
     "require-dir": "^0.3.0",
+    "response-time": "^2.3.2",
+    "sha1": "^1.1.1",
+    "sort-object": "^3.0.2",
     "sortablejs": "^1.5.0-rc1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"

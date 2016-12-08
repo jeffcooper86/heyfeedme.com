@@ -1,5 +1,7 @@
 var async = require('async');
 var _ = require('lodash');
+
+var cache = require(process.cwd() + '/utils/cache');
 var utils = require(process.cwd() + '/utils/global');
 var dbUtils = require(process.cwd() + '/utils/db');
 
@@ -97,6 +99,7 @@ exports = module.exports = function(req, res, next) {
         cb();
       } else {
         req.flash('success', `${modelName.slice(0, -1)} saved.`);
+        cache.reset();
 
         // Need to get document again - findByIdAndUpdate is limiting
         // http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const flash = require('flash');
 const mongoose = require('mongoose');
+const responseTime = require('response-time');
 const requireDir = require('require-dir');
 const session = require('express-session');
 const slash = require('express-slash');
@@ -22,6 +23,7 @@ const routes = requireDir('routes', {
  * ----------------------------
  */
 app.enable('strict routing');
+app.use(responseTime());
 app.use(express.static('public'));
 app.set('view engine', 'pug');
 app.use(bodyParser.json());
