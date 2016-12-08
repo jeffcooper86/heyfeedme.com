@@ -146,6 +146,10 @@ var recipeSchema = new Schema({
   }
 });
 
+recipeSchema.virtual('absoluteLink').get(function() {
+  return '//heyfeedme.com' + recipeUtils.getRecipeLink(this);
+});
+
 recipeSchema.virtual('defaultName').get(function() {
   return this.name;
 });
