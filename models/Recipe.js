@@ -74,7 +74,7 @@ var stepsSchema = new Schema({
   text: {
     type: String,
     longText: true,
-    maxlength: 140
+    maxlength: 300
   },
   photo: {
     type: String,
