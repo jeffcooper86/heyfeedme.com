@@ -41,7 +41,6 @@
     "pug": "^2.0.0-beta6",
     "require-dir": "^0.3.0",
     "response-time": "^2.3.2",
-    "sha1": "^1.1.1",
     "sort-object": "^3.0.2",
     "sortablejs": "^1.5.0-rc1",
     "vinyl-buffer": "^1.0.0",
