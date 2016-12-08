@@ -31,7 +31,7 @@ exports = module.exports = function(req, res) {
     function _recipeInfo(err, data) {
       if (!cached) cache.set(`recipe-${recipeId}`, data);
       l.data.recipe = data;
-      l.title = data.seoDescription;
+      l.title = data.seoDescription || `${utils.capitalizeTitles(data.name)} - Heyfeedme`;
       cb(err);
     }
   }
