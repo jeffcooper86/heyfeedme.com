@@ -90,7 +90,7 @@ exports = module.exports = function(req, res, next) {
   function updateDocument(cb) {
     if (req.method !== 'POST' || action !== 'update') return cb();
     reqData = _trimEmptyRequestData(reqData);
-    reqData = _trimEmptyArrayReqData(reqData);
+    reqData = _formatArrayReqData(reqData);
     doc.update(reqData, function(err) {
       if (err) {
         console.error(err);
@@ -113,14 +113,12 @@ exports = module.exports = function(req, res, next) {
     _.forEach(newD, function(value, key) {
       if (_.isObject(value) || _.isArray(value)) {
         newD[key] = _trimEmptyRequestData(value);
-      } else if (!_.isArray(data) && value.length === 0) {
-        delete newD[key];
       }
     });
     return newD;
   }
 
-  function _trimEmptyArrayReqData(data) {
+  function _formatArrayReqData(data) {
     return dbUtils.formatReqDataArrays(data, MongooseModel.schema.paths);
   }
 };

@@ -5,6 +5,18 @@ var recipeUtils = require(process.cwd() + '/utils/recipes');
 var categories = recipeUtils.getCategories();
 var classifications = recipeUtils.getClassifications();
 
+// var cloudinarySchema = new Schema({
+//   public_id: String,
+//   version: Number,
+//   signature: String,
+//   width: Number,
+//   height: Number,
+//   format: String,
+//   resource_type: String,
+//   url: String,
+//   secure_url: String
+// });
+
 var ingredientSchema = new Schema({
   name: {
     type: String,
@@ -67,6 +79,7 @@ servingsSchema.virtual('servingSize').get(function() {
   var qty = this.qty,
     m = this.measurement;
 
+  if (!qty && !m) return;
   return `${qty} ${m}`;
 });
 
@@ -94,7 +107,8 @@ var recipeSchema = new Schema({
   },
   photo: {
     type: String,
-    file: 'image'
+    file: 'image',
+    cdn: 'cloudinary'
   },
   summary: {
     type: String,

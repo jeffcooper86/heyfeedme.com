@@ -49,8 +49,8 @@ function formatReqData(data, schema) {
 function formatReqDataArrays(data, schema) {
   data = _.cloneDeep(data);
   _.forEach(schema, function(field) {
-    if (field.instance === 'Array' && data[field.path]) {
-      if (!_.isArray(data[field.path])) data[field.path] = [data[field.path]];
+    if (field.instance === 'Array') {
+      if (!_.isArray(data[field.path])) data[field.path] = [data[field.path] || ''];
       data[field.path] = data[field.path].filter(function(data) {
         if (typeof data === 'string') return data.length > 0;
         return true;

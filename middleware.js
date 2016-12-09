@@ -1,3 +1,5 @@
+var async = require('async');
+var cloudinary = require('cloudinary');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var mongoose = require('mongoose');
@@ -78,19 +80,41 @@ function filenames(req, res, next) {
     photoFile = req.files['photo-file'],
     stepsPhotoFiles = req.files['steps.photo-file'];
 
-  if (photoFile) {
-    photoFile = photoFile[0];
-    req.body['photo'] = photoFile.destination.replace('./public/', '') + photoFile.filename;
+  async.parallel([
+    _upLoadPhotoFile,
+    _uploadStepsPhotoFiles
+  ], function(err) {
+    if (err) {
+      return res.render('_error500');
+    }
+    next();
+  });
+
+  function _upLoadPhotoFile(cb) {
+    if (photoFile) {
+      photoFile = photoFile[0];
+      cloudinary.uploader.upload(photoFile.path, function(cphoto) {
+        req.body['photo'] = cphoto.secure_url;
+        cb();
+      });
+    } else cb();
   }
 
-  if (stepsPhotoFiles) {
-    stepsPhotoFiles.forEach(function(f) {
-      var originalPath = f.destination.replace('./public/', '') + f.originalname;
-      stepsPhotos[stepsPhotos.indexOf(originalPath)] = f.path.replace('public/', '');
-    });
-  }
+  function _uploadStepsPhotoFiles(cb) {
+    if (stepsPhotoFiles) {
+      var length = stepsPhotoFiles.length,
+        count = 0;
 
-  next();
+      stepsPhotoFiles.forEach(function(f) {
+        var originalPath = f.destination.replace('./public/', '') + f.originalname;
+        cloudinary.uploader.upload(f.path, function(cphoto) {
+          stepsPhotos[stepsPhotos.indexOf(originalPath)] = cphoto.secure_url;
+          count++;
+          if (count === length) cb();
+        });
+      });
+    } else cb();
+  }
 }
 
 function getSetEnv(req, res, next) {

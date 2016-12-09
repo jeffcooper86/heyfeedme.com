@@ -9,6 +9,25 @@ mixin subdocField(field, fieldScope, data, i)
     i
   )
 
+mixin formFieldFile(val, options, sName, siName)
+  .form-field.ff-wide.js-file-field
+    input(
+      type='file'
+      name=`${sName}-file`
+    ).js-form-file
+    input(
+      type='hidden'
+      name=sName
+      value=val
+    )
+    div(class=val ? 'active' : null).form-file-remove.js-form-file-x
+      span Remove
+      i.icon.fa.fa-times.
+    if options.file === 'image' && val
+      img(src=`${val}`).form-field.ff-wide
+    else
+      p= val
+
 mixin formFieldStringNum(val, options, sName, siName)
   if Array.isArray(options.type)
     - options = options.type[0]
@@ -26,23 +45,7 @@ mixin formFieldStringNum(val, options, sName, siName)
     ).form-field.ff-wide= val
 
   else if options.file
-    .form-field.ff-wide.js-file-field
-      input(
-        type='file'
-        name=`${sName}-file`
-      ).js-form-file
-      input(
-        type='hidden'
-        name=sName
-        value=val
-      )
-      div(class=val ? 'active' : null).form-file-remove.js-form-file-x
-        span Remove
-        i.icon.fa.fa-times.
-      if options.file === 'image' && val
-        img(src=`/${val}`).form-field.ff-wide
-      else
-        p= val
+    +formFieldFile(val, options, sName, siName)
 
   else
     input(
@@ -193,5 +196,9 @@ mixin formFieldsFromSchema(fields, fgClass, fieldScope, i)
 
         //- Subdocument.
         when 'Embedded'
-          .form-group-embedded.form-group.fg-spread
-            +subdocField(field, key, field.data)
+          if field.options.file
+            +formFieldFile(field.data, field.options, sName, siName)
+
+          else
+            .form-group-embedded.form-group.fg-spread
+              +subdocField(field, key, field.data)

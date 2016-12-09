@@ -108,7 +108,9 @@ function fileUpload(paths) {
   });
 
   $('.js-form-file-x i').on('click', function() {
-    _removeImageFile($(this).closest('.js-file-field'));
+    var $field = $(this).closest('.js-file-field');
+    _removeImageFile($field);
+    clearFieldVals($field);
   });
 }
 
@@ -132,11 +134,7 @@ function _fileNameFromVal(val) {
 
 function _removeImageFile($field) {
   var $x = $field.find('.js-form-file-x'),
-    $file = $field.find('.js-form-file'),
-    $hidden = $field.find('input[type=\'hidden\']'),
     $img = $field.find('img');
-  $hidden.val('');
-  $file.val('');
   $img.remove();
   $x.removeClass('active');
 }
