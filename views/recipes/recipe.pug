@@ -60,7 +60,7 @@ block bodyContent
             if r.classifications.length
               .rm-classes
                 +recipeClasses(r.classifications)
-            p.rm-summary= r.summary
+            p.rm-summary= r.summary || r.seoDescription
 
       //-
         Recipe.
