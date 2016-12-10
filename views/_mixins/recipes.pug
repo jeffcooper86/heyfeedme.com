@@ -28,7 +28,7 @@ mixin recipes(recipes)
           a(href=r.link).rlm-recipe
             p.rlm-title= filters.capitalizeTitles(r.name)
             .rlm-photo(
-              style= r.photo ? `background-image:url(/${r.photo});` : null
+              style= r.photo ? `background-image:url(${r.photo});` : null
             )
             .rlm-details
               p= filters.moment(r.published).fromNow()
