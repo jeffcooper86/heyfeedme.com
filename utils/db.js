@@ -15,6 +15,7 @@ module.exports.schemaDefaultsPopulated = schemaDefaultsPopulated;
 module.exports.schemaOfModel = schemaOfModel;
 module.exports.schemaPopulated = schemaPopulated;
 module.exports.schemaPopulatedWithRefsAsync = schemaPopulatedWithRefsAsync;
+module.exports.trimEmptyNonStrRequestData = trimEmptyNonStrRequestData;
 
 function formatCurrentDateFromReqData(data) {
   data = _.cloneDeep(data);
@@ -43,6 +44,7 @@ function formatReqData(data, schema) {
   newD = addPublishedDate(newD, schema);
   newD = formatReqDataDocArrays(newD, schema);
   newD = formatReqDataBools(newD, schema);
+  newD = trimEmptyNonStrRequestData(newD, schema);
   return newD;
 }
 
@@ -227,4 +229,19 @@ function schemaPopulatedWithRefsAsync(data, schema, cb) {
     });
     return data;
   }
+}
+
+function trimEmptyNonStrRequestData(data, schema) {
+  data = _.cloneDeep(data);
+  _.forEach(schema, function(field) {
+    var inst = field.instance;
+    if (data[field.path] === '' && inst !== 'String') {
+      delete data[field.path];
+    } else if (field.$isMongooseDocumentArray && data[field.path]) {
+      data[field.path].forEach(function(d, i) {
+        data[field.path][i] = trimEmptyNonStrRequestData(data[field.path][i], field.schema.paths);
+      });
+    }
+  });
+  return data;
 }
