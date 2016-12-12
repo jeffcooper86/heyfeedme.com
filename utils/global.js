@@ -18,11 +18,11 @@ function capitalizeFirst(str) {
 }
 
 function capitalizeTitles(title, skip) {
-  var words = title.split(' ');
-  skip = skip || ['of', 'the', 'and', 'de'];
+  var words = title.toLowerCase().split(' ');
+  skip = skip || ['a', 'of', 'the', 'and', 'de'];
 
   words.forEach(function(word, i) {
-    if (skip.indexOf(word) < 0) {
+    if (skip.indexOf(word) < 0 || i === 0) {
       words[i] = _.capitalize(word);
     }
   });
