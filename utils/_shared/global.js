@@ -58,7 +58,7 @@ function rotateRandom() {
 }
 
 function slugify(route) {
-  if (route) return route.replace(/[ ]/g, '-');
+  if (route) return route.replace(/[,]/g, '').replace(/[ ]/g, '-');
   return '';
 }
 
