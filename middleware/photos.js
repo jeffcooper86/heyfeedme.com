@@ -10,105 +10,26 @@ var utils = require(process.cwd() + '/utils/global');
 var env = process.env;
 
 module.exports.clearUnusedPhotos = clearUnusedPhotos;
-module.exports.cloudStorage = cloudStorage;
-module.exports.localStorage = localStorage;
 module.exports.storePhotos = storePhotos;
 module.exports.uploadRecipePhotos = uploadRecipePhotos;
 
 function clearUnusedPhotos(req, res, next) {
-  // var stepsPhotos = req.body['steps.photo'],
-  //   photosPath = dbUtils.getPhotosPath(req, 'recipes') + 'steps.photo/',
-  //   photosSaved;
-  //
-  // try {
-  //   photosSaved = fs.readdirSync(photosPath);
-  // } catch (err) {}
-  //
-  // if (!photosSaved) return next();
-  // stepsPhotos = stepsPhotos.map(function(p) {
-  //   p = p.split('/');
-  //   return p[p.length - 1];
-  // });
-  // photosSaved.forEach(function(p) {
-  //   if (stepsPhotos.indexOf(p) === -1) {
-  //     fs.unlinkSync(photosPath + p);
-  //   }
-  // });
-  next();
-}
-
-function cloudStorage(req, res, next) {
-  var stepsPhotos = req.body['steps.photo'],
-    photoFile = req.files['photo-file'],
-    stepsPhotoFiles = req.files['steps.photo-file'];
-
-  async.parallel([
-    _upLoadPhotoFile,
-    _uploadStepsPhotoFiles
-  ], function(err) {
-    if (err) {
-      return res.render('_error500');
-    }
-    next();
-  });
-
-  function _upLoadPhotoFile(cb) {
-    if (photoFile) {
-      photoFile = photoFile[0];
-      cloudinary.uploader.upload(photoFile.path, function(cphoto) {
-        req.body['photo'] = cphoto.secure_url;
-        cb();
-      }, {
-        public_id: `hfm/${utils.i.stripFileExtension(photoFile.path.replace('temp/', ''))}`
-      });
-    } else cb();
+  switch (env.NODE_ENV) {
+    case 'development':
+      _clearLocalPhotos(req, res, next);
+      break;
+    default:
+      _clearCloudPhotos(req, res, next);
   }
-
-  function _uploadStepsPhotoFiles(cb) {
-    if (stepsPhotoFiles) {
-      var length = stepsPhotoFiles.length,
-        count = 0;
-
-      stepsPhotoFiles.forEach(function(f) {
-        var originalPath = f.destination.replace('./temp', '') + f.originalname;
-        cloudinary.uploader.upload(f.path, function(cphoto) {
-          stepsPhotos[stepsPhotos.indexOf(originalPath)] = cphoto.secure_url;
-          count++;
-          if (count === length) cb();
-        }, {
-          folder: `hfm/${f.destination.replace('./temp/', '').replace('.', '-')}`
-        });
-      });
-    } else cb();
-  }
-}
-
-function localStorage(req, res, next) {
-  var stepsPhotos = req.body['steps.photo'],
-    photoFile = req.files['photo-file'],
-    stepsPhotoFiles = req.files['steps.photo-file'];
-
-  if (photoFile) {
-    photoFile = photoFile[0];
-    req.body['photo'] = photoFile.path.replace('temp', '');
-  }
-
-  if (stepsPhotoFiles) {
-    stepsPhotoFiles.forEach(function(f) {
-      var originalPath = f.destination.replace('./temp', '') + f.originalname;
-      stepsPhotos[stepsPhotos.indexOf(originalPath)] = f.path.replace('temp', '');
-    });
-  }
-  next();
 }
 
 function storePhotos(req, res, next) {
   switch (env.NODE_ENV) {
     case 'development':
-      localStorage(req, res, next);
+      _localStorage(req, res, next);
       break;
     default:
-      cloudStorage(req, res, next);
+      _cloudStorage(req, res, next);
       break;
   }
 }
@@ -168,4 +89,91 @@ function uploadRecipePhotos(opts) {
   return multer({
     storage: storage
   }).fields(opts);
+}
+
+function _clearLocalPhotos(req, res, next) {
+  var stepsPhotos = req.body['steps.photo'],
+    photosPath = `./temp${dbUtils.getPhotosPath(req, 'recipes')}steps.photo/`,
+    photosSaved;
+
+  try {
+    photosSaved = fs.readdirSync(photosPath);
+  } catch (err) {}
+
+  if (!photosSaved) return next();
+  stepsPhotos = stepsPhotos.map(function(p) {
+    p = p.split('/');
+    return p[p.length - 1];
+  });
+  photosSaved.forEach(function(p) {
+    if (stepsPhotos.indexOf(p) === -1) {
+      fs.unlinkSync(photosPath + p);
+    }
+  });
+  next();
+}
+
+function _cloudStorage(req, res, next) {
+  var stepsPhotos = req.body['steps.photo'],
+    photoFile = req.files['photo-file'],
+    stepsPhotoFiles = req.files['steps.photo-file'];
+
+  async.parallel([
+    _upLoadPhotoFile,
+    _uploadStepsPhotoFiles
+  ], function(err) {
+    if (err) {
+      return res.render('_error500');
+    }
+    next();
+  });
+
+  function _upLoadPhotoFile(cb) {
+    if (photoFile) {
+      photoFile = photoFile[0];
+      cloudinary.uploader.upload(photoFile.path, function(cphoto) {
+        req.body['photo'] = cphoto.secure_url;
+        cb();
+      }, {
+        public_id: `hfm/${utils.i.stripFileExtension(photoFile.path.replace('temp/', ''))}`
+      });
+    } else cb();
+  }
+
+  function _uploadStepsPhotoFiles(cb) {
+    if (stepsPhotoFiles) {
+      var length = stepsPhotoFiles.length,
+        count = 0;
+
+      stepsPhotoFiles.forEach(function(f) {
+        var originalPath = f.destination.replace('./temp', '') + f.originalname;
+        cloudinary.uploader.upload(f.path, function(cphoto) {
+          stepsPhotos[stepsPhotos.indexOf(originalPath)] = cphoto.secure_url;
+          count++;
+          if (count === length) cb();
+        }, {
+          folder: `hfm/${f.destination.replace('./temp/', '').replace('.', '-')}`
+        });
+      });
+    } else cb();
+  }
+}
+
+function _localStorage(req, res, next) {
+  var stepsPhotos = req.body['steps.photo'],
+    photoFile = req.files['photo-file'],
+    stepsPhotoFiles = req.files['steps.photo-file'];
+
+  if (photoFile) {
+    photoFile = photoFile[0];
+    req.body['photo'] = photoFile.path.replace('temp', '');
+  }
+
+  if (stepsPhotoFiles) {
+    stepsPhotoFiles.forEach(function(f) {
+      var originalPath = f.destination.replace('./temp', '') + f.originalname;
+      stepsPhotos[stepsPhotos.indexOf(originalPath)] = f.path.replace('temp', '');
+    });
+  }
+  next();
 }
