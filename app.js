@@ -94,7 +94,7 @@ app.route('/admin/:model(recipes)/:documentId')
     }, {
       name: 'steps.photo-file'
     }]),
-    middleware.filenames,
+    middleware.cloudStorage,
     middleware.clearUnusedFiles,
     routes.admin.document);
 

@@ -12,8 +12,8 @@ var recipeUtils = require(process.cwd() + '/utils/recipes');
 var env = process.env;
 
 module.exports.clearUnusedFiles = clearUnusedFiles;
+module.exports.cloudStorage = cloudStorage;
 module.exports.dbConnect = dbConnect;
-module.exports.filenames = filenames;
 module.exports.getSetEnv = getSetEnv;
 module.exports.readMultipartData = readMultipartData;
 module.exports.requireAuthentication = requireAuthentication;
@@ -21,37 +21,6 @@ module.exports.setGlobalData = setGlobalData;
 module.exports.setTemplateFilters = setTemplateFilters;
 module.exports.uploadRecipePhotos = uploadRecipePhotos;
 module.exports.wwwRedirect = wwwRedirect;
-
-function dbConnect(req, res, next) {
-  var dbstr,
-    mongoc = utils.i.getNested(JSON.parse(env.APP_CONFIG), 'mongo');
-
-  if (mongoose.connections &&
-    mongoose.connections[0]._readyState === 1) return next();
-
-  switch (env.NODE_ENV) {
-    case 'production-local':
-      dbstr = `mongodb://${mongoc.user}:${env.MONGO_PW}@${mongoc.hostString}/${mongoc.db}`;
-      break;
-    case 'production':
-      dbstr = `mongodb://${mongoc.user}:${env.MONGO_PW}@${mongoc.hostString}`;
-      break;
-    default:
-      dbstr = `mongodb://localhost/${env.APP}`;
-      break;
-  }
-
-  mongoose.connect(dbstr);
-  var db = mongoose.connection;
-  db.on('error', function(err) {
-    console.error(err);
-    next();
-  });
-  db.once('open', function() {
-    req.db = db;
-    next();
-  });
-}
 
 function clearUnusedFiles(req, res, next) {
   // var stepsPhotos = req.body['steps.photo'],
@@ -75,7 +44,7 @@ function clearUnusedFiles(req, res, next) {
   next();
 }
 
-function filenames(req, res, next) {
+function cloudStorage(req, res, next) {
   var stepsPhotos = req.body['steps.photo'],
     photoFile = req.files['photo-file'],
     stepsPhotoFiles = req.files['steps.photo-file'];
@@ -114,11 +83,42 @@ function filenames(req, res, next) {
           count++;
           if (count === length) cb();
         }, {
-          public_id: `hfm/${utils.i.stripFileExtension(f.path.replace('temp/', '').replace('.', '-'))}`
+          folder: `hfm/${f.destination.replace('./temp/', '').replace('.', '-')}`
         });
       });
     } else cb();
   }
+}
+
+function dbConnect(req, res, next) {
+  var dbstr,
+    mongoc = utils.i.getNested(JSON.parse(env.APP_CONFIG), 'mongo');
+
+  if (mongoose.connections &&
+    mongoose.connections[0]._readyState === 1) return next();
+
+  switch (env.NODE_ENV) {
+    case 'production-local':
+      dbstr = `mongodb://${mongoc.user}:${env.MONGO_PW}@${mongoc.hostString}/${mongoc.db}`;
+      break;
+    case 'production':
+      dbstr = `mongodb://${mongoc.user}:${env.MONGO_PW}@${mongoc.hostString}`;
+      break;
+    default:
+      dbstr = `mongodb://localhost/${env.APP}`;
+      break;
+  }
+
+  mongoose.connect(dbstr);
+  var db = mongoose.connection;
+  db.on('error', function(err) {
+    console.error(err);
+    next();
+  });
+  db.once('open', function() {
+    req.db = db;
+    next();
+  });
 }
 
 function getSetEnv(req, res, next) {

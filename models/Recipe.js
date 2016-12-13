@@ -5,18 +5,6 @@ var recipeUtils = require(process.cwd() + '/utils/recipes');
 var categories = recipeUtils.getCategories();
 var classifications = recipeUtils.getClassifications();
 
-// var cloudinarySchema = new Schema({
-//   public_id: String,
-//   version: Number,
-//   signature: String,
-//   width: Number,
-//   height: Number,
-//   format: String,
-//   resource_type: String,
-//   url: String,
-//   secure_url: String
-// });
-
 var ingredientSchema = new Schema({
   name: {
     type: String,
