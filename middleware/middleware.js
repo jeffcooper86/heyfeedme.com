@@ -22,9 +22,13 @@ function dbConnect(req, res, next) {
     mongoose.connections[0]._readyState === 1) return next();
 
   switch (env.NODE_ENV) {
+
+    // Get production data locally.
     case 'production-local':
       dbstr = `mongodb://${mongoc.user}:${env.MONGO_PW}@${mongoc.hostString}/${mongoc.db}`;
       break;
+
+    // Only works in productin env.
     case 'production':
       dbstr = `mongodb://${mongoc.user}:${env.MONGO_PW}@${mongoc.hostString}`;
       break;
