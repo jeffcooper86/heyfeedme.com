@@ -16,7 +16,7 @@ forms.characterLimit();
 
 function fileUpload() {
   var docId = $('.js-document').data('id'),
-    basePath = `images/photos/recipes/u/${docId}`;
+    basePath = `/recipes/${docId}`;
   forms.fileUpload({
     'photo': `${basePath}/photo`,
     'steps.photo': `${basePath}/steps.photo`

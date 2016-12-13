@@ -130,7 +130,7 @@ function getRefFields(schema, scope) {
 }
 
 function getPhotosPath(req, name) {
-  return `./public/images/photos/${name}/u/${req.params.documentId}/`;
+  return `/${name}/${req.params.documentId}/`;
 }
 
 /**

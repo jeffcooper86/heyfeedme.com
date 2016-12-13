@@ -2,6 +2,7 @@ bower_components
 node_modules
 public/dist
 public/images/photos/recipes/u
+temp
 
 .DS_Store
 .env

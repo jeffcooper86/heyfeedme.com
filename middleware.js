@@ -54,24 +54,24 @@ function dbConnect(req, res, next) {
 }
 
 function clearUnusedFiles(req, res, next) {
-  var stepsPhotos = req.body['steps.photo'],
-    photosPath = dbUtils.getPhotosPath(req, 'recipes') + 'steps.photo/',
-    photosSaved;
-
-  try {
-    photosSaved = fs.readdirSync(photosPath);
-  } catch (err) {}
-
-  if (!photosSaved) return next();
-  stepsPhotos = stepsPhotos.map(function(p) {
-    p = p.split('/');
-    return p[p.length - 1];
-  });
-  photosSaved.forEach(function(p) {
-    if (stepsPhotos.indexOf(p) === -1) {
-      fs.unlinkSync(photosPath + p);
-    }
-  });
+  // var stepsPhotos = req.body['steps.photo'],
+  //   photosPath = dbUtils.getPhotosPath(req, 'recipes') + 'steps.photo/',
+  //   photosSaved;
+  //
+  // try {
+  //   photosSaved = fs.readdirSync(photosPath);
+  // } catch (err) {}
+  //
+  // if (!photosSaved) return next();
+  // stepsPhotos = stepsPhotos.map(function(p) {
+  //   p = p.split('/');
+  //   return p[p.length - 1];
+  // });
+  // photosSaved.forEach(function(p) {
+  //   if (stepsPhotos.indexOf(p) === -1) {
+  //     fs.unlinkSync(photosPath + p);
+  //   }
+  // });
   next();
 }
 
@@ -96,6 +96,8 @@ function filenames(req, res, next) {
       cloudinary.uploader.upload(photoFile.path, function(cphoto) {
         req.body['photo'] = cphoto.secure_url;
         cb();
+      }, {
+        public_id: `hfm/${utils.i.stripFileExtension(photoFile.path.replace('temp/', ''))}`
       });
     } else cb();
   }
@@ -106,11 +108,13 @@ function filenames(req, res, next) {
         count = 0;
 
       stepsPhotoFiles.forEach(function(f) {
-        var originalPath = f.destination.replace('./public/', '') + f.originalname;
+        var originalPath = f.destination.replace('./temp', '') + f.originalname;
         cloudinary.uploader.upload(f.path, function(cphoto) {
           stepsPhotos[stepsPhotos.indexOf(originalPath)] = cphoto.secure_url;
           count++;
           if (count === length) cb();
+        }, {
+          public_id: `hfm/${utils.i.stripFileExtension(f.path.replace('temp/', '').replace('.', '-'))}`
         });
       });
     } else cb();
@@ -151,7 +155,7 @@ function uploadRecipePhotos(opts) {
   var storage = multer.diskStorage({
 
     destination: function(req, file, cb) {
-      var path = makePath(req, file),
+      var path = `./temp${makePath(req, file)}`,
         fileName = makeFileName(req, file);
 
       try {
@@ -179,21 +183,20 @@ function uploadRecipePhotos(opts) {
       files,
       rn = utils.makeRandomFileName(ext);
 
-    try {
-      files = fs.readdirSync(makePath(req, file));
-    } catch (err) {
-      files = [];
-    }
-
     if (file.fieldname === 'steps.photo-file') {
-      while (files.indexOf(rn) > -1) {
-        rn = utils.makeRandomFileName(ext);
+      try {
+        files = fs.readdirSync(makePath(req, file));
+      } catch (err) {
+        files = [];
+      }
+
+      if (files) {
+        while (files.indexOf(rn) > -1) {
+          rn = utils.makeRandomFileName(ext);
+        }
       }
       return rn;
-    }
-
-    n = `${n}.${ext}`;
-    return n.toLowerCase();
+    } else return `${n}.${ext}`.toLowerCase();
   }
 
   function makePath(req, file) {
