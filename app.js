@@ -13,7 +13,8 @@ const slash = require('express-slash');
 const MongoStore = require('connect-mongo')(session);
 
 // App.
-const middleware = require(process.cwd() + '/middleware');
+const middleware = require(process.cwd() + '/middleware/middleware');
+const middlewarePhotos = require(process.cwd() + '/middleware/photos');
 const routes = requireDir('routes', {
   recurse: true
 });
@@ -25,6 +26,7 @@ const routes = requireDir('routes', {
 app.enable('strict routing');
 app.use(responseTime());
 app.use(express.static('public'));
+app.use(express.static('temp'));
 app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -88,14 +90,14 @@ app.use(middleware.requireAuthentication);
 app.route('/admin/:model(recipes)/:documentId')
   .get(routes.admin.document)
   .post(
-    middleware.uploadRecipePhotos([{
+    middlewarePhotos.uploadRecipePhotos([{
       name: 'photo-file',
       maxCount: 1
     }, {
       name: 'steps.photo-file'
     }]),
-    middleware.cloudStorage,
-    middleware.clearUnusedFiles,
+    middlewarePhotos.storePhotos,
+    middlewarePhotos.clearUnusedPhotos,
     routes.admin.document);
 
 // To do: Make admin section a router module http://expressjs.com/en/guide/routing.html#express-router
