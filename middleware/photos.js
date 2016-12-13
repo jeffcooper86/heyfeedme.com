@@ -91,6 +91,10 @@ function uploadRecipePhotos(opts) {
   }).fields(opts);
 }
 
+function _clearCloudPhotos(req, res, next) {
+  next();
+}
+
 function _clearLocalPhotos(req, res, next) {
   var stepsPhotos = req.body['steps.photo'],
     photosPath = `./temp${dbUtils.getPhotosPath(req, 'recipes')}steps.photo/`,

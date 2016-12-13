@@ -1,9 +1,9 @@
-extends ../_layouts/base  
+extends ../_layouts/admin
 
-block body
+block adminBody
   .container.container-1
-    h1.h1 Admin
-    
+    h2.heading.h4 Models
+
     each model in locals.models
       p
         a(href='/admin/' + model)= model

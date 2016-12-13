@@ -25,16 +25,16 @@ const routes = requireDir('routes', {
  */
 app.enable('strict routing');
 app.use(responseTime());
+require('dotenv').config({
+  silent: true
+});
 app.use(express.static('public'));
-app.use(express.static('temp'));
+if (process.env.NODE_ENV === 'development') app.use(express.static('temp'));
 app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-require('dotenv').config({
-  silent: true
-});
 app.use(middleware.wwwRedirect);
 app.use('/robots.txt', routes._robots);
 app.use(middleware.dbConnect);
