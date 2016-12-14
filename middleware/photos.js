@@ -92,7 +92,26 @@ function uploadRecipePhotos(opts) {
 }
 
 function _clearCloudPhotos(req, res, next) {
-  next();
+  var stepsPhotos = req.body['steps.photo'];
+  cloudinary.api.resources(
+    function(cPhotos) {
+      var toDelete = cPhotos.resources.filter(function(val) {
+        return stepsPhotos.indexOf(val.secure_url) < 0;
+      });
+      toDelete = toDelete.map(function(val) {
+        return val.public_id;
+      });
+      if (toDelete.length) {
+        cloudinary.api.delete_resources(toDelete, function(data) {
+          return;
+        });
+      }
+      next();
+    }, {
+      prefix: `hfm/recipes/${req.params.documentId}/steps-photo/`,
+      type: 'upload'
+    }
+  );
 }
 
 function _clearLocalPhotos(req, res, next) {
