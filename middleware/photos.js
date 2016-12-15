@@ -20,6 +20,7 @@ function clearUnusedPhotos(req, res, next) {
       break;
     default:
       _clearCloudPhotos(req, res, next);
+      break;
   }
 }
 

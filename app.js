@@ -42,7 +42,9 @@ app.use(session({
   store: new MongoStore({
     mongooseConnection: mongoose.connection
   }),
-  secret: process.env.SESSION_SECRET
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
 }));
 app.use(cookieParser());
 app.use(flash());
