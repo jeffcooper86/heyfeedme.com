@@ -11,7 +11,7 @@ function doSearch() {
   }
 }
 
-function doToggle() {
+function doZoomToggle() {
   toggle.toggle({
     triggerEl: '.js-zoom',
     cb: onToggle
@@ -27,5 +27,17 @@ function doToggle() {
   }
 }
 
+function doIngredientToggle() {
+  toggle.toggle({
+    triggerEl: '.js-ingredient',
+    class: 'fa-star fa-star-o',
+    target: function($el) {
+      if ($el.hasClass('icon')) return $el;
+      return $el.siblings('.icon');
+    }
+  });
+}
+
+doIngredientToggle();
 doSearch();
-doToggle();
+doZoomToggle();

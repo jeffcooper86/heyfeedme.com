@@ -8,8 +8,8 @@ mixin recipeIngredients(ingredients, subIngredient)
         i(
           style=filters.i.rotateRandom()
           class=subIngredient ? 'fa-star' : 'fa-star-o'
-        ).icon.fa
-        span
+        ).icon.fa.js-ingredient
+        span.js-ingredient
           if i.recipe
             a(href=i.recipe.link)= i.recipe.defaultName
             if i.recipe.ingredients
