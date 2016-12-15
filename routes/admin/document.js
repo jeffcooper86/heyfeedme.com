@@ -42,7 +42,11 @@ exports = module.exports = function(req, res, next) {
     cancelEdit,
     populateSchema
   ], function(err) {
-    if (err) return res.render('_error500');
+    if (err) {
+      console.error(err);
+      req.flash('error', err);
+      return res.render('_error500');
+    }
     return res.render(template);
   });
 
