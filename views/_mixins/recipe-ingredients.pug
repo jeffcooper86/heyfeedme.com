@@ -1,15 +1,15 @@
 mixin recipeIngredients(ingredients, subIngredient)
   -var ingredientsCount = 0;
-  ul()
+  ul.rim-ingredients
     each i in ingredients
       li(
         itemprop= subIngredient ? '' : 'recipeIngredient'
       ).rim-ingredient
         i(
           style=filters.i.rotateRandom()
-          class=subIngredient ? 'fa-star-o' : 'fa-star'
-        ).icon.fa.no-click
-        span
+          class=subIngredient ? 'fa-star' : 'fa-star-o'
+        ).icon.fa.js-ingredient
+        span.js-ingredient
           if i.recipe
             a(href=i.recipe.link)= i.recipe.defaultName
             if i.recipe.ingredients
