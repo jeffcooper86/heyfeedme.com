@@ -44,7 +44,7 @@ function getActiveClassifications(req) {
 }
 
 function getCategories() {
-  return 'breakfast;lunch;dinner;carbs;pasta;sandwiches;meat;main dishes;sides;salads;soups;stews;dips;sauces;dressings;drinks;dessert'
+  return 'breakfast;lunch;dinner;carbs;pasta;sandwiches;meat;main dishes;sides;salads;soups;stews;dips;sauces;dressings;drinks;dessert;spices'
     .split(';').sort();
 }
 
