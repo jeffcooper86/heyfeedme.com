@@ -26,10 +26,10 @@ mixin recipes(recipes)
       .rlm-recipes-wrap
         each r in recipes
           a(href=r.link).rlm-recipe
+            p.rlm-title= filters.capitalizeTitles(r.name)
             .rlm-photo(
               style= r.photo ? `background-image:url(${r.photo});` : null
             )
-            p.rlm-title= filters.capitalizeTitles(r.name)
             .rlm-details
               if r.classifications.length
                 ul.rlm-diets
