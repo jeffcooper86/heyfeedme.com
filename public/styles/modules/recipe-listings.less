@@ -11,14 +11,28 @@
 }
 
 .rlm-details {
-  font-size: @font-size-s1;
+  font-size: @font-size-s2;
+  font-weight: @font-weight-regular;
 
-  margin-top: @spacing-s2;
+  padding-right: @border-radius;
+  padding-left: @border-radius;
 
-  color: @color-gray-d2;
-  background: @color-white;
+  color: @color-gray;
+}
 
-  .mi-pad-text;
+.rlm-diet {
+  line-height: @line-height;
+  i {
+    margin-right: @spacing-s3;
+
+    color: @color-gray;
+  }
+}
+
+.rlm-diets {
+  margin-bottom: @spacing-s2;
+
+  color: @color-gray-d3;
 }
 
 .rlm-h {
@@ -29,8 +43,17 @@
   position: relative;
 }
 
+.rlm-moment {
+  font-weight: @font-weight-light;
+
+  margin-top: @spacing-s2;
+  margin-bottom: @spacing-s2;
+}
+
 .rlm-photo {
   width: 100%;
+
+  border-radius: @border-radius;
 
   .mi-responsive-height(2/3);
   .mi-background-image;
@@ -40,7 +63,7 @@
   position: relative;
 
   width: 100%;
-  margin-bottom: @spacing;
+  margin-bottom: @spacing-l1;
 
   @media(min-width: @bp-m5-min) {
     margin-bottom: @spacing-l1;
@@ -87,17 +110,18 @@
   }
 }
 
+.rlm-recipe-tallies {
+  color: @color-gray-d1;
+}
+
 .rlm-recipes-wrap {
   display: flex;
-
-  width: 100vw;
-  margin-left: -@container-padding;
 
   flex-wrap: wrap;
 
   @media(min-width: @bp-m5-min) {
     width: 100%;
-    margin-top: @spacing-s1;
+    margin-top: @spacing-l1;
     margin-left: 0;
   }
 }
@@ -135,21 +159,9 @@
   font-size: @font-size-s1;
 
   margin-top: @spacing-s2;
-  margin-bottom: @spacing-s1;
-  padding: @spacing-s2 @spacing-s1;
+  margin-bottom: @spacing-s2;
 
   text-align: left;
-
-  border-radius: @border-radius;
-  background: @color-2-l2;
-
-  @media(min-width: @bp-m5-min) {
-    margin-top: @spacing;
-    margin-bottom: @spacing;
-    padding: 0;
-
-    background: none;
-  }
 
   a {
     color: @color-2-d2;
@@ -161,13 +173,13 @@
 }
 
 .rlm-title {
-  font-size: @font-size;
+  font-size: @font-size-s1;
+  font-weight: @font-weight-regular;
 
-  padding-bottom: @spacing-s2;
+  margin-top: @spacing-s2;
+  margin-bottom: @spacing-s3;
+  padding-right: @border-radius;
+  padding-left: @border-radius;
 
-  color: @color-1-d3;
-  background: @color-white;
-
-  .mi-text-clip;
-  .mi-pad-text;
+  color: @color-gray-d3;
 }

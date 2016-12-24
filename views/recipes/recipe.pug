@@ -30,11 +30,12 @@ block bodyContent
         -------------------
       .rm-section.rm-header
         if r.servings
-          .rm-servings(itemprop='recipeYield')
+          p.rm-servings(itemprop='recipeYield')
             if r.servings.servings
-              span.heading.h5.no-space= `Servings - ${r.servings.servings}`
+              span= `Servings - ${r.servings.servings}`
+              br
             if r.servings.servingSize
-              span.heading.h5= `Serving Size - ${r.servings.servingSize}`
+              span= `Size - ${r.servings.servingSize}`
         h1.heading.h1.rlm-h(itemprop='name')= filters.capitalizeTitles(r.name)
         .rm-main-photo
           a(

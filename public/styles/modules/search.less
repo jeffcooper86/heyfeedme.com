@@ -12,6 +12,8 @@
 
 .sm-search {
   input {
+    background: @color-white-d2;
+
     @media(max-width: @bp-m3-max) {
       font-weight: @font-weight-bold;
 
@@ -21,15 +23,14 @@
       padding-right: @spacing-s1;
 
       color: @color-gray-d3;
-      border: 0;
-      background: @color-gray-l2;
+      background: transparent;
     }
 
     &::placeholder {
-      color: @color-gray-d1;
+      color: @color-gray-d3;
 
       @media(max-width: @bp-m3-max) {
-        font-weight: @font-weight-bold;
+        font-weight: @font-weight-light;
       }
     }
   }
@@ -67,5 +68,7 @@
   margin-left: 0;
 
   border-color: @color-border-l2;
-  background: @color-white-d1;
+  border-top: none;
+  border-right: none;
+  border-left: none;
 }

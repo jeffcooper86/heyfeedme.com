@@ -2,6 +2,7 @@ mixin filters(filterItems, activeFilters, matchFilters, opts)
 
   if filterItems && activeFilters
     .filters-wrap
+      block
       .filters.js-filters(data-filters=opts.filterName)
         span(
           data-filter='all'
