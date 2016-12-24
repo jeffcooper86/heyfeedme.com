@@ -36,7 +36,7 @@ block bodyContent
               br
             if r.servings.servingSize
               span= `Size - ${r.servings.servingSize}`
-        h1.heading.h1.rlm-h(itemprop='name')= filters.capitalizeTitles(r.name)
+        h1.heading.h1.rm-h(itemprop='name')= filters.capitalizeTitles(r.name)
         .rm-main-photo
           a(
             data-pin-do='buttonPin'
@@ -67,8 +67,8 @@ block bodyContent
         Recipe.
         -------------------
       .m-recipe-main-content.rm-section.rm-recipe
-        .m-recipe-ingredients.note.note-2
-          h2.heading.h2.rmcm-heading.no-space-top
+        .m-recipe-ingredients
+          h2.heading.h4.rmcm-heading
             span(data-target='.m-recipe-ingredients').js-zoom Ingredients: #{r.ingredients.length}
             i(data-target='.m-recipe-ingredients').icon.fa.fa-plus.rmcm-zoom.js-zoom
           .rm-list.list-spaced-s1
@@ -76,7 +76,7 @@ block bodyContent
 
         .m-recipe-steps
           -var stepsCount = 0;
-          h2.heading.h2.rmcm-heading
+          h2.heading.h4.rmcm-heading
             span(data-target='.m-recipe-steps').js-zoom Steps: #{r.steps.length}
             i(data-target='.m-recipe-steps').icon.fa.fa-plus.rmcm-zoom.js-zoom
           ul.rsm-steps.rm-list
@@ -110,10 +110,11 @@ block bodyContent
         -------------------
       .rm-section.rm-footer
         if r.published
-          p.rm-date Published #{filters.moment(r.updated).format('MMMM DD, YYYY')}
+          .rm-published
+            p.rm-date Published #{filters.moment(r.updated).format('MMMM DD, YYYY')}
 
-        if r.updated && filters.moment(r.updated).diff(filters.moment(r.published), 'days') < 0
-          p.rm-date Updated #{filters.moment(r.updated).format('MMMM DD, YYYY')}
+            if r.updated && filters.moment(r.updated).diff(filters.moment(r.published), 'days') < 0
+              p.rm-date Updated #{filters.moment(r.updated).format('MMMM DD, YYYY')}
 
 block contentJs
   script(src='/dist/js/pages/recipes/recipe.js')
