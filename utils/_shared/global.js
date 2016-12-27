@@ -57,8 +57,11 @@ function rotateRandom() {
   return `transform:rotate(${Math.ceil(Math.random() * 360)}deg);`;
 }
 
-function slugify(route) {
-  if (route) return route.replace(/[,]/g, '').replace(/[ ]/g, '-');
+function slugify(route, keepComma) {
+  if (route) {
+    if (!keepComma) route = route.replace(/[,]/g, '');
+    return route.replace(/[ ]/g, '-');
+  }
   return '';
 }
 

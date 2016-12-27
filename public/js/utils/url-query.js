@@ -47,7 +47,7 @@ function stripParamFromQuery(p, q) {
 }
 
 function updateQueryParam(q, p, newVals) {
-  var newValStr = iUtils.slugify(newVals.join(','));
+  var newValStr = iUtils.slugify(newVals.join(','), true);
 
   if (!newValStr.length) return stripParamFromQuery(p, q);
 
