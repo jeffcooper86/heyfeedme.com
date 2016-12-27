@@ -29,7 +29,7 @@
           font-weight: inherit;
 
           color: @color-white;
-          background: @color-1-d1;
+          background: @color-black-l3;
         }
       }
 
@@ -37,12 +37,24 @@
         font-weight: inherit;
 
         color: @color-white;
-        background: @color-1-d2;
+        background: @color-black-l2;
       }
 
       &.filter-all {
         width: 100%;
       }
+    }
+  }
+
+  .filters-match {
+    &:after {
+      color: @color-black-l2;
+    }
+  }
+
+  .active > .filters-match {
+    &:after {
+      color: @color-white;
     }
   }
 
@@ -60,7 +72,7 @@
   height: 100%;
   padding: @spacing-s1;
 
-  background: @color-1;
+  background: @color-black-l1;
 
   -webkit-overflow-scrolling: touch;
 
@@ -81,7 +93,7 @@
 
     &:hover {
       .no-touchevents & {
-        color: @color-1-d3;
+        color: @color-gray-l2;
       }
     }
   }
