@@ -68,7 +68,7 @@ block bodyContent
         -------------------
       .m-recipe-main-content.rm-section.rm-recipe
         .m-recipe-ingredients
-          h2.heading.h4.rmcm-heading
+          h2.heading.h2.rmcm-heading
             span(data-target='.m-recipe-ingredients').js-zoom Ingredients: #{r.ingredients.length}
             i(data-target='.m-recipe-ingredients').icon.fa.fa-plus.rmcm-zoom.js-zoom
           .rm-list.list-spaced-s1
@@ -76,7 +76,7 @@ block bodyContent
 
         .m-recipe-steps
           -var stepsCount = 0;
-          h2.heading.h4.rmcm-heading
+          h2.heading.h2.rmcm-heading
             span(data-target='.m-recipe-steps').js-zoom Steps: #{r.steps.length}
             i(data-target='.m-recipe-steps').icon.fa.fa-plus.rmcm-zoom.js-zoom
           ul.rsm-steps.rm-list

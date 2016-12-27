@@ -3,6 +3,9 @@ include crumbs
 mixin recipes(recipes)
   .m-recipe-listings
     .rlm-wrap
+      p.heading.h1.rlm-hero-text
+        | Heyfeedme
+        span.rlm-hero-desc Recipes for a happy belly.
       .rlm-header
         p.js-recipes-tally.rlm-tally
           span
@@ -38,10 +41,10 @@ mixin recipes(recipes)
                       i(style=filters.i.rotateRandom()).fa.fa-star
                       span= filters.capitalizeTitles(c)
                     //- =filters.capitalizeTitles(filters.i.stringifyArray(r.classifications, ', '))
-              .rlm-recipe-tallies
-                p Ingredients: #{r.ingredients.length}
-                  br
-                  | Steps: #{r.steps.length}
+              //- .rlm-recipe-tallies
+              //-   p Ingredients: #{r.ingredients.length}
+              //-     br
+              //-     | Steps: #{r.steps.length}
               .rlm-moment
                 p= filters.moment(r.published).fromNow()
 

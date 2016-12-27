@@ -10,12 +10,17 @@
 
   border-bottom: 1px solid @color-border-l2;
   background: @color-white;
-  // box-shadow: 0 0 1px 0 @color-gray-l1;
 
   align-items: center;
 
   @media(min-width: @bp-m4-min) {
+    position: relative;
+
     height: @header-height-d;
+    margin-bottom: @spacing;
+
+    border-bottom: 0;
+    background: transparent;
   }
 }
 

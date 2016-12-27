@@ -5,11 +5,12 @@
 body {
   font-family: @font-1;
   font-size: @font-size;
-  font-weight: @font-weight-light;
   line-height: @line-height-s1;
 
   color: @color-black-l3;
   background: @color-white;
+
+  -webkit-font-smoothing: antialiased;
 
   &.active-right-nav {
     @media(max-width: @bp-m3-max) {

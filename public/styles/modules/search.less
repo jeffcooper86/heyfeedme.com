@@ -15,25 +15,24 @@
     background: @color-white-d2;
 
     @media(max-width: @bp-m3-max) {
-      font-weight: @font-weight-bold;
-
       width: 100%;
       margin-right: 0;
       margin-left: 0;
       padding-right: @spacing-s1;
 
-      color: @color-gray-d3;
+      color: @color-2-d2;
       background: transparent;
     }
 
     &::placeholder {
-      color: @color-gray-d3;
-
-      @media(max-width: @bp-m3-max) {
-        font-weight: @font-weight-light;
-      }
+      color: @color-gray-d2;
     }
   }
+
+  .icon {
+    color: @color-gray-d2;
+  }
+
   @media(max-width: @bp-m3-max) {
     width: 100%;
 
@@ -71,4 +70,8 @@
   border-top: none;
   border-right: none;
   border-left: none;
+
+  @media(min-width: @bp-m4-min) {
+    border-bottom: none;
+  }
 }
