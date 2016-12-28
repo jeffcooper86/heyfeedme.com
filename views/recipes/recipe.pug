@@ -42,11 +42,11 @@ block bodyContent
             data-pin-do='buttonPin'
             data-pin-custom='true'
             data-pin-description=r.seoDescription || r.title
-            href=`https://www.pinterest.com/pin/create/button/?url=${r.absoluteLink}&media=${r.photo}`
+            href=`https://www.pinterest.com/pin/create/button/?url=${r.absoluteLink}&media=${r.photoOptimized.compressed}`
           ).social-pinit-link
             .rm-photo(
               itemprop='image'
-              style= r.photo ? `background-image:url(${r.photo});` : null
+              style= r.photo ? `background-image:url(${r.photoOptimized.scaled.b});` : null
             )
             span.social-pinit
               i.icon.fa.fa-pinterest
@@ -86,7 +86,7 @@ block bodyContent
                   span.rm-count.rsm-count= ++stepsCount
                   span(itemprop='recipeInstructions').rsm-text= step.text
                   if step.photo
-                    .rsm-photo(style=`background-image:url(${step.photo})`)
+                    .rsm-photo(style=`background-image:url(${step.photoOptimized.scaled.b})`)
 
         if r.notes
           .note

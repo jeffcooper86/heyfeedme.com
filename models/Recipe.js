@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var recipeUtils = require(process.cwd() + '/utils/recipes');
+var cloudinaryUtils = require(process.cwd() + '/utils/cloudinary');
 
 var categories = recipeUtils.getCategories();
 var classifications = recipeUtils.getClassifications();
@@ -84,6 +85,10 @@ var stepsSchema = new Schema({
   }
 });
 
+stepsSchema.virtual('photoOptimized').get(function() {
+  return cloudinaryUtils.optimized(this.photo);
+});
+
 var recipeSchema = new Schema({
   publish: {
     type: Boolean
@@ -158,6 +163,10 @@ recipeSchema.virtual('defaultName').get(function() {
 
 recipeSchema.virtual('link').get(function() {
   return recipeUtils.getRecipeLink(this);
+});
+
+recipeSchema.virtual('photoOptimized').get(function() {
+  return cloudinaryUtils.optimized(this.photo);
 });
 
 module.exports.model = mongoose.model('Recipe', recipeSchema);

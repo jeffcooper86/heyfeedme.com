@@ -30,7 +30,7 @@ mixin recipes(recipes)
           a(href=r.link).rlm-recipe
             p.rlm-title= filters.capitalizeTitles(r.name)
             .rlm-photo(
-              style= r.photo ? `background-image:url(${r.photo});` : null
+              style= r.photo ? `background-image:url(${r.photoOptimized.scaled.a});` : null
             )
             .rlm-details
               if r.classifications.length
@@ -39,11 +39,6 @@ mixin recipes(recipes)
                     li.rlm-diet
                       i(style=filters.i.rotateRandom()).fa.fa-star
                       span= filters.capitalizeTitles(c)
-                    //- =filters.capitalizeTitles(filters.i.stringifyArray(r.classifications, ', '))
-              //- .rlm-recipe-tallies
-              //-   p Ingredients: #{r.ingredients.length}
-              //-     br
-              //-     | Steps: #{r.steps.length}
               .rlm-moment
                 p= filters.moment(r.published).fromNow()
 
