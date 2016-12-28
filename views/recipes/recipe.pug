@@ -46,7 +46,7 @@ block bodyContent
           ).social-pinit-link
             .rm-photo(
               itemprop='image'
-              style= r.photo ? `background-image:url(${r.photoOptimized.scaled.b});` : null
+              style= r.photo ? `background-image:url(${r.photoOptimized.scaled.c});` : null
             )
             span.social-pinit
               i.icon.fa.fa-pinterest
@@ -86,7 +86,7 @@ block bodyContent
                   span.rm-count.rsm-count= ++stepsCount
                   span(itemprop='recipeInstructions').rsm-text= step.text
                   if step.photo
-                    .rsm-photo(style=`background-image:url(${step.photoOptimized.scaled.b})`)
+                    .rsm-photo(style=`background-image:url(${step.photoOptimized.scaled.c})`)
 
         if r.notes
           .note

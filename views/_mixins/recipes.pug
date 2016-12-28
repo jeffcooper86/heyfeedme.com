@@ -30,7 +30,7 @@ mixin recipes(recipes)
           a(href=r.link).rlm-recipe
             p.rlm-title= filters.capitalizeTitles(r.name)
             .rlm-photo(
-              style= r.photo ? `background-image:url(${r.photoOptimized.scaled.a});` : null
+              style= r.photo ? `background-image:url(${r.photoOptimized.scaled.c});` : null
             )
             .rlm-details
               if r.classifications.length

@@ -17,6 +17,7 @@ function _scale(url) {
   var compressed = _compress(url);
   return {
     a: compressed.replace(rStr, `${rStr}/w_414`),
-    b: compressed.replace(rStr, `${rStr}/w_760`)
+    b: compressed.replace(rStr, `${rStr}/w_760`),
+    c: compressed.replace(rStr, `${rStr}/w_818`)
   };
 }
