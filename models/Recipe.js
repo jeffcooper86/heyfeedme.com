@@ -81,7 +81,8 @@ var stepsSchema = new Schema({
   photo: {
     type: String,
     file: 'image',
-    note: 'Ratio should be 3:1'
+    note: 'Ratio should be 3:1',
+    cdn: 'cloudinary'
   }
 });
 

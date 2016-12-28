@@ -2,6 +2,7 @@ var _ = require('lodash');
 var async = require('async');
 
 var utils = require(process.cwd() + '/utils/global');
+var cloudinaryUtils = require(process.cwd() + '/utils/cloudinary');
 
 module.exports.buildModelPath = buildModelPath;
 module.exports.formatReqData = formatReqData;
@@ -162,9 +163,16 @@ function schemaOfModel(Model) {
  * @param {object} schema - A mongoosejs schema.
  */
 function schemaPopulated(data, schema) {
-  var newSchema = _.cloneDeep(schema);
+  var newSchema = _.cloneDeep(schema),
+    val;
   for (var key in data) {
-    if (newSchema[key]) newSchema[key].data = data[key];
+    val = newSchema[key];
+    if (val) {
+      val.data = data[key];
+      if (val.options && val.options.file === 'image' && val.options.cdn === 'cloudinary') {
+        val.data = cloudinaryUtils.optimized(data[key]).scaled.c;
+      }
+    }
   }
   return newSchema;
 }
