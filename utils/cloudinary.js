@@ -10,6 +10,7 @@ function optimized(url) {
 }
 
 function _compress(url) {
+  if (!url) url = '';
   return url.replace(rStr, `${rStr}/q_auto:best`);
 }
 
