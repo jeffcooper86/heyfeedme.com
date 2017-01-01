@@ -91,7 +91,7 @@
 
 .site-content {
   max-width: 2000px;
-  min-height: calc(100% ~'-' @header-height + 15);
+  min-height: calc(100% ~'-' @header-height + 15 + 63);
   margin-top: @header-height;
   margin-right: auto;
   margin-left: auto;
@@ -100,7 +100,7 @@
   background: @color-white;
 
   @media(min-width: @bp-m4-min) {
-    min-height: calc(100% ~'-' @header-height-d + 15);
+    min-height: calc(100% ~'-' 63px);
     margin-top: 0;
   }
 }
@@ -113,10 +113,10 @@
   }
 
   + .site-content {
-    min-height: calc(100% ~'-' @header-height + 15 + @spacing-l1);
+    min-height: calc(100% ~'-' @header-height + 15 + 63);
 
     @media(min-width: @bp-m4-min) {
-      min-height: calc(100% ~'-' @header-height-d + 15 + @spacing-l1);
+      min-height: calc(100% ~'-' 63px);
     }
   }
 }
