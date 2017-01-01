@@ -70,6 +70,7 @@ app.get('/recipe/[a-z-]+/:recipeId([a-f0-9]{24})', routes.recipes.recipe);
 
 // Static.
 app.get('/about', routes.about.index);
+app.get('/recipe-conversions', routes.tools.conversions);
 
 /**
  * API.

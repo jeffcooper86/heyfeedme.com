@@ -1,0 +1,23 @@
+extends ../_layouts/content-spaced-top
+
+block bodyContent
+  .container.container-3
+    h2.heading.h2 Recipe Conversions
+    table
+      thead
+        tr
+          td Name
+          td(colspan=ratios.length)
+            span Equivalent
+        tr
+          td
+          each r in ratios
+            td
+              span= r.name.full
+              span= r.name.abrv ? `(${r.name.abrv})` : null
+      tbody
+        each r in ratios
+          tr
+            th
+              span= r.name.full
+              span= r.name.abrv ? `(${r.name.abrv})` : null
