@@ -31,8 +31,9 @@ const dash = {
   name: {
     full: 'dash'
   },
-  pinch: 2,
-  tsp: 16,
+  ratios: {
+    pinch: 2
+  },
   rank: 1
 };
 
@@ -40,7 +41,9 @@ const pinch = {
   name: {
     full: 'pinch'
   },
-  tsp: 8,
+  ratios: {
+    teaspoon: 8
+  },
   rank: 2
 };
 
@@ -49,7 +52,9 @@ const tsp = {
     abrv: 'tsp',
     full: 'teaspoon'
   },
-  tbsp: 3,
+  ratios: {
+    tablespoon: 3
+  },
   rank: 3,
   standards: fractions.unshift(eighth)
 };
@@ -59,7 +64,9 @@ const tbsp = {
     abrv: 'tbsp',
     full: 'tablespoon'
   },
-  oz: 2,
+  ratios: {
+    ounce: 2
+  },
   rank: 4
 };
 
@@ -68,7 +75,9 @@ const oz = {
     abrv: 'oz',
     full: 'ounce'
   },
-  cup: 8,
+  ratios: {
+    cup: 8
+  },
   rank: 5
 };
 
@@ -76,7 +85,9 @@ const cup = {
   name: {
     full: 'cup'
   },
-  pint: 2,
+  ratios: {
+    pint: 2
+  },
   rank: 6,
   standards: fractions
 };
@@ -86,8 +97,9 @@ const pint = {
     abrv: 'pt',
     full: 'pint'
   },
-  quart: 2,
-  oz: 16,
+  ratios: {
+    quart: 2
+  },
   rank: 7
 };
 
@@ -96,8 +108,10 @@ const quart = {
     abrv: 'qt',
     full: 'quart'
   },
-  gallon: 4,
-  equivalent: liter,
+  ratios: {
+    gallon: 4
+  },
+  equivalent: 'liter',
   rank: 8
 };
 
@@ -106,10 +120,12 @@ const gallon = {
     abrv: 'gal',
     full: 'gallon'
   },
+  ratios: {},
   rank: 9
 };
 
 const americanStandard = [dash, pinch, tsp, tbsp, oz, cup, pint, quart, gallon];
+addRatios(americanStandard);
 
 module.exports.convert = convert;
 module.exports.americanStandard = americanStandard;
@@ -119,4 +135,21 @@ function convert(opts) {
     measurement = opts.measurement;
 
   return qty + measurement;
+}
+
+function addRatios(measurements) {
+  measurements.map(function(r, i) {
+    var factor = 1;
+    measurements.forEach(function(rr, ii) {
+      var name = measurements[ii].name.full;
+      if (ii > i) {
+        factor = factor * measurements[ii - 1].ratios[rr.name.full];
+        r.ratios[name] = factor;
+      } else if (ii !== i && measurements[ii]) {
+        r.ratios[name] = `1/${measurements[ii].ratios[r.name.full]}`;
+      }
+    });
+    return r;
+  });
+  return measurements;
 }

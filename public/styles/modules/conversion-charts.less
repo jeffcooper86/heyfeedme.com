@@ -1,0 +1,20 @@
+.m-conversion-charts {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  .tbl {
+    width: 100%;
+    padding: @spacing-s2;
+
+    table-layout: fixed;
+
+    @media(min-width: @bp-m4-min) {
+      width: calc(50% ~'-' @spacing-s2 * 2);
+
+      &:nth-child(2n + 1) {
+        margin-right: @spacing-s2 * 2;
+      }
+    }
+  }
+}

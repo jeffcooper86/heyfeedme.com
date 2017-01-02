@@ -3,21 +3,44 @@ extends ../_layouts/content-spaced-top
 block bodyContent
   .container.container-3
     h2.heading.h2 Recipe Conversions
-    table
-      thead
-        tr
-          td Name
-          td(colspan=ratios.length)
-            span Equivalent
-        tr
-          td
-          each r in ratios
-            td
-              span= r.name.full
-              span= r.name.abrv ? `(${r.name.abrv})` : null
-      tbody
-        each r in ratios
-          tr
-            th
-              span= r.name.full
-              span= r.name.abrv ? `(${r.name.abrv})` : null
+    //- table.tbl.tbl-small-2.tbl-full.tbl-color.tbl-grid
+    //-   thead
+    //-     tr
+    //-       th
+    //-       each r in ratios
+    //-         th= r.name.abrv || r.name.full
+    //-
+    //-   tbody
+    //-     tr
+    //-     each r, k in ratios
+    //-       tr
+    //-         th(scope='col')
+    //-           span= r.name.abrv || r.name.full
+    //-
+    //-         each rr, kk in ratios
+    //-           -var num = rr.ratios[r.name.full]
+    //-           td
+    //-             if num
+    //-               if typeof(num) === 'number'
+    //-                 span= num
+    //-             else
+    //-               span 1
+
+    .m-conversion-charts
+      each r, i in ratios.slice(0, ratios.length - 1)
+        -var section = ratios.slice(i + 1, i + 3)
+        //- h3.heading.h3= r.name.abrv || r.name.full
+        table.tbl.tbl-small-2.tbl-color.tbl-grid
+          thead
+            tr
+              th
+              each r in section
+                th
+                  span= r.name.abrv || r.name.full
+          tbody
+            tr
+              th(scope='col')
+                span= '1 '
+                span= r.name.abrv || r.name.full
+              each rr in section
+                td= rr.ratios[r.name.full]
