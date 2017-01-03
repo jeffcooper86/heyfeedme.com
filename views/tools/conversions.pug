@@ -2,8 +2,7 @@ extends ../_layouts/content-spaced-top
 
 block bodyContent
   .container.container-3
-    h2.heading.h2 Recipe Conversions
-    h3.heading.h3 Conversion Tool
+    h2.heading.h2 Conversion Tool
     if data.result
       .note
         p= `${data.result} ${data.to}`
@@ -41,7 +40,6 @@ block bodyContent
     .gap
 
     .m-conversion-charts
-      h3.heading.h3 Conversion Charts
       .ccm-tables
         each r, i in ratios.slice(0, ratios.length - 1)
           -var section = ratios.slice(i + 1, i + 3)
