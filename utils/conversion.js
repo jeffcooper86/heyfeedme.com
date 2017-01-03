@@ -1,3 +1,5 @@
+var utils = require(process.cwd() + '/utils/global');
+
 /**
  * Measurements
  */
@@ -148,18 +150,22 @@ function addRatios(measurements) {
 }
 
 function convert(opts) {
-  var amount = opts.amount,
-    adjustment = opts.adjustment || 1,
-    from = opts.from,
-    to = opts.to,
+  var amount = utils.fractionToInt(opts.amount),
+    adjustment = utils.fractionToInt(opts.adjustment) || 1,
+    fromU = opts.from,
+    toU = opts.to,
     result,
     ratios = americanStandard;
 
-  if (!amount || !from || !to) return 'NAN';
+  if (!amount || !fromU || !toU) return 'NAN';
   result = amount * adjustment;
-  if (from !== to) {
+  if (fromU !== toU) {
     ratios.forEach(function(r) {
-      if (r.name.full === from) result = result * r.ratios[to];
+      var toNum;
+      if (r.name.full === toU) {
+        toNum = utils.fractionToInt(r.ratios[fromU]);
+        result = result * toNum;
+      }
     });
   }
   return result;

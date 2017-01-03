@@ -5,6 +5,7 @@ var isomorphicUtils = require(process.cwd() + '/utils/_shared/global');
 module.exports.i = isomorphicUtils;
 module.exports.capitalizeFirst = capitalizeFirst;
 module.exports.capitalizeTitles = capitalizeTitles;
+module.exports.fractionToInt = fractionToInt;
 module.exports.makeRandomFileName = makeRandomFileName;
 module.exports.moment = moment;
 module.exports.stripPrivates = stripPrivates;
@@ -36,6 +37,13 @@ function makeRandomFileName(ext) {
 
 function moment(date) {
   return momentJs(date);
+}
+
+function fractionToInt(f) {
+  if (typeof f !== 'string') return f;
+  f = f.split('/');
+  if (f.length === 1) return f[0];
+  return f[0] / f[1];
 }
 
 function stripPrivates(d) {

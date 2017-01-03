@@ -6,7 +6,7 @@ block bodyContent
     h3.heading.h3 Conversion Tool
     if data.result
       .note
-        p= data.result
+        p= `${data.result} ${data.to}`
     form(method='post').form.form-small
       .form-group
         label(for='amount') Amount
@@ -14,14 +14,12 @@ block bodyContent
           type='text'
           name='amount'
           id='amount'
-          value=data.amount
+          value=data.amount || 1
           placeholder='1').form-field.ff-wide
-      .form-group
-        label(for='from').label From
-          .select-wrap.form-field.ff-wide
-            select(name='from' id='from').form-field.ff-wide
-              each ratio in ratios
-                option(selected=data.from === ratio.name.full)= ratio.name.full
+        .select-wrap.form-field.ff-wide
+          select(name='from' id='from').form-field.ff-wide
+            each ratio in ratios
+              option(selected=data.from === ratio.name.full)= ratio.name.full
       .form-group
         label(for='to') To
           .select-wrap.form-field.ff-wide
