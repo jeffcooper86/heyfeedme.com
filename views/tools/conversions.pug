@@ -4,6 +4,9 @@ block bodyContent
   .container.container-3
     h2.heading.h2 Recipe Conversions
     h3.heading.h3 Conversion Tool
+    if data.result
+      .note
+        p= data.result
     form(method='post').form.form-small
       .form-group
         label(for='amount') Amount
