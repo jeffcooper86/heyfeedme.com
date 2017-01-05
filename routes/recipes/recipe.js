@@ -30,7 +30,7 @@ exports = module.exports = function(req, res) {
     recipeQuery.exec(_recipeInfo);
 
     function _recipeInfo(err, data) {
-      if (err) cb(err);
+      if (err) return cb(err);
       if (!cached) cache.set(`recipe-${recipeId}`, data);
       l.data.recipe = data;
       l.title = data.seoDescription || `${utils.capitalizeTitles(data.name)} - Heyfeedme`;
