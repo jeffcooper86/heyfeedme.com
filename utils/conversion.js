@@ -1,4 +1,4 @@
-var utils = require(process.cwd() + '/utils/global');
+var math = require('mathjs');
 
 /**
  * Measurements
@@ -11,7 +11,8 @@ const eighth = 1 / 8,
 const ml = {
   name: {
     abrv: 'ml',
-    full: 'milliliter'
+    full: 'milliliter',
+    plural: 'milliliters'
   },
   type: 'm',
   tsp: 5,
@@ -21,7 +22,8 @@ const ml = {
 const liter = {
   name: {
     abrv: 'l',
-    full: 'liter'
+    full: 'liter',
+    plural: 'liters'
   },
   type: 'm',
   equivalent: quart
@@ -31,7 +33,8 @@ const liter = {
 // American Standard
 const dash = {
   name: {
-    full: 'dash'
+    full: 'dash',
+    plural: 'dashes'
   },
   ratios: {
     pinch: 2
@@ -41,7 +44,8 @@ const dash = {
 
 const pinch = {
   name: {
-    full: 'pinch'
+    full: 'pinch',
+    plural: 'pinches'
   },
   ratios: {
     teaspoon: 8
@@ -52,7 +56,8 @@ const pinch = {
 const tsp = {
   name: {
     abrv: 'tsp',
-    full: 'teaspoon'
+    full: 'teaspoon',
+    plural: 'teaspoons'
   },
   ratios: {
     tablespoon: 3
@@ -64,7 +69,8 @@ const tsp = {
 const tbsp = {
   name: {
     abrv: 'tbsp',
-    full: 'tablespoon'
+    full: 'tablespoon',
+    plural: 'tablespoons'
   },
   ratios: {
     ounce: 2
@@ -75,7 +81,8 @@ const tbsp = {
 const oz = {
   name: {
     abrv: 'oz',
-    full: 'ounce'
+    full: 'ounce',
+    plural: 'ounces'
   },
   ratios: {
     cup: 8
@@ -85,7 +92,8 @@ const oz = {
 
 const cup = {
   name: {
-    full: 'cup'
+    full: 'cup',
+    plural: 'cups'
   },
   ratios: {
     pint: 2
@@ -97,7 +105,8 @@ const cup = {
 const pint = {
   name: {
     abrv: 'pt',
-    full: 'pint'
+    full: 'pint',
+    plural: 'pints'
   },
   ratios: {
     quart: 2
@@ -108,7 +117,8 @@ const pint = {
 const quart = {
   name: {
     abrv: 'qt',
-    full: 'quart'
+    full: 'quart',
+    plural: 'quarts'
   },
   ratios: {
     gallon: 4
@@ -120,7 +130,8 @@ const quart = {
 const gallon = {
   name: {
     abrv: 'gal',
-    full: 'gallon'
+    full: 'gallon',
+    plural: 'gallons'
   },
   ratios: {},
   rank: 9
@@ -131,6 +142,8 @@ addRatios(americanStandard);
 
 module.exports.convert = convert;
 module.exports.americanStandard = americanStandard;
+module.exports.getShortName = getShortName;
+module.exports.getUnit = getUnit;
 
 function addRatios(measurements) {
   measurements.map(function(r, i) {
@@ -150,23 +163,57 @@ function addRatios(measurements) {
 }
 
 function convert(opts) {
-  var amount = utils.fractionToInt(opts.amount),
-    adjustment = utils.fractionToInt(opts.adjustment) || 1,
+  var amount = opts.amount,
+    adjustment = math.fraction(opts.adjustment || 1),
     fromU = opts.from,
     toU = opts.to,
-    result,
+    val,
     ratios = americanStandard;
 
-  if (!amount || !fromU || !toU) return 'NAN';
-  result = amount * adjustment;
+  if (!amount || !fromU || !toU) return;
+
+  amount = math.fraction(opts.amount);
+  val = math.multiply(amount, adjustment);
   if (fromU !== toU) {
     ratios.forEach(function(r) {
       var toNum;
       if (r.name.full === toU) {
-        toNum = utils.fractionToInt(r.ratios[fromU]);
-        result = result * toNum;
+        toNum = math.fraction(r.ratios[fromU]);
+        val = math.multiply(toNum, val);
       }
     });
   }
-  return result;
+  return _fractionAndInt(val);
 }
+
+function getShortName(unit) {
+  return unit.name.abrv ? unit.name.abrv : unit.name.full;
+}
+
+function getUnit(opts) {
+  var optKey = opts.name || opts.abrv || opts,
+    unit;
+  americanStandard.forEach(function(u) {
+    if (optKey === u.name.full || optKey === u.name.abrv) unit = u;
+  });
+  return unit;
+}
+
+function _fractionAndInt(val) {
+  var r = {};
+  r.fraction = val.toFraction();
+  r.int = math.round(math.number(val), 3);
+  if (val.n > val.d) {
+    r.mixed = _mixedNumber(val);
+  }
+  return r;
+}
+
+function _mixedNumber(val) {
+  var n,
+    f;
+  n = Math.floor(val.n / val.d);
+  f = math.fraction((val.n - (n * val.d)) / val.d);
+  if (math.number(f) === 0) return n;
+  else return `${n} ${f.toFraction()}`;
+};

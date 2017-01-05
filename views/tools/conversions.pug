@@ -2,10 +2,11 @@ extends ../_layouts/content-spaced-top
 
 block bodyContent
   .container.container-3
-    h2.heading.h2 Conversion Tool
+    h2.heading.h2 Recipe Conversions
+    h3.heading.h3 Calculator
     if data.result
       .note
-        p= `${data.result} ${data.to}`
+        p= `${data.formattedResult.toAmt} ${data.formattedResult.toUnitFull}`
     form(method='post').form.form-small
       .form-group
         label(for='amount') Amount
@@ -18,15 +19,15 @@ block bodyContent
         .select-wrap.form-field.ff-wide
           select(name='from' id='from').form-field.ff-wide
             each ratio in ratios
-              option(selected=data.from === ratio.name.full)= ratio.name.full
+              option(selected=data.from ? data.from === ratio.name.full : ratio.name.abrv === 'tsp')= ratio.name.full
       .form-group
         label(for='to') To
           .select-wrap.form-field.ff-wide
             select(name='to' id='to').form-field.ff-wide
               each ratio in ratios
-                option(selected=data.to === ratio.name.full)= ratio.name.full
+                option(selected=data.to ? data.to === ratio.name.full : ratio.name.abrv === 'tbsp')= ratio.name.full
       .form-group
-        label(for='adjusment') Adjustment
+        label(for='adjustment') Adjustment
         input(
           type='text'
           name='adjustment'
@@ -37,9 +38,8 @@ block bodyContent
       .text-center
         input(type='submit').btn.btn-1.form-field.ff-wide
 
-    .gap
-
     .m-conversion-charts
+      h3.heading.h3 Ratios
       .ccm-tables
         each r, i in ratios.slice(0, ratios.length - 1)
           -var section = ratios.slice(i + 1, i + 3)
@@ -54,7 +54,6 @@ block bodyContent
             tbody
               tr
                 th(scope='col')
-                  span= '1 '
                   span= r.name.abrv || r.name.full
                 each rr in section
-                  td= rr.ratios[r.name.full]
+                  td= rr.ratios[r.name.full].replace('/', ':')

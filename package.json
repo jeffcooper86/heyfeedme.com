@@ -34,6 +34,7 @@
     "gulp-watch": "^4.3.5",
     "lodash": "^4.6.1",
     "lru-cache": "^4.0.2",
+    "mathjs": "^3.8.1",
     "mkdirp": "^0.5.1",
     "moment": "^2.14.1",
     "mongodb": "^2.1.11",
