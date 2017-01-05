@@ -18,6 +18,7 @@ exports = module.exports = function(req, res) {
   ], function(err) {
     if (err) {
       console.log(err);
+      req.flash('error', err);
       return res.render('_error500');
     }
     return res.render(template);
