@@ -4,8 +4,7 @@ var math = require('mathjs');
  * Measurements
  */
 
-const eighth = 1 / 8,
-  fractions = [1 / 8, 0.25, 1 / 3, 0.5, 2 / 3, 0.75, 1];
+const fractions = '1/8 1/4 1/3 1/2'.split(' ');
 
 // Metric
 const ml = {
@@ -63,7 +62,7 @@ const tsp = {
     tablespoon: 3
   },
   rank: 3,
-  standards: fractions.unshift(eighth)
+  standards: fractions
 };
 
 const tbsp = {
@@ -75,7 +74,8 @@ const tbsp = {
   ratios: {
     ounce: 2
   },
-  rank: 4
+  rank: 4,
+  standards: fractions.slice(1)
 };
 
 const oz = {
@@ -99,7 +99,7 @@ const cup = {
     pint: 2
   },
   rank: 6,
-  standards: fractions
+  standards: fractions.slice(1)
 };
 
 const pint = {
@@ -111,7 +111,8 @@ const pint = {
   ratios: {
     quart: 2
   },
-  rank: 7
+  rank: 7,
+  standards: fractions.slice(1)
 };
 
 const quart = {
@@ -124,7 +125,8 @@ const quart = {
     gallon: 4
   },
   equivalent: 'liter',
-  rank: 8
+  rank: 8,
+  standards: fractions.slice(1)
 };
 
 const gallon = {
@@ -134,7 +136,8 @@ const gallon = {
     plural: 'gallons'
   },
   ratios: {},
-  rank: 9
+  rank: 9,
+  standards: fractions.slice(1)
 };
 
 const americanStandard = [dash, pinch, tsp, tbsp, oz, cup, pint, quart, gallon];
@@ -183,6 +186,7 @@ function convert(opts) {
       }
     });
   }
+  _fractionStandard(math.number(val), getUnit(fromU));
   return _fractionAndInt(val);
 }
 
@@ -199,6 +203,37 @@ function getUnit(opts) {
   return unit;
 }
 
+// Need to consider 0 and 1 as well.
+function _closestFraction(num, fractions) {
+  var closest = [],
+    difference,
+    numFrac;
+
+  var numMixed = _mixedNumber(num).split(' ');
+
+  numFrac = numMixed.length === 2 ? numMixed[1] : numMixed[0];
+  numFrac = math.number(math.fraction(numFrac));
+
+  fractions.forEach(function(f) {
+    var n = math.number(math.fraction(f));
+    var diff = Math.abs(numFrac - n);
+
+    if (!difference || diff < difference) {
+      difference = diff;
+      closest = [f];
+    } else if (diff === difference) {
+      closest.push(f);
+    }
+  });
+
+  return {
+    closest: {
+      val: closest,
+      diff: difference
+    }
+  };
+}
+
 function _fractionAndInt(val) {
   var r = {};
   r.fraction = val.toFraction();
@@ -209,11 +244,47 @@ function _fractionAndInt(val) {
   return r;
 }
 
+function _fractionStandard(num, unit) {
+  var standards = unit.standards,
+    allStandards = [],
+    fraction = math.fraction(num),
+    isStandard = false,
+    closestFraction;
+
+  if (!_isFraction(num)) return;
+
+  standards.forEach(function(s) {
+
+    // Check if fraction is already standard.
+    var sd = Number(s.split('/')[1]);
+    if (sd === fraction.d) isStandard = true;
+
+    // Build all possible standard fractions.
+    for (var i = 1; i < sd; i++) {
+      if (sd === 2 || sd / i !== 2) allStandards.push(`${i}/${sd}`);
+    }
+  });
+
+  if (isStandard) return fraction;
+
+  // console.log(num, unit, standards);
+  closestFraction = _closestFraction(num, allStandards);
+  console.log(closestFraction);
+}
+
+function _isFraction(num) {
+  var fraction = math.fraction(num),
+    n = Math.floor(fraction.n / fraction.d);
+  return (fraction.n - (n * fraction.d)) / fraction.d !== 0;
+}
+
 function _mixedNumber(val) {
   var n,
     f;
+
+  if (!val.n || !val.d) val = math.fraction(val);
   n = Math.floor(val.n / val.d);
   f = math.fraction((val.n - (n * val.d)) / val.d);
-  if (math.number(f) === 0) return n;
+  if (math.number(f) === 0) return `${n}`;
   else return `${n} ${f.toFraction()}`;
 };
