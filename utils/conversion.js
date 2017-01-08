@@ -1,169 +1,12 @@
+var _ = require('lodash');
+
+var measurements = require('./conversion-measurements');
 var math = require('mathjs');
 
-/**
- * Measurements
- */
-
-const fractions = '1/8 1/4 1/3 1/2'.split(' ');
-
-// Metric
-const ml = {
-  name: {
-    abrv: 'ml',
-    full: 'milliliter',
-    plural: 'milliliters'
-  },
-  type: 'm',
-  tsp: 5,
-  liter: 1000
-};
-
-const liter = {
-  name: {
-    abrv: 'l',
-    full: 'liter',
-    plural: 'liters'
-  },
-  type: 'm',
-  equivalent: quart
-};
-
-
-// American Standard
-const dash = {
-  name: {
-    full: 'dash',
-    plural: 'dashes'
-  },
-  ratios: {
-    pinch: 2
-  },
-  rank: 1
-};
-
-const pinch = {
-  name: {
-    full: 'pinch',
-    plural: 'pinches'
-  },
-  ratios: {
-    teaspoon: 8
-  },
-  rank: 2
-};
-
-const tsp = {
-  name: {
-    abrv: 'tsp',
-    full: 'teaspoon',
-    plural: 'teaspoons'
-  },
-  ratios: {
-    tablespoon: 3
-  },
-  rank: 3,
-  standards: fractions
-};
-
-const tbsp = {
-  name: {
-    abrv: 'tbsp',
-    full: 'tablespoon',
-    plural: 'tablespoons'
-  },
-  ratios: {
-    ounce: 2
-  },
-  rank: 4,
-  standards: fractions.slice(1)
-};
-
-const oz = {
-  name: {
-    abrv: 'oz',
-    full: 'ounce',
-    plural: 'ounces'
-  },
-  ratios: {
-    cup: 8
-  },
-  rank: 5
-};
-
-const cup = {
-  name: {
-    full: 'cup',
-    plural: 'cups'
-  },
-  ratios: {
-    pint: 2
-  },
-  rank: 6,
-  standards: fractions.slice(1)
-};
-
-const pint = {
-  name: {
-    abrv: 'pt',
-    full: 'pint',
-    plural: 'pints'
-  },
-  ratios: {
-    quart: 2
-  },
-  rank: 7,
-  standards: fractions.slice(1)
-};
-
-const quart = {
-  name: {
-    abrv: 'qt',
-    full: 'quart',
-    plural: 'quarts'
-  },
-  ratios: {
-    gallon: 4
-  },
-  equivalent: 'liter',
-  rank: 8,
-  standards: fractions.slice(1)
-};
-
-const gallon = {
-  name: {
-    abrv: 'gal',
-    full: 'gallon',
-    plural: 'gallons'
-  },
-  ratios: {},
-  rank: 9,
-  standards: fractions.slice(1)
-};
-
-const americanStandard = [dash, pinch, tsp, tbsp, oz, cup, pint, quart, gallon];
-addRatios(americanStandard);
-
 module.exports.convert = convert;
-module.exports.americanStandard = americanStandard;
+module.exports.americanStandard = measurements.americanStandard;
 module.exports.getShortName = getShortName;
 module.exports.getUnit = getUnit;
-
-function addRatios(measurements) {
-  measurements.map(function(r, i) {
-    var factor = 1;
-    measurements.forEach(function(rr, ii) {
-      var name = measurements[ii].name.full;
-      if (ii > i) {
-        factor = factor * measurements[ii - 1].ratios[rr.name.full];
-        r.ratios[name] = factor;
-      } else if (ii !== i && measurements[ii]) {
-        r.ratios[name] = `1/${measurements[ii].ratios[r.name.full]}`;
-      }
-    });
-    return r;
-  });
-  return measurements;
-}
 
 function convert(opts) {
   var amount = opts.amount,
@@ -171,12 +14,16 @@ function convert(opts) {
     fromU = opts.from,
     toU = opts.to,
     val,
-    ratios = americanStandard;
+    ratios = measurements.americanStandard,
+    result = {};
 
   if (!amount || !fromU || !toU) return;
 
+  // Caculate adjustment.
   amount = math.fraction(opts.amount);
   val = math.multiply(amount, adjustment);
+
+  // Convert by ratio.
   if (fromU !== toU) {
     ratios.forEach(function(r) {
       var toNum;
@@ -186,8 +33,11 @@ function convert(opts) {
       }
     });
   }
-  _fractionStandard(math.number(val), getUnit(fromU));
-  return _fractionAndInt(val);
+
+  // Calculate fractions.
+  result.val = _fractionAndInt(val);
+  result.closestFraction = _closestFraction(val, getUnit(toU));
+  return result;
 }
 
 function getShortName(unit) {
@@ -197,20 +47,40 @@ function getShortName(unit) {
 function getUnit(opts) {
   var optKey = opts.name || opts.abrv || opts,
     unit;
-  americanStandard.forEach(function(u) {
+  measurements.americanStandard.forEach(function(u) {
     if (optKey === u.name.full || optKey === u.name.abrv) unit = u;
   });
-  return unit;
+  return _.cloneDeep(unit);
 }
 
-// Need to consider 0 and 1 as well.
-function _closestFraction(num, fractions) {
+function _allPossibleFractions(fractions) {
+  return fractions.reduce(function(result, f) {
+    if (f === 0 || f === 1) result.push(f);
+    else {
+      var sd = Number(f.split('/')[1]);
+      for (var i = 1; i < sd; i++) {
+        if (sd === 2 || sd / i !== 2) result.push(`${i}/${sd}`);
+      }
+    }
+    return result;
+  }, []);
+}
+
+function _closestFraction(num, fromU) {
   var closest = [],
     difference,
-    numFrac;
+    fractions,
+    numFrac,
+    numMixed = _mixedNumber(num).split(' ');
 
-  var numMixed = _mixedNumber(num).split(' ');
+  if (_isStandardFraction(math.number(num), fromU)) return;
+  fractions = fromU.standards || [];
 
+  // Need to consider 0 and 1 as well.
+  if (fractions[0] !== 0) fractions.unshift(0);
+  if (fractions[1] !== 1) fractions.push(1);
+
+  fractions = _allPossibleFractions(fractions);
   numFrac = numMixed.length === 2 ? numMixed[1] : numMixed[0];
   numFrac = math.number(math.fraction(numFrac));
 
@@ -244,32 +114,24 @@ function _fractionAndInt(val) {
   return r;
 }
 
-function _fractionStandard(num, unit) {
+function _isStandardFraction(num, unit) {
   var standards = unit.standards,
-    allStandards = [],
     fraction = math.fraction(num),
-    isStandard = false,
-    closestFraction;
+    isStandard = false;
 
-  if (!_isFraction(num)) return;
+  // Consider integers to be standard.
+  if (!_isFraction(num)) return true;
 
+  // If no standards, can't be standard.
+  if (!standards) return false;
+
+  // Check for matching denominators.
   standards.forEach(function(s) {
-
-    // Check if fraction is already standard.
     var sd = Number(s.split('/')[1]);
     if (sd === fraction.d) isStandard = true;
-
-    // Build all possible standard fractions.
-    for (var i = 1; i < sd; i++) {
-      if (sd === 2 || sd / i !== 2) allStandards.push(`${i}/${sd}`);
-    }
   });
 
-  if (isStandard) return fraction;
-
-  // console.log(num, unit, standards);
-  closestFraction = _closestFraction(num, allStandards);
-  console.log(closestFraction);
+  return isStandard;
 }
 
 function _isFraction(num) {
