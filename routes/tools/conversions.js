@@ -32,8 +32,8 @@ function formatResult(data) {
   fr.fromAmt = data.amount;
   fr.fromUnit = cUtils.getShortName(data.fromUnit);
   fr.fromUnitFull = '';
-  fr.toAmt = data.result.mixed || data.result.fraction;
-  fr.toUnit = data.toUnit.name.abrv ? data.toUnit.name.abrv : data.result > 1 ? data.toUnit.name.plural : data.toUnit.name.full;
-  fr.toUnitFull = data.result.int > 1 ? data.toUnit.name.plural : data.toUnit.name.full;
+  fr.toAmt = data.result.val.mixed || data.result.val.fraction;
+  fr.toUnit = data.toUnit.name.abrv ? data.toUnit.name.abrv : data.result.val.int > 1 ? data.toUnit.name.plural : data.toUnit.name.full;
+  fr.toUnitFull = data.result.val.int > 1 ? data.toUnit.name.plural : data.toUnit.name.full;
   return fr;
 }
