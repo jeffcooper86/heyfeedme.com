@@ -7,7 +7,7 @@ block bodyContent
     if data.result
       -var unit = data.formattedResult.toUnitFull;
       .note
-        h4.heading.h4 Amount
+        h4.heading.h4.no-space-top Result
         p= `${data.formattedResult.toAmt} ${unit}`
         if data.result.closestFraction
           h4.heading.h4 Rounded
