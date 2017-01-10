@@ -52,17 +52,20 @@ block bodyContent
       .ccm-tables
         each r, i in ratios.slice(0, ratios.length - 1)
           -var section = ratios.slice(i + 1, i + 3)
-          //- h3.heading.h3= r.name.abrv || r.name.full
-          table.tbl.tbl-small-2.tbl-color.tbl-grid
-            thead
-              tr
-                th
-                each r in section
+          .cmm-table
+            table.tbl.tbl-small-2.tbl-color.tbl-grid
+              thead
+                tr
                   th
+                  each r in section
+                    th
+                      span= r.name.abrv || r.name.full
+              tbody
+                tr
+                  th(scope='col')
                     span= r.name.abrv || r.name.full
-            tbody
-              tr
-                th(scope='col')
-                  span= r.name.abrv || r.name.full
-                each rr in section
-                  td= rr.ratios[r.name.full].replace('/', ':')
+                  each rr in section
+                    td= rr.ratios[r.name.full].replace('/', ':')
+              if r.standards
+                caption.tbl-subcaption
+                  = `Common fractions: ${filters.i.stringifyArray(r.standards)}`

@@ -16,6 +16,8 @@ mixin tableContent(tableData)
 .table-wrap
   table.tbl
     +tableContent(tableData)
+    caption.tbl-subcaption
+      | This is a table subcaption in all it's glory.
 
 .table-wrap
   table.tbl.tbl-sort.tbl-color
