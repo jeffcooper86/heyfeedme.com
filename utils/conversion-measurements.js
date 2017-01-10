@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 const fractions = '1/8 1/4 1/3 1/2'.split(' ');
 
 // Metric
@@ -135,8 +137,25 @@ const gallon = {
   standards: fractions.slice(1)
 };
 
-const americanStandard = [dash, pinch, tsp, tbsp, oz, cup, pint, quart, gallon];
-_addRatios(americanStandard);
+const americanStandard = _addRatios([dash, pinch, tsp, tbsp, oz, cup, pint, quart, gallon]);
+
+module.exports.americanStandard = americanStandard;
+module.exports.getUnit = getUnit;
+module.exports.getUnitShortName = getUnitShortName;
+
+function getUnit(opts) {
+  var optKey = opts.name || opts.abrv || opts,
+    unit;
+  americanStandard.forEach(function(u) {
+    if (optKey === u.name.full || optKey === u.name.abrv) unit = u;
+  });
+  return _.cloneDeep(unit);
+}
+
+function getUnitShortName(unit) {
+  if (!unit.name) return;
+  return unit.name.abrv ? unit.name.abrv : unit.name.full;
+}
 
 function _addRatios(measurements) {
   measurements.map(function(r, i) {
@@ -154,5 +173,3 @@ function _addRatios(measurements) {
   });
   return measurements;
 }
-
-module.exports.americanStandard = americanStandard;

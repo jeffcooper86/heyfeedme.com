@@ -1,13 +1,8 @@
-var _ = require('lodash');
-
 var fractions = require('./fractions');
 var measurements = require('./conversion-measurements');
 var math = require('mathjs');
 
 module.exports.convert = convert;
-module.exports.americanStandard = measurements.americanStandard;
-module.exports.getUnitShortName = getUnitShortName;
-module.exports.getUnit = getUnit;
 
 function convert(opts) {
   var amount = opts.amount,
@@ -16,7 +11,7 @@ function convert(opts) {
     toU = opts.to,
     val,
     ratios = measurements.americanStandard,
-    unit = getUnit(toU),
+    unit = measurements.getUnit(toU),
     result = {};
 
   if (!amount || !fromU || !toU || !unit) return;
@@ -40,17 +35,4 @@ function convert(opts) {
   result.val = fractions.fractionAndInt(val);
   result.closestFraction = fractions.closestFraction(val, unit.standards);
   return result;
-}
-
-function getUnit(opts) {
-  var optKey = opts.name || opts.abrv || opts,
-    unit;
-  measurements.americanStandard.forEach(function(u) {
-    if (optKey === u.name.full || optKey === u.name.abrv) unit = u;
-  });
-  return _.cloneDeep(unit);
-}
-
-function getUnitShortName(unit) {
-  return unit.name.abrv ? unit.name.abrv : unit.name.full;
 }

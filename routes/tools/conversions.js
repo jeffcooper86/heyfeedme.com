@@ -1,9 +1,10 @@
 var cUtils = require(process.cwd() + '/utils/conversion');
+var measurements = require(process.cwd() + '/utils/conversion-measurements');
 
 exports = module.exports = function(req, res, next) {
   var l = res.locals;
   l.title = 'Recipe conversions';
-  l.ratios = cUtils.americanStandard;
+  l.ratios = measurements.americanStandard;
   if (req.method === 'POST') doConversion();
   return res.render('tools/conversions.pug');
 
@@ -20,8 +21,8 @@ exports = module.exports = function(req, res, next) {
     l.data.from = opts.from;
     l.data.to = opts.to;
     l.data.result = result;
-    l.data.fromUnit = cUtils.getUnit(opts.from);
-    l.data.toUnit = cUtils.getUnit(opts.to);
+    l.data.fromUnit = measurements.getUnit(opts.from);
+    l.data.toUnit = measurements.getUnit(opts.to);
     if (!result) return;
     l.data.formattedResult = formatResult(l.data);
   }
@@ -30,7 +31,7 @@ exports = module.exports = function(req, res, next) {
 function formatResult(data) {
   var fr = {};
   fr.fromAmt = data.amount;
-  fr.fromUnit = cUtils.getUnitShortName(data.fromUnit);
+  fr.fromUnit = measurements.getUnitShortName(data.fromUnit);
   fr.fromUnitFull = '';
   fr.toAmt = data.result.val.mixed || data.result.val.fraction;
   fr.toUnit = data.toUnit.name.abrv ? data.toUnit.name.abrv : data.result.val.int > 1 ? data.toUnit.name.plural : data.toUnit.name.full;
