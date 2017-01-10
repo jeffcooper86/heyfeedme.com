@@ -71,7 +71,9 @@ function _closestFraction(num, fromU) {
     difference,
     fractions,
     numFrac,
-    numMixed = _mixedNumber(num).split(' ');
+    numInt,
+    numMixed = _mixedNumber(num).split(' '),
+    result;
 
   if (_isStandardFraction(math.number(num), fromU)) return;
   fractions = fromU.standards || [];
@@ -83,6 +85,7 @@ function _closestFraction(num, fromU) {
   fractions = _allPossibleFractions(fractions);
   numFrac = numMixed.length === 2 ? numMixed[1] : numMixed[0];
   numFrac = math.number(math.fraction(numFrac));
+  numInt = numMixed.length === 2 ? numMixed[0] : 0;
 
   fractions.forEach(function(f) {
     var n = math.number(math.fraction(f));
@@ -96,12 +99,18 @@ function _closestFraction(num, fromU) {
     }
   });
 
-  return {
-    closest: {
-      val: closest,
-      diff: difference
-    }
+  result = {
+    vals: [],
+    diff: math.round(difference, 4)
   };
+
+  closest.forEach(function(c) {
+    result.vals.push(_fractionAndInt(
+      math.add(math.number(numInt), math.fraction(c))
+    ));
+  });
+
+  return result;
 }
 
 function _fractionAndInt(val) {

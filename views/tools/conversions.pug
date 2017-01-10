@@ -5,8 +5,17 @@ block bodyContent
     h2.heading.h2 Recipe Conversions
     h3.heading.h3 Calculator
     if data.result
+      -var unit = data.formattedResult.toUnitFull;
       .note
-        p= `${data.formattedResult.toAmt} ${data.formattedResult.toUnitFull}`
+        h4.heading.h4 Amount
+        p= `${data.formattedResult.toAmt} ${unit}`
+        if data.result.closestFraction
+          h4.heading.h4 Rounded
+          p
+            each val in data.result.closestFraction.vals
+              span= `${val.mixed || val.fraction} ${val.int === 0 ? '' : unit}`
+              br
+            em.text-emphasis= `difference: ${data.result.closestFraction.diff} ${data.formattedResult.toUnit}`
     form(method='post').form.form-small
       .form-group
         label(for='amount') Amount

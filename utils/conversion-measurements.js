@@ -81,7 +81,8 @@ const oz = {
   ratios: {
     cup: 8
   },
-  rank: 5
+  rank: 5,
+  standards: ['1/2']
 };
 
 const cup = {
