@@ -5,6 +5,6 @@ form.m-search.js-search
       type='text'
       name='search'
       placeholder='What to eat?'
-      value=data.search
+      value=data ? data.search : null
     ).sm-text
   input(type='submit' value='Search').btn.btn-1.sm-submit

@@ -30,7 +30,7 @@ exports = module.exports = function(req, res, next) {
 function formatResult(data) {
   var fr = {};
   fr.fromAmt = data.amount;
-  fr.fromUnit = cUtils.getShortName(data.fromUnit);
+  fr.fromUnit = cUtils.getUnitShortName(data.fromUnit);
   fr.fromUnitFull = '';
   fr.toAmt = data.result.val.mixed || data.result.val.fraction;
   fr.toUnit = data.toUnit.name.abrv ? data.toUnit.name.abrv : data.result.val.int > 1 ? data.toUnit.name.plural : data.toUnit.name.full;
