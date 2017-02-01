@@ -17,13 +17,13 @@ module.exports.unslugify = unslugify;
 
 function arrayChunk(data, n) {
   var newD = [],
-    l = data.length;
+    l = data.length,
+    chunk,
+    chunked = 0;
 
   // Default to 2 chunks.
   n = (!n || n < 2) ? 2 : n;
-
-  var chunk = Math.ceil(1 / n * l),
-    chunked = 0;
+  chunk = Math.ceil(1 / n * l);
 
   // Add each chunk.
   for (var chunkI = 0; chunkI < n; chunkI += 1) {
