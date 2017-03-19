@@ -3,7 +3,7 @@ var _ = require('lodash');
 const fractions = '1/8 1/4 1/3 1/2'.split(' ');
 
 // Metric
-const ml = {
+var ml = {
   name: {
     abrv: 'ml',
     full: 'milliliter',
@@ -14,7 +14,7 @@ const ml = {
   liter: 1000
 };
 
-const liter = {
+var liter = {
   name: {
     abrv: 'l',
     full: 'liter',
@@ -26,7 +26,7 @@ const liter = {
 
 
 // American Standard
-const dash = {
+var dash = {
   name: {
     full: 'dash',
     plural: 'dashes'
@@ -37,7 +37,7 @@ const dash = {
   rank: 1
 };
 
-const pinch = {
+var pinch = {
   name: {
     full: 'pinch',
     plural: 'pinches'
@@ -48,7 +48,7 @@ const pinch = {
   rank: 2
 };
 
-const tsp = {
+var tsp = {
   name: {
     abrv: 'tsp',
     full: 'teaspoon',
@@ -61,7 +61,7 @@ const tsp = {
   standards: fractions
 };
 
-const tbsp = {
+var tbsp = {
   name: {
     abrv: 'tbsp',
     full: 'tablespoon',
@@ -74,7 +74,7 @@ const tbsp = {
   standards: fractions.slice(1)
 };
 
-const oz = {
+var oz = {
   name: {
     abrv: 'oz',
     full: 'ounce',
@@ -87,7 +87,7 @@ const oz = {
   standards: ['1/2']
 };
 
-const cup = {
+var cup = {
   name: {
     full: 'cup',
     plural: 'cups'
@@ -99,7 +99,7 @@ const cup = {
   standards: fractions.slice(1)
 };
 
-const pint = {
+var pint = {
   name: {
     abrv: 'pt',
     full: 'pint',
@@ -112,7 +112,7 @@ const pint = {
   standards: fractions.slice(1)
 };
 
-const quart = {
+var quart = {
   name: {
     abrv: 'qt',
     full: 'quart',
@@ -126,7 +126,7 @@ const quart = {
   standards: fractions.slice(1)
 };
 
-const gallon = {
+var gallon = {
   name: {
     abrv: 'gal',
     full: 'gallon',

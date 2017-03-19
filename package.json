@@ -46,7 +46,8 @@
     "sort-object": "^3.0.2",
     "sortablejs": "^1.5.0-rc1",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "arryChunk": "git+ssh://git@github.com:jecoopr/arrayChunk.git#0.1.0"
   },
   "devDependencies": {
     "eslint": "^3.7.1",
