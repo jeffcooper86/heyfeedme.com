@@ -3,7 +3,6 @@ var math = require('mathjs');
 module.exports.allPossibleFractions = allPossibleFractions;
 module.exports.closestFraction = closestFraction;
 module.exports.fractionAndInt = fractionAndInt;
-module.exports.isFraction = isFraction;
 module.exports.isStandardFraction = isStandardFraction;
 module.exports.mixedNumber = mixedNumber;
 
@@ -77,28 +76,20 @@ function fractionAndInt(val) {
   return r;
 }
 
-function isFraction(num) {
-  var fraction = math.fraction(num),
-    n = Math.floor(fraction.n / fraction.d);
-  return (fraction.n - (n * fraction.d)) / fraction.d !== 0;
-}
-
 function isStandardFraction(num, standards) {
-  var fraction = math.fraction(num),
-    isStandard = false;
+  var fraction = math.fraction(num);
 
   // Consider integers to be standard.
-  if (!isFraction(num)) return true;
+  if (Number.isInteger(num)) return true;
 
   // If no standards, can't be standard.
   if (!standards) return false;
 
   // Check for matching denominators.
-  standards.forEach(function(s) {
+  return standards.some(function(s) {
     var sd = Number(s.split('/')[1]);
-    if (sd === fraction.d) isStandard = true;
+    return sd === fraction.d;
   });
-  return isStandard;
 }
 
 function mixedNumber(val) {
