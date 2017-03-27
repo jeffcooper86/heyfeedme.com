@@ -94,25 +94,30 @@ function uploadRecipePhotos(opts) {
 
 function _clearCloudPhotos(req, res, next) {
   var stepsPhotos = req.body['steps.photo'];
-  cloudinary.api.resources(
-    function(cPhotos) {
-      var toDelete = cPhotos.resources.filter(function(val) {
-        return stepsPhotos.indexOf(val.secure_url) < 0;
-      });
-      toDelete = toDelete.map(function(val) {
-        return val.public_id;
-      });
-      if (toDelete.length) {
-        cloudinary.api.delete_resources(toDelete, function(data) {
-          return;
+  try {
+    cloudinary.api.resources(
+      function(cPhotos) {
+        var toDelete = cPhotos.resources.filter(function(val) {
+          return stepsPhotos.indexOf(val.secure_url) < 0;
         });
+        toDelete = toDelete.map(function(val) {
+          return val.public_id;
+        });
+        if (toDelete.length) {
+          cloudinary.api.delete_resources(toDelete, function(data) {
+            return;
+          });
+        }
+        next();
+      }, {
+        prefix: `hfm/recipes/${req.params.documentId}/steps-photo/`,
+        type: 'upload'
       }
-      next();
-    }, {
-      prefix: `hfm/recipes/${req.params.documentId}/steps-photo/`,
-      type: 'upload'
-    }
-  );
+    );
+  } catch (e) {
+    console.error(e);
+    next();
+  }
 }
 
 function _clearLocalPhotos(req, res, next) {
@@ -155,12 +160,17 @@ function _cloudStorage(req, res, next) {
   function _upLoadPhotoFile(cb) {
     if (photoFile) {
       photoFile = photoFile[0];
-      cloudinary.uploader.upload(photoFile.path, function(cphoto) {
-        req.body['photo'] = cphoto.secure_url;
+      try {
+        cloudinary.uploader.upload(photoFile.path, function(cphoto) {
+          req.body['photo'] = cphoto.secure_url;
+          cb();
+        }, {
+          public_id: `hfm/${utils.i.stripFileExtension(photoFile.path.replace('temp/', ''))}`
+        });
+      } catch (e) {
+        console.log(e);
         cb();
-      }, {
-        public_id: `hfm/${utils.i.stripFileExtension(photoFile.path.replace('temp/', ''))}`
-      });
+      }
     } else cb();
   }
 
@@ -171,13 +181,18 @@ function _cloudStorage(req, res, next) {
 
       stepsPhotoFiles.forEach(function(f) {
         var originalPath = f.destination.replace('./temp', '') + f.originalname;
-        cloudinary.uploader.upload(f.path, function(cphoto) {
-          stepsPhotos[stepsPhotos.indexOf(originalPath)] = cphoto.secure_url;
-          count++;
-          if (count === length) cb();
-        }, {
-          folder: `hfm/${f.destination.replace('./temp/', '').replace('.', '-')}`
-        });
+        try {
+          cloudinary.uploader.upload(f.path, function(cphoto) {
+            stepsPhotos[stepsPhotos.indexOf(originalPath)] = cphoto.secure_url;
+            count++;
+            if (count === length) cb();
+          }, {
+            folder: `hfm/${f.destination.replace('./temp/', '').replace('.', '-')}`
+          });
+        } catch (e) {
+          console.error(e);
+          cb();
+        }
       });
     } else cb();
   }
