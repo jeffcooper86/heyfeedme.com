@@ -1,6 +1,6 @@
 // Server and client side global utils - avoid large libraries.
 
-var arrayChunk = require('arrayChunk');
+var arrayChunk = require('array-chunker');
 
 module.exports.arrayChunk = arrayChunk;
 module.exports.getFileExt = getFileExt;
