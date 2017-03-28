@@ -1,5 +1,5 @@
 var cookies = require('../utils/cookies');
-var urlQuery = require('../utils/url-query');
+var urlq = require('urlq');
 
 module.exports.doFilters = doFilters;
 
@@ -50,7 +50,7 @@ function _updateUrlQueryFromCookie(name) {
   // Remove the param from the query if the cookie is set to all.
   if ((cookieV.length === 1 && cookieV[0] === 'all')) cookieV = [];
 
-  return urlQuery.updateUrlQuery(
-    urlQuery.updateQueryParam(window.location.search, name, cookieV)
+  return urlq.updateQuery(
+    urlq.updateParam(window.location.search, name, cookieV)
   );
 }

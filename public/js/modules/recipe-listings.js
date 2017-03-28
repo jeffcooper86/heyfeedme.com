@@ -1,7 +1,7 @@
 var cookies = require('../utils/cookies');
 var rightNav = require('../modules/right-nav');
 var ui = require('../ui');
-var urlQuery = require('../utils/url-query');
+var urlq = require('urlq');
 
 module.exports.sortOrder = sortOrder;
 module.exports.updateRecipes = updateRecipes;
@@ -40,8 +40,8 @@ function sortOrder() {
       sort = $this.val(),
       $recipes = $('.m-recipe-listings');
     cookies.setCookie(cookie, sort);
-    urlQuery.updateUrlQuery(
-      urlQuery.updateQueryParam(window.location.search, 'sort', [sort])
+    urlq.updateQuery(
+      urlq.updateParam(window.location.search, 'sort', [sort])
     );
     updateRecipes($recipes);
   }
