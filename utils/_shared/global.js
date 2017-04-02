@@ -1,6 +1,7 @@
 // Server and client side global utils - avoid large libraries.
 
 var arrayChunk = require('array-chunker');
+var vfc = require('vfc');
 
 module.exports.arrayChunk = arrayChunk;
 module.exports.getFileExt = getFileExt;
@@ -8,7 +9,6 @@ module.exports.getNested = getNested;
 module.exports.rotateRandom = rotateRandom;
 module.exports.slugify = slugify;
 module.exports.sortOn = sortOn;
-module.exports.sortVerticalFlowColumns = sortVerticalFlowColumns;
 module.exports.stringifyArray = stringifyArray;
 module.exports.stripFileExtension = stripFileExtension;
 module.exports.tally = tally;
@@ -16,6 +16,7 @@ module.exports.trimDirectories = trimDirectories;
 module.exports.trimOn = trimOn;
 module.exports.truncate = truncate;
 module.exports.unslugify = unslugify;
+module.exports.vfc = vfc;
 
 
 function getFileExt(s) {
@@ -55,21 +56,6 @@ function sortOn(opts) {
     if ('-1 desc'.split(' ').indexOf(opts.order) > -1) compare = compare * -1;
     return compare;
   });
-}
-
-function sortVerticalFlowColumns(data, n) {
-
-  // Default to 2 columns.
-  n = (!n || n < 2) ? 2 : n;
-  var chunked = arrayChunk(data, n),
-    newD = [];
-
-  for (var i = 0; i < Math.ceil((1 / n) * data.length); i += 1) {
-    for (var j = 0; j < n; j += 1) {
-      if (chunked[j][i]) newD.push(chunked[j][i]);
-    }
-  }
-  return newD;
 }
 
 function stringifyArray(arr, separator, limit, more) {
