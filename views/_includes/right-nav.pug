@@ -5,7 +5,7 @@ nav.m-right-nav.js-right-nav
     .rnm-sections
       span.heading.h5.no-space-top Sections
       +filters(
-        filters.i.sortVerticalFlowColumns(data.recipes.categories),
+        filters.i.vfc(data.recipes.categories),
         data.recipes.activeCats,
         data.recipe ? data.recipe.categories : [],
         {
@@ -15,7 +15,7 @@ nav.m-right-nav.js-right-nav
       )
       span.heading.h5 Diets
       +filters(
-        filters.i.sortVerticalFlowColumns(data.recipes.classifications),
+        filters.i.vfc(data.recipes.classifications),
         data.recipes.activeClasses,
         data.recipe ? data.recipe.classifications : [],
         {
