@@ -1,7 +1,13 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
+const ConversionResults = require('./containers/conversionResults');
+const ConversionForm = require('./containers/conversionForm');
+
 ReactDOM.render(
-  <h1>Test hello</h1>,
-  document.getElementById('app')
+  <div>
+    <ConversionForm />
+    <ConversionResults />
+  </div>,
+  document.getElementById('calculator')
 );

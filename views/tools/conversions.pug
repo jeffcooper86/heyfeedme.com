@@ -3,50 +3,19 @@ extends ../_layouts/content-spaced-top
 block bodyContent
   .container.container-3
     h2.heading.h2 Recipe Conversions
-    h3.heading.h3 Calculator
-    div#app
-    if data.result
-      -var unit = data.formattedResult.toUnitFull;
-      .note
-        h4.heading.h4.no-space-top Result
-        p= `${data.formattedResult.toAmt} ${unit}`
-        if data.result.closestFraction
-          h4.heading.h4 Rounded
-          p
-            each val in data.result.closestFraction.vals
-              span= `${val.mixed || val.fraction} ${val.int === 0 ? '' : unit}`
-              br
-            em.text-emphasis= `difference: ${data.result.closestFraction.diff} ${data.formattedResult.toUnit}`
-    form(method='post').form.form-small
-      .form-group
-        label(for='amount') Amount
-        input(
-          type='text'
-          name='amount'
-          id='amount'
-          value=data.amount || 1
-          placeholder='1').form-field.ff-wide
-        .select-wrap.form-field.ff-wide
-          select(name='from' id='from').form-field.ff-wide
-            each ratio in ratios
-              option(selected=data.from ? data.from === ratio.name.full : ratio.name.abrv === 'tsp')= ratio.name.full
-      .form-group
-        label(for='to') To
-          .select-wrap.form-field.ff-wide
-            select(name='to' id='to').form-field.ff-wide
-              each ratio in ratios
-                option(selected=data.to ? data.to === ratio.name.full : ratio.name.abrv === 'tbsp')= ratio.name.full
-      .form-group
-        label(for='adjustment') Adjustment
-        input(
-          type='text'
-          name='adjustment'
-          id='adjustment'
-          placeholder='1'
-          value=data.adjustment
-        ).form-field.ff-wide
-      .text-center
-        input(type='submit').btn.btn-1.form-field.ff-wide
+    div#calculator
+    //- if data.result
+    //-   -var unit = data.formattedResult.toUnitFull;
+    //-   .note
+    //-     h4.heading.h4.no-space-top Result
+    //-     p= `${data.formattedResult.toAmt} ${unit}`
+    //-     if data.result.closestFraction
+    //-       h4.heading.h4 Rounded
+    //-       p
+    //-         each val in data.result.closestFraction.vals
+    //-           span= `${val.mixed || val.fraction} ${val.int === 0 ? '' : unit}`
+    //-           br
+    //-         em.text-emphasis= `difference: ${data.result.closestFraction.diff} ${data.formattedResult.toUnit}`
 
     .m-conversion-charts
       h3.heading.h3 Ratios
