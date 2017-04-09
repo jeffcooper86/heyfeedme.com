@@ -1,7 +1,7 @@
 {
   "braceStyle": "collapse",
   "breakChainedMethods": false,
-  "e4x": false,
+  "e4x": true,
   "evalCode": false,
   "end_with_newline": true,
   "indentChar": " ",

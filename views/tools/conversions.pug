@@ -4,6 +4,7 @@ block bodyContent
   .container.container-3
     h2.heading.h2 Recipe Conversions
     h3.heading.h3 Calculator
+    div#app
     if data.result
       -var unit = data.formattedResult.toUnitFull;
       .note
@@ -69,3 +70,6 @@ block bodyContent
               if r.standards
                 caption.tbl-subcaption
                   = `Common fractions: ${filters.i.stringifyArray(r.standards)}`
+
+block contentJs
+  script(src='/dist/js/pages/tools/conversions.js')

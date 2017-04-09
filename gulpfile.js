@@ -72,6 +72,7 @@ gulp.task('dist:less', function() {
 });
 
 gulp.task('dist:js', function() {
+  setProdEnv();
   var bundleStream = browserify(paths.public.js.compile.main).bundle();
   return bundleStream
     .pipe(source('main.js'))
@@ -90,6 +91,7 @@ gulp.task('dist:jsDev', function() {
 });
 
 gulp.task('dist:jsPages', function() {
+  setProdEnv();
   return jsPageBundle();
 });
 
@@ -180,7 +182,9 @@ function lessPageCompile() {
 function jsPageBundle() {
   glob(paths.public.js.compile.pages, function(err, files) {
     files.forEach(function(file) {
-      var bundleStream = browserify(file).bundle();
+      var bundleStream = browserify(file)
+        .transform('babelify')
+        .bundle();
       bundleStream
         .pipe(source(`js/pages${file.slice(file.indexOf('pages') + 5)}`))
         .pipe(buffer())
@@ -194,7 +198,9 @@ function jsPageBundle() {
 function jsPageBundleDev() {
   glob(paths.public.js.compile.pages, function(err, files) {
     files.forEach(function(file) {
-      var bundleStream = browserify(file).bundle();
+      var bundleStream = browserify(file)
+        .transform('babelify')
+        .bundle();
       bundleStream
         .pipe(source(`js/pages${file.slice(file.indexOf('pages') + 5)}`))
         .pipe(buffer())
@@ -206,4 +212,8 @@ function jsPageBundleDev() {
 function onWatchError(err) {
   console.log(err.message);
   this.emit('end');
+}
+
+function setProdEnv() {
+  process.env.NODE_ENV = 'production';
 }
