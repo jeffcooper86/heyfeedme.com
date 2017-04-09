@@ -1,5 +1,12 @@
 {
-  "extends": "standard",
+  "plugins": [
+    "react"
+  ],
+
+  "extends": [
+    "standard",
+    "plugin:react/recommended"
+  ],
 
   "globals": {
     "heyfeedme": true,
