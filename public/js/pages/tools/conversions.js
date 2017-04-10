@@ -8,11 +8,19 @@ const ConversionForm = require('./containers/conversionForm');
 class ConversionTool extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      conversion: null
+
+    const initialFormVals = {
+      amount: 1,
+      from: 'teaspoon',
+      to: 'tablespoon',
+      adjustment: 1
     };
 
     this.calcResult = this.calcResult.bind(this);
+    this.initialFormVals = initialFormVals;
+    this.state = {
+      conversion: cUtils.convertFormatted(initialFormVals)
+    };
   }
 
   calcResult(opts) {
@@ -25,7 +33,7 @@ class ConversionTool extends React.Component {
   render() {
     return (
       <div>
-        <ConversionForm calcResult={this.calcResult}/>
+        <ConversionForm calcResult={this.calcResult} initialVals={this.initialFormVals}/>
         <ConversionResults result={this.state.conversion}/>
       </div>
     );

@@ -8,13 +8,7 @@ const units = measurements.americanStandard;
 class ConversionForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      amount: 1,
-      from: 'teaspoon',
-      to: 'tablespoon',
-      adjustment: 1
-    };
-
+    this.state = props.initialVals;
     this.onFormChange = this.onFormChange.bind(this);
   }
 

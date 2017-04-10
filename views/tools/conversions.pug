@@ -4,18 +4,6 @@ block bodyContent
   .container.container-3
     h2.heading.h2 Recipe Conversions
     div#calculator
-    //- if data.result
-    //-   -var unit = data.formattedResult.toUnitFull;
-    //-   .note
-    //-     h4.heading.h4.no-space-top Result
-    //-     p= `${data.formattedResult.toAmt} ${unit}`
-    //-     if data.result.closestFraction
-    //-       h4.heading.h4 Rounded
-    //-       p
-    //-         each val in data.result.closestFraction.vals
-    //-           span= `${val.mixed || val.fraction} ${val.int === 0 ? '' : unit}`
-    //-           br
-    //-         em.text-emphasis= `difference: ${data.result.closestFraction.diff} ${data.formattedResult.toUnit}`
 
     .m-conversion-charts
       h3.heading.h3 Ratios
