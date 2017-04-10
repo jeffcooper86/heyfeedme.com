@@ -1,4 +1,11 @@
-var math = require('mathjs');
+const mathCore = require('mathjs/core');
+
+const math = mathCore.create();
+math.import(require('mathjs/lib/type/fraction'));
+math.import(require('mathjs/lib/type/number'));
+math.import(require('mathjs/lib/function/arithmetic/add'));
+math.import(require('mathjs/lib/function/arithmetic/round'));
+
 
 module.exports.allPossibleFractions = allPossibleFractions;
 module.exports.closestFraction = closestFraction;

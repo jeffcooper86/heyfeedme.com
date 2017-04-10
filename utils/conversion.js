@@ -1,6 +1,10 @@
-var fractions = require('./fractions');
-var measurements = require('./conversion-measurements');
-var math = require('mathjs');
+const fractions = require('./fractions');
+const measurements = require('./conversion-measurements');
+const mathCore = require('mathjs/core');
+
+const math = mathCore.create();
+math.import(require('mathjs/lib/type/fraction'));
+math.import(require('mathjs/lib/function/arithmetic/multiply'));
 
 module.exports.convert = convert;
 module.exports.convertFormatted = convertFormatted;

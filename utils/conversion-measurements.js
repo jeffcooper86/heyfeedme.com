@@ -1,28 +1,28 @@
-var _ = require('lodash');
+var _cloneDeep = require('lodash.clonedeep');
 
 const fractions = '1/8 1/4 1/3 1/2'.split(' ');
 
 // Metric
-var ml = {
-  name: {
-    abrv: 'ml',
-    full: 'milliliter',
-    plural: 'milliliters'
-  },
-  type: 'm',
-  tsp: 5,
-  liter: 1000
-};
-
-var liter = {
-  name: {
-    abrv: 'l',
-    full: 'liter',
-    plural: 'liters'
-  },
-  type: 'm',
-  equivalent: quart
-};
+// var ml = {
+//   name: {
+//     abrv: 'ml',
+//     full: 'milliliter',
+//     plural: 'milliliters'
+//   },
+//   type: 'm',
+//   tsp: 5,
+//   liter: 1000
+// };
+//
+// var liter = {
+//   name: {
+//     abrv: 'l',
+//     full: 'liter',
+//     plural: 'liters'
+//   },
+//   type: 'm',
+//   equivalent: quart
+// };
 
 
 // American Standard
@@ -149,7 +149,7 @@ function getUnit(opts) {
   americanStandard.forEach(function(u) {
     if (optKey === u.name.full || optKey === u.name.abrv) unit = u;
   });
-  return _.cloneDeep(unit);
+  return _cloneDeep(unit);
 }
 
 function getUnitShortName(unit) {
