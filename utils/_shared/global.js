@@ -1,7 +1,7 @@
 // Server and client side global utils - avoid large libraries.
 
 var arrayChunk = require('array-chunker');
-var vfc = require('vfc');
+var vfc = require('vertical-flow-columns');
 
 module.exports.arrayChunk = arrayChunk;
 module.exports.getFileExt = getFileExt;

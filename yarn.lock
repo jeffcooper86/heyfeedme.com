@@ -5538,9 +5538,9 @@ url@~0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-"urlq@git+ssh://git@github.com:jecoopr/urlq.git#0.1.0":
+urlq@^0.1.0:
   version "0.1.0"
-  resolved "git+ssh://git@github.com/jecoopr/urlq.git#bb5b933450ada985271bc714192e2dcbc83eacac"
+  resolved "https://registry.yarnpkg.com/urlq/-/urlq-0.1.0.tgz#ad92a111eccb99af43a455d390d5520968ad30cc"
 
 user-home@^1.1.1:
   version "1.1.1"
@@ -5597,9 +5597,9 @@ verror@1.3.6:
   dependencies:
     extsprintf "1.0.2"
 
-"vfc@git+ssh://git@github.com:jecoopr/vertical-flow-columns.git#0.1.0":
+vertical-flow-columns@^0.1.0:
   version "0.1.0"
-  resolved "git+ssh://git@github.com/jecoopr/vertical-flow-columns.git#6fbb01a09dc678eaae978f6962b2552867ca011b"
+  resolved "https://registry.yarnpkg.com/vertical-flow-columns/-/vertical-flow-columns-0.1.0.tgz#51efbdaf6645276b96787c87009427a5e5ea26f3"
   dependencies:
     array-chunker "^0.3.1"
 
