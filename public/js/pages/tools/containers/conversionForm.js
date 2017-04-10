@@ -25,7 +25,7 @@ class ConversionForm extends React.Component {
 
     this.setState({
       [name]: value
-    });
+    }, () => this.props.calcResult(this.state));
   }
 
   render() {

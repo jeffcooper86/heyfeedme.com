@@ -1,11 +1,16 @@
 const React = require('react');
 
-class ConversionResults extends React.Component {
-  render() {
-    return (
-      <div className='note'>
+
+function ConversionResults(props) {
+  const r = props.result;
+  if (!r) return <div></div>;
+
+  const unit = r.formatted.toUnitFull;
+  return (
+    <div className='note'>
+        <pre>{JSON.stringify(props.result)}</pre>
         <h4 className='heading h4 no-space-top'>Result</h4>
-        <p>result placeholder</p>
+        <p>{`${r.formatted.toAmt} ${unit}`}</p>
         <h4 className='heading h4'>Rounded</h4>
         <p>
           <span>rounded result</span>
@@ -13,8 +18,7 @@ class ConversionResults extends React.Component {
           <em className='text-emphasis'>difference: result placeholder</em>
         </p>
       </div>
-    );
-  }
+  );
 }
 
 module.exports = ConversionResults;
