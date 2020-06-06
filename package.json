@@ -58,7 +58,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^3.7.1",
+    "eslint": "^4.18.2",
     "eslint-config-standard": "^6.2.0",
     "eslint-plugin-promise": "^3.0.0",
     "eslint-plugin-react": "^6.10.3",
