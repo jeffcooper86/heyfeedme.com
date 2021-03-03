@@ -45,7 +45,7 @@
     "mongodb": "^2.2.19",
     "mongoose": "^4.9.1",
     "multer": "^1.1.0",
-    "pug": "^2.0.0-beta6",
+    "pug": "^3.0.1",
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
     "require-dir": "^0.3.0",
