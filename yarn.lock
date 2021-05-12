@@ -1332,9 +1332,9 @@ commander@~2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.1.0.tgz#d121bbae860d9992a3d517ba96f56588e47c6781"
 
-complex.js@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/complex.js/-/complex.js-2.0.1.tgz#ea90c7a05aeceaf3a376d2c0f6a78421727d6879"
+complex.js@^2.0.11:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/complex.js/-/complex.js-2.0.12.tgz#fa4df97d8928e5f7b6a86b35bdeecc3a3eda8a22"
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -1552,9 +1552,9 @@ decamelize@^1.0.0, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
-decimal.js@7.1.1:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-7.1.1.tgz#1adcad7d70d7a91c426d756f1eb6566c3be6cbcf"
+decimal.js@^10.2.1:
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.2.1.tgz#238ae7b0f0c793d3e3cea410108b35a2c01426a3"
 
 deep-extend@~0.4.0:
   version "0.4.1"
@@ -1848,6 +1848,10 @@ es6-weak-map@^2.0.1:
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
+
+escape-latex@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/escape-latex/-/escape-latex-1.2.0.tgz#07c03818cf7dac250cce517f4fda1b001ef2bca1"
 
 escape-string-regexp@^1.0.0, escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
@@ -2307,9 +2311,9 @@ forwarded@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.0.tgz#19ef9874c4ae1c297bcf078fde63a09b66a84363"
 
-fraction.js@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.0.0.tgz#73974e2f8b51ef709536d624cc90782e2bb61274"
+fraction.js@^4.0.12:
+  version "4.0.13"
+  resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.0.13.tgz#3c1c315fa16b35c85fffa95725a36fa729c69dfe"
 
 fresh@0.5.0:
   version "0.5.0"
@@ -3227,6 +3231,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
+javascript-natural-sort@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/javascript-natural-sort/-/javascript-natural-sort-0.7.1.tgz#f9e2303d4507f6d74355a73664d1440fb5a0ef59"
+
 jest-matcher-utils@^19.0.0:
   version "19.0.0"
   resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-19.0.0.tgz#5ecd9b63565d2b001f61fbf7ec4c7f537964564d"
@@ -3767,16 +3775,18 @@ map-stream@>=0.0.4, map-stream@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.1.0.tgz#e56aa94c4c8055a16404a0674b78f215f7c8e194"
 
-mathjs@^3.8.1:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-3.10.0.tgz#cae0a27340483a00499253fb2c82f5818b9683fe"
+mathjs@^7.5.1:
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-7.5.1.tgz#eb125295310a99ddcaf6145c47b09aab36e48274"
   dependencies:
-    complex.js "2.0.1"
-    decimal.js "7.1.1"
-    fraction.js "4.0.0"
-    seed-random "2.2.0"
-    tiny-emitter "1.0.2"
-    typed-function "0.10.5"
+    complex.js "^2.0.11"
+    decimal.js "^10.2.1"
+    escape-latex "^1.2.0"
+    fraction.js "^4.0.12"
+    javascript-natural-sort "^0.7.1"
+    seed-random "^2.2.0"
+    tiny-emitter "^2.1.0"
+    typed-function "^2.0.0"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -4928,7 +4938,7 @@ safe-buffer@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
 
-seed-random@2.2.0:
+seed-random@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/seed-random/-/seed-random-2.2.0.tgz#2a9b19e250a817099231a5b99a4daf80b7fbed54"
 
@@ -5391,9 +5401,9 @@ timers-ext@0.1:
     es5-ext "~0.10.14"
     next-tick "1"
 
-tiny-emitter@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-1.0.2.tgz#8e49470d3f55f89e247210368a6bb9fb51aa1601"
+tiny-emitter@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"
@@ -5458,9 +5468,9 @@ type-is@^1.6.4, type-is@~1.6.14:
     media-typer "0.3.0"
     mime-types "~2.1.13"
 
-typed-function@0.10.5:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/typed-function/-/typed-function-0.10.5.tgz#2e0f18abd065219fab694a446a65c6d1981832c0"
+typed-function@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/typed-function/-/typed-function-2.0.0.tgz#15ab3825845138a8b1113bd89e60cd6a435739e8"
 
 typedarray@~0.0.5:
   version "0.0.6"
