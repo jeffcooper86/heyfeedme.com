@@ -5,7 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "array-chunker": "^0.3.1",
-    "async": "^1.5.2",
+    "async": "^2.6.4",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.24.1",
     "babelify": "^7.3.0",
